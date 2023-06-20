@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://bw276q3qbblmw"]
+
+[node name="LifeBarPortion" type="ColorRect"]
+offset_right = 1152.0
+offset_bottom = 8.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
