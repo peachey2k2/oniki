@@ -23,12 +23,17 @@ var enemy = {
 			"name": "placeholder",
 			"health": 20,
 			"time": 50,
-			"amount": 5,
-			"repeat": 10000,
-			"tilt": PI/17,
-			"velocity": Vector2(200, 0),
-			"distance": 50,
-			"delay": 0.15
+			"spawner_count": 1,
+			0: {
+				"type": 0,
+				"bullet": 0,
+				"amount": 5,
+				"repeat": 10000,
+				"tilt": PI/17,
+				"velocity": Vector2(200, 0),
+				"distance": 50,
+				"delay": 0.15
+			}
 		}
 	}
 }
