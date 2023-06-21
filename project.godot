@@ -24,6 +24,11 @@ BattleStats="*res://scripts/battleStats.gd"
 
 window/stretch/mode="2d"
 
+[editor]
+
+version_control/plugin_name="GitPlugin"
+version_control/autoload_on_startup=true
+
 [gui]
 
 common/drop_mouse_on_gui_input_disabled=true
