@@ -8,7 +8,7 @@ func _ready():
 	pass # Replace with function body.
 
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	
 	direction.x = int(Input.is_action_pressed("ui_right")) - int(Input.is_action_pressed("ui_left"))
 	direction.y = int(Input.is_action_pressed("ui_down")) - int(Input.is_action_pressed("ui_up"))
@@ -20,10 +20,7 @@ func _physics_process(delta):
 		$Hitbox.hide()
 	set_velocity(direction*SPEED)
 	move_and_slide()
-	
-	if Input.is_action_just_pressed("pause"):
-		get_tree().set_pause(true)
 
-func _on_Hitbox_area_entered(area):
+func _on_Hitbox_area_entered(_area):
 	position = Vector2.ZERO
 

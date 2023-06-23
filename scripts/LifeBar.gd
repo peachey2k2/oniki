@@ -12,13 +12,13 @@ func _ready():
 	$"../../Enemy".connect("area_entered",Callable(self,"_on_area_entered"))
 	$"../../Enemy".connect("area_exited",Callable(self,"_on_area_exited"))
 
-func _on_area_entered(area):
+func _on_area_entered(_area):
 	playerInRange = true
 
-func _on_area_exited(area):
+func _on_area_exited(_area):
 	playerInRange = false
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if Input.is_action_pressed("hit") && !hitOnCooldown:
 		hitOnCooldown = true
 		if currLife != 0 && playerInRange: #Z
