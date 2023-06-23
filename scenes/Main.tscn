@@ -18,6 +18,7 @@ grow_vertical = 2
 script = ExtResource("2")
 
 [node name="Player" parent="." instance=ExtResource("4")]
+z_index = 1
 texture_filter = 1
 
 [node name="Enemy" parent="." instance=ExtResource("3_j7bnb")]
