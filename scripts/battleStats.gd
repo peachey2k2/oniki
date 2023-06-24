@@ -11,14 +11,6 @@ enum {SMALL, MEDIUM, LARGE, XLARGE}
 #time:int - the initial value of the timeout timer, displayed at top right
 #spawner_count:int - amount of spawner objects to use
 
-#offset:Vector2 - the location of that spawner relative to the player
-#amount:int - amount of bullets per circle
-#repeat:int - how many circles the function will create before stopping
-#tilt:float - how much the circle should tilt every time
-#velocity:Vector2 - vector to control the speed. it'll be rotated for every generated bullet. 
-#distance:float - how far from the origin bullets will spawn in
-#delay:float - time delay between each circle
-
 var enemy = {
 	"bar_count": 1,
 	0: {

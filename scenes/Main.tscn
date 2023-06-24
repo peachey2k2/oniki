@@ -1,113 +1,12 @@
-[gd_scene load_steps=8 format=3 uid="uid://bty05s2e3am5q"]
+[gd_scene load_steps=3 format=3 uid="uid://cgpbies442yv1"]
 
-[ext_resource type="Script" path="res://scripts/main.gd" id="2"]
-[ext_resource type="Script" path="res://scripts/FPS.gd" id="3"]
-[ext_resource type="PackedScene" uid="uid://c1b6e6j2g6ul3" path="res://scenes/enemy.tscn" id="3_j7bnb"]
-[ext_resource type="PackedScene" uid="uid://b2cvqisw0hsd4" path="res://scenes/Player.tscn" id="4"]
-[ext_resource type="Script" path="res://scripts/LifeBar.gd" id="5_hv86u"]
-[ext_resource type="Script" path="res://scripts/TimeoutTimer.gd" id="6_bavyu"]
-[ext_resource type="Script" path="res://scripts/GrazeCounter.gd" id="7_bdfv3"]
+[ext_resource type="Texture2D" uid="uid://33qc36xfaf85" path="res://icon.png" id="1_21nhi"]
+[ext_resource type="Script" path="res://scenes/Main.gd" id="1_l75ni"]
 
-[node name="Battle" type="Control"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("2")
+[node name="Main" type="Node2D"]
+script = ExtResource("1_l75ni")
 
-[node name="Player" parent="." instance=ExtResource("4")]
-z_index = 1
-texture_filter = 1
-
-[node name="Enemy" parent="." instance=ExtResource("3_j7bnb")]
-position = Vector2(575, 100)
-
-[node name="BattleUI" type="Control" parent="."]
-z_index = 20
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-metadata/_edit_use_anchors_ = true
-
-[node name="FPSCounter" type="Label" parent="BattleUI"]
-process_mode = 3
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -52.5
-offset_top = -26.0
-offset_right = 52.5
-grow_horizontal = 2
-grow_vertical = 0
-text = "placeholder"
-horizontal_alignment = 1
-script = ExtResource("3")
-
-[node name="LifeBarContainer" type="HBoxContainer" parent="BattleUI"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.000868056
-anchor_top = 0.00154321
-anchor_right = 1.00087
-anchor_bottom = 0.00154321
+[node name="Button" type="Button" parent="."]
+offset_right = 8.0
 offset_bottom = 8.0
-grow_horizontal = 2
-script = ExtResource("5_hv86u")
-metadata/_edit_use_anchors_ = true
-
-[node name="Time" type="Label" parent="BattleUI"]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -56.0
-offset_top = 20.0
-offset_bottom = 46.0
-grow_horizontal = 0
-text = "test"
-horizontal_alignment = 2
-script = ExtResource("6_bavyu")
-
-[node name="Timer" type="Timer" parent="BattleUI/Time"]
-one_shot = true
-
-[node name="BarCount" type="Label" parent="BattleUI"]
-layout_mode = 1
-offset_top = 20.0
-offset_right = 56.0
-offset_bottom = 46.0
-text = "test"
-
-[node name="SpellName" type="Label" parent="BattleUI"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -28.0
-offset_top = 20.0
-offset_right = 28.0
-offset_bottom = 46.0
-grow_horizontal = 2
-text = "test"
-horizontal_alignment = 1
-
-[node name="Graze" type="Label" parent="BattleUI"]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -23.0
-offset_right = 40.0
-grow_vertical = 0
-text = "test"
-script = ExtResource("7_bdfv3")
-
-[connection signal="bar_emptied" from="BattleUI/LifeBarContainer" to="Enemy" method="_on_life_bar_container_bar_emptied"]
+icon = ExtResource("1_21nhi")

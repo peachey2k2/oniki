@@ -14,7 +14,6 @@ mouse_filter = 2
 script = ExtResource("1_o40ta")
 
 [node name="MainContainer" type="MarginContainer" parent="."]
-visible = false
 z_index = 1000
 layout_mode = 1
 anchors_preset = 8
@@ -32,9 +31,25 @@ grow_vertical = 2
 [node name="Panel" type="Panel" parent="MainContainer"]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MainContainer"]
+[node name="PauseMenu" type="VBoxContainer" parent="MainContainer"]
 layout_mode = 2
 
-[node name="Button" type="Button" parent="MainContainer/VBoxContainer"]
+[node name="ReturnToGame" type="Button" parent="MainContainer/PauseMenu"]
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
+text = "Return to Game"
+
+[node name="Options" type="Button" parent="MainContainer/PauseMenu"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+text = "Options"
+
+[node name="MainMenu" type="Button" parent="MainContainer/PauseMenu"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+text = "Main Menu"
+
+[node name="Quit" type="Button" parent="MainContainer/PauseMenu"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+text = "Quit"

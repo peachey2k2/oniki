@@ -1,11 +1,10 @@
 extends CharacterBody2D
 const SPEED = 400
 var direction:Vector2
-#var window_size = Window.get_size()
 
 
 func _ready():
-	pass # Replace with function body.
+	pass
 
 
 func _physics_process(_delta):
