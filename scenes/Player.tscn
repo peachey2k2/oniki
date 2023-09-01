@@ -1,69 +1,250 @@
-[gd_scene load_steps=8 format=3 uid="uid://b2cvqisw0hsd4"]
+[gd_scene load_steps=30 format=3 uid="uid://b2cvqisw0hsd4"]
 
 [ext_resource type="Script" path="res://scripts/Player.gd" id="1"]
-[ext_resource type="Texture2D" uid="uid://bnp87m1ta3d4q" path="res://assets/Player.png" id="2"]
+[ext_resource type="Texture2D" uid="uid://k17bceadv2dw" path="res://assets/tilesets/player.png" id="2_uua6r"]
 [ext_resource type="Texture2D" uid="uid://bm7fjopepd3ug" path="res://assets/hitbox.png" id="3"]
+[ext_resource type="Texture2D" uid="uid://bkkn8qp51756y" path="res://assets/Slash.png" id="3_sjd7i"]
+[ext_resource type="Texture2D" uid="uid://dg7eoqklgqf2d" path="res://assets/outline.png" id="5_14hk0"]
+[ext_resource type="Texture2D" uid="uid://qn7kob85vepp" path="res://assets/outline2.png" id="6_a6fx5"]
 
-[sub_resource type="CapsuleShape2D" id="1"]
-radius = 6.0
+[sub_resource type="AtlasTexture" id="AtlasTexture_cwqkf"]
+atlas = ExtResource("2_uua6r")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_heye5"]
+atlas = ExtResource("2_uua6r")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w0tdd"]
+atlas = ExtResource("2_uua6r")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8ygil"]
+atlas = ExtResource("2_uua6r")
+region = Rect2(32, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s3x6m"]
+atlas = ExtResource("2_uua6r")
+region = Rect2(48, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2y336"]
+atlas = ExtResource("2_uua6r")
+region = Rect2(64, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_im0rb"]
+atlas = ExtResource("2_uua6r")
+region = Rect2(80, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5xbd3"]
+atlas = ExtResource("2_uua6r")
+region = Rect2(96, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nlkg6"]
+atlas = ExtResource("2_uua6r")
+region = Rect2(112, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_og8hi"]
+atlas = ExtResource("2_uua6r")
+region = Rect2(128, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dcuu4"]
+atlas = ExtResource("2_uua6r")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_is81d"]
+atlas = ExtResource("2_uua6r")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rowl8"]
+atlas = ExtResource("2_uua6r")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j6ga3"]
+atlas = ExtResource("2_uua6r")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dndcn"]
+atlas = ExtResource("2_uua6r")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_amqk2"]
+atlas = ExtResource("2_uua6r")
+region = Rect2(96, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o3c3t"]
+atlas = ExtResource("2_uua6r")
+region = Rect2(112, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lefqv"]
+atlas = ExtResource("2_uua6r")
+region = Rect2(128, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fiwbo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cwqkf")
+}],
+"loop": true,
+"name": &"stop_left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_heye5")
+}],
+"loop": true,
+"name": &"stop_right",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w0tdd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8ygil")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s3x6m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2y336")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_im0rb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5xbd3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nlkg6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_og8hi")
+}],
+"loop": true,
+"name": &"walk_left",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dcuu4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_is81d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rowl8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j6ga3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dndcn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_amqk2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o3c3t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lefqv")
+}],
+"loop": true,
+"name": &"walk_right",
+"speed": 15.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5n1w8"]
+radius = 16.0
 
 [sub_resource type="CircleShape2D" id="2"]
 radius = 3.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_yvwpy"]
-radius = 150.0
+radius = 120.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7l3f5"]
-radius = 50.0
+radius = 60.0
 
 [node name="Player" type="CharacterBody2D"]
 z_index = 2
 script = ExtResource("1")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="PlayerSprite" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
+position = Vector2(0, -8)
 scale = Vector2(4, 4)
-texture = ExtResource("2")
+sprite_frames = SubResource("SpriteFrames_fiwbo")
+animation = &"stop_right"
+
+[node name="Slash" type="Sprite2D" parent="."]
+visible = false
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("3_sjd7i")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 28)
-rotation = 1.5708
-shape = SubResource("1")
+position = Vector2(0, 18)
+shape = SubResource("CircleShape2D_5n1w8")
 
-[node name="Hitbox" type="Area2D" parent="."]
+[node name="ExtraColliders" type="Node2D" parent="."]
+modulate = Color(1, 1, 1, 0)
+
+[node name="Hitbox" type="Area2D" parent="ExtraColliders"]
 z_index = 2
 collision_layer = 0
 collision_mask = 2
 monitorable = false
 
-[node name="Sprite2D" type="Sprite2D" parent="Hitbox"]
+[node name="Sprite2D" type="Sprite2D" parent="ExtraColliders/Hitbox"]
 texture_filter = 2
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("3")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ExtraColliders/Hitbox"]
 z_index = 1
 shape = SubResource("2")
-debug_color = Color(0, 0.6, 0.701961, 0.937255)
+disabled = true
+debug_color = Color(0, 0.6, 0.701961, 0.533333)
 
-[node name="HitDetection" type="Area2D" parent="."]
+[node name="HitDetection" type="Area2D" parent="ExtraColliders"]
 collision_layer = 4
 collision_mask = 0
 
-[node name="Sprite2D" type="Sprite2D" parent="HitDetection"]
+[node name="Sprite2D" type="Sprite2D" parent="ExtraColliders/HitDetection"]
+modulate = Color(1, 1, 1, 0.490196)
+scale = Vector2(0.59, 0.59)
+texture = ExtResource("5_14hk0")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitDetection"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ExtraColliders/HitDetection"]
 shape = SubResource("CircleShape2D_yvwpy")
-debug_color = Color(0.65098, 0.513726, 0.176471, 0.419608)
+debug_color = Color(0.65098, 0.513726, 0.176471, 0.196078)
 
-[node name="GrazeDetection" type="Area2D" parent="."]
+[node name="GrazeDetection" type="Area2D" parent="ExtraColliders"]
 collision_layer = 0
 collision_mask = 2
 
-[node name="Sprite2D" type="Sprite2D" parent="GrazeDetection"]
+[node name="Sprite2D" type="Sprite2D" parent="ExtraColliders/GrazeDetection"]
+modulate = Color(1, 1, 1, 0.498039)
+scale = Vector2(1.05, 1.05)
+texture = ExtResource("6_a6fx5")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GrazeDetection"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ExtraColliders/GrazeDetection"]
 shape = SubResource("CircleShape2D_7l3f5")
-debug_color = Color(0.956863, 0.137255, 0.384314, 0.419608)
+debug_color = Color(0.980392, 0.254902, 0.431373, 0.105882)
 
-[connection signal="area_entered" from="Hitbox" to="." method="_on_Hitbox_area_entered"]
+[node name="InteractDetection" type="Area2D" parent="ExtraColliders"]
+position = Vector2(0, 18)
+collision_layer = 0
+collision_mask = 16
+
+[node name="Sprite2D" type="Sprite2D" parent="ExtraColliders/InteractDetection"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ExtraColliders/InteractDetection"]
+shape = SubResource("CircleShape2D_7l3f5")
+debug_color = Color(0.592157, 0.556863, 0.541176, 0.0784314)
+
+[node name="PlayerCamera" type="Camera2D" parent="."]
+
+[connection signal="area_entered" from="ExtraColliders/Hitbox" to="." method="_on_Hitbox_area_entered"]

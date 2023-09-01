@@ -4,6 +4,7 @@
 
 [node name="PauseHandler" type="Control"]
 process_mode = 3
+z_index = 4096
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -38,6 +39,16 @@ layout_mode = 2
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 text = "Return to Game"
+
+[node name="RestartCurrentBattle" type="Button" parent="MainContainer/PauseMenu"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+text = "Restart Current Battle"
+
+[node name="LeaveBattle" type="Button" parent="MainContainer/PauseMenu"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+text = "Leave Battle"
 
 [node name="Options" type="Button" parent="MainContainer/PauseMenu"]
 custom_minimum_size = Vector2(0, 20)

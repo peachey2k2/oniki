@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://cl785bquhjyuh"]
+[gd_scene load_steps=5 format=3 uid="uid://bbor6j5q5rtti"]
 
 [ext_resource type="Script" path="res://scripts/bullet.gd" id="1_8tb81"]
 [ext_resource type="Texture2D" uid="uid://v3ev0mhpq60a" path="res://assets/bullet_outer.png" id="2_se865"]
@@ -30,7 +30,4 @@ texture = ExtResource("3_01mcx")
 z_index = 4
 shape = SubResource("1")
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
-
 [connection signal="body_entered" from="." to="." method="_on_bullet_body_entered"]
-[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

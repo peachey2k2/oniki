@@ -2,43 +2,34 @@ extends HBoxContainer
 @onready var portion = preload("res://scenes/life_bar_portion.tscn")
 var maxLife = 0
 var currLife = 0
-var playerInRange := false
 var hitOnCooldown := false
 signal bar_emptied
 
-const HIT_COOLDOWN = 1
-
 func _ready():
-	$"../../Enemy".connect("area_entered",Callable(self,"_on_area_entered"))
-	$"../../Enemy".connect("area_exited",Callable(self,"_on_area_exited"))
-
-func _on_area_entered(_area):
-	playerInRange = true
-
-func _on_area_exited(_area):
-	playerInRange = false
+	pass
 
 func _physics_process(_delta):
-	if Input.is_action_pressed("hit") && !hitOnCooldown:
-		hitOnCooldown = true
-		if currLife != 0 && playerInRange: #Z
-			currLife -= 1
-			get_child(currLife).color = Color(0, 0, 0, 0)
-			if currLife == 0:
-				emit_signal("bar_emptied")
-				fillHealth(currLife)
-		await get_tree().create_timer(HIT_COOLDOWN).timeout
-		hitOnCooldown = false
+	pass
+	
+func _on_player_shoot():
+	if currLife != 0 && GFS.Enemy.monitoring && GFS.Enemy.has_overlapping_areas() && GFS.Enemy.shield_state == 0: #Z
+		currLife -= 1
+		get_child(currLife).color.a = 0
+		if currLife == 0:
+			emit_signal("bar_emptied")
+			fill_health(currLife)
 
-func fillHealth(lifeInput):
-	clearHealth()
+func fill_health(lifeInput):
+	clear_health()
 	maxLife = lifeInput
 	currLife = lifeInput
 	for i in range(lifeInput):
 		var portion_ins = portion.instantiate()
 		add_child(portion_ins)
 
-func clearHealth():
-	for i in maxLife:
-		get_child(i).queue_free()
+func clear_health():
+	maxLife = 0
+	currLife = 0
+	for i in get_children():
+		i.queue_free()
 

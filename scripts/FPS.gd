@@ -9,5 +9,5 @@ func _process(_delta: float) -> void:
 		fps += 1
 	else:
 		start = Time.get_ticks_msec()
-		text = str(fps)
+		text = "FPS: " + str(fps)
 		fps = 1

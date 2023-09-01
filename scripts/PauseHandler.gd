@@ -12,25 +12,41 @@ func _ready():
 
 func _process(_delta):
 	if Input.is_action_just_pressed("pause"):
-		tree.set_pause(!tree.is_paused())
 		if tree.is_paused():
-			emit_signal("game_paused")
-			show()
-			menu.get_child(0).grab_focus()
+			unpause()
 		else:
-			emit_signal("game_unpaused")
-			hide()
-			
-func _on_button_0_pressed():
+			pause()
+
+func pause():
+	tree.set_pause(true)
+	emit_signal("game_paused")
+	position -= get_screen_position()
+	show()
+	menu.get_child(0).grab_focus()
+	
+func unpause():
 	tree.set_pause(false)
 	emit_signal("game_unpaused")
 	hide()
-	
+
+func _on_button_0_pressed():
+	unpause()
+
 func _on_button_1_pressed():
-	pass
+	if GFS.game_state == 3:
+		GFS.restart_battle()
+		unpause()
 
 func _on_button_2_pressed():
-	pass
-	
+	if GFS.game_state == 3:
+		GFS.end_battle()
+		unpause()
+
 func _on_button_3_pressed():
+	pass
+
+func _on_button_4_pressed():
+	pass
+
+func _on_button_5_pressed():
 	tree.quit()

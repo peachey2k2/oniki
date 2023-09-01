@@ -1,24 +1,29 @@
-[gd_scene load_steps=4 format=3 uid="uid://c1b6e6j2g6ul3"]
+[gd_scene load_steps=5 format=3 uid="uid://c1b6e6j2g6ul3"]
 
 [ext_resource type="Script" path="res://scripts/Enemy.gd" id="1_3cod2"]
-[ext_resource type="Texture2D" uid="uid://cvae4rbcp4e81" path="res://assets/Enemy.png" id="2_nu8vq"]
+[ext_resource type="Texture2D" uid="uid://cqidv1awi6e6i" path="res://assets/shield_outer.png" id="2_syoba"]
+[ext_resource type="Texture2D" uid="uid://c4jnb2jd0gx1w" path="res://assets/shield_inner.png" id="3_sgy80"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kjryw"]
 size = Vector2(32, 64)
 
 [node name="Enemy" type="Area2D"]
 collision_layer = 0
-collision_mask = 6
+collision_mask = 4
 monitoring = false
 monitorable = false
 script = ExtResource("1_3cod2")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture_filter = 1
-scale = Vector2(4, 4)
-texture = ExtResource("2_nu8vq")
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_kjryw")
 
-[node name="Spawners" type="Node2D" parent="."]
+[node name="Shield" type="Node2D" parent="."]
+modulate = Color(1, 0.00392157, 0, 1)
+
+[node name="Outer" type="Sprite2D" parent="Shield"]
+modulate = Color(0.960784, 0.960784, 0.960784, 0.6)
+texture = ExtResource("2_syoba")
+
+[node name="Inner" type="Sprite2D" parent="Shield"]
+modulate = Color(0.890196, 1, 0.988235, 0.2)
+texture = ExtResource("3_sgy80")

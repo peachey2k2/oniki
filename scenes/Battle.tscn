@@ -1,12 +1,23 @@
-[gd_scene load_steps=8 format=3 uid="uid://bty05s2e3am5q"]
+[gd_scene load_steps=11 format=3 uid="uid://bty05s2e3am5q"]
 
-[ext_resource type="Script" path="res://scripts/main.gd" id="1_l7pku"]
-[ext_resource type="PackedScene" uid="uid://b2cvqisw0hsd4" path="res://scenes/Player.tscn" id="2_hilyk"]
-[ext_resource type="PackedScene" uid="uid://c1b6e6j2g6ul3" path="res://scenes/enemy.tscn" id="3_xm52y"]
+[ext_resource type="Script" path="res://scripts/Battle.gd" id="1_p0goo"]
 [ext_resource type="Script" path="res://scripts/FPS.gd" id="4_ufn6s"]
 [ext_resource type="Script" path="res://scripts/LifeBar.gd" id="5_taydl"]
 [ext_resource type="Script" path="res://scripts/TimeoutTimer.gd" id="6_7ngma"]
+[ext_resource type="Script" path="res://scripts/BulletRemover.gd" id="6_ctue6"]
 [ext_resource type="Script" path="res://scripts/GrazeCounter.gd" id="7_5eiw7"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_pgn28"]
+font_size = 32
+
+[sub_resource type="LabelSettings" id="LabelSettings_3ekv2"]
+font_size = 32
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rlwpo"]
+size = Vector2(2000, 50)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jq4nx"]
+size = Vector2(50, 2000)
 
 [node name="Battle" type="Control"]
 layout_mode = 3
@@ -15,14 +26,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_l7pku")
-
-[node name="Player" parent="." instance=ExtResource("2_hilyk")]
-z_index = 1
-texture_filter = 1
-
-[node name="Enemy" parent="." instance=ExtResource("3_xm52y")]
-position = Vector2(575, 100)
+script = ExtResource("1_p0goo")
 
 [node name="BattleUI" type="Control" parent="."]
 z_index = 20
@@ -68,11 +72,11 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -56.0
-offset_top = 20.0
-offset_bottom = 46.0
+offset_left = -60.0
+offset_bottom = 48.0
 grow_horizontal = 0
 text = "test"
+label_settings = SubResource("LabelSettings_pgn28")
 horizontal_alignment = 2
 script = ExtResource("6_7ngma")
 
@@ -81,10 +85,10 @@ one_shot = true
 
 [node name="BarCount" type="Label" parent="BattleUI"]
 layout_mode = 1
-offset_top = 20.0
-offset_right = 56.0
-offset_bottom = 46.0
+offset_right = 60.0
+offset_bottom = 48.0
 text = "test"
+label_settings = SubResource("LabelSettings_3ekv2")
 
 [node name="SpellName" type="Label" parent="BattleUI"]
 layout_mode = 1
@@ -92,9 +96,9 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -28.0
-offset_top = 20.0
+offset_top = 3.0
 offset_right = 28.0
-offset_bottom = 46.0
+offset_bottom = 29.0
 grow_horizontal = 2
 text = "test"
 horizontal_alignment = 1
@@ -110,4 +114,31 @@ grow_vertical = 0
 text = "test"
 script = ExtResource("7_5eiw7")
 
-[connection signal="bar_emptied" from="BattleUI/LifeBarContainer" to="Enemy" method="_on_life_bar_container_bar_emptied"]
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+
+[node name="Spawners" type="Node2D" parent="."]
+
+[node name="BulletRemover" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+script = ExtResource("6_ctue6")
+
+[node name="Up" type="CollisionShape2D" parent="BulletRemover"]
+position = Vector2(576, -200)
+shape = SubResource("RectangleShape2D_rlwpo")
+
+[node name="Left" type="CollisionShape2D" parent="BulletRemover"]
+position = Vector2(-200, 324)
+shape = SubResource("RectangleShape2D_jq4nx")
+
+[node name="Down" type="CollisionShape2D" parent="BulletRemover"]
+position = Vector2(576, 848)
+shape = SubResource("RectangleShape2D_rlwpo")
+
+[node name="Right" type="CollisionShape2D" parent="BulletRemover"]
+position = Vector2(1352, 324)
+shape = SubResource("RectangleShape2D_jq4nx")
+
+[connection signal="area_entered" from="BulletRemover" to="BulletRemover" method="_on_area_entered"]
