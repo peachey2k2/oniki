@@ -1,0 +1,8 @@
+
+== 1
+Player: line 1
+TestDummy: line 2
+Player: line 3
+TestDummy: line 4
+TestDummy: text {trigger battle_test_dummy}
+-> END

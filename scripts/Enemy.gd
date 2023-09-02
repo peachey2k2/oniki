@@ -30,14 +30,14 @@ func _ready():
 	TimeoutTimer.connect("timeout", Callable(self, "_on_spell_timed_out"))
 	
 	$"../BattleUI/LifeBarContainer".clear_health()
-	Player.position = stats.get("player_pos")
+	Player.position = GFS.bui_lerp(stats.get("player_pos"))
 	BattleUI.get_node("Graze").reset()
 	BattleUI.get_node("BarCount").text = str(stats.get("bar_count") - 1)
 	for i in stats.get("bar_count"):
 		bar = stats.get(i)
 		for j in bar.get("spell_count"):
 			spell = bar.get(j)
-			position = spell.get("enemy_pos")
+			position = GFS.bui_lerp(spell.get("enemy_pos"))
 			change_shield(spell.get("shield"))
 			$"../BattleUI/LifeBarContainer".fill_health(spell.get("health"))
 			TimeoutTimer.start(spell.get("time"))
@@ -49,8 +49,8 @@ func _ready():
 				bullet = spell.get(k).get("bullet")
 				BulletSpawner_ins = BulletSpawner.instantiate()
 				match spawner.get("pos_type"):
-					0: BulletSpawner_ins.position = spawner.get("position")
-					1: BulletSpawner_ins.position = spawner.get("position") + position
+					0: BulletSpawner_ins.position = GFS.bui_lerp(spawner.get("position"))
+					1: BulletSpawner_ins.position = GFS.bui_lerp(spawner.get("position"), true) + position
 				BulletSpawner_ins.rotation_speed = spawner.get("rotation_speed")
 				Spawners.add_child(BulletSpawner_ins)
 				match spawner.get("type"):
@@ -78,8 +78,8 @@ func _ready():
 						bullet.get("amount"),
 						bullet.get("repeat"),
 						bullet.get("speed"),
-						bullet.get("start_point"),
-						bullet.get("gap"),
+						GFS.bui_lerp(bullet.get("start_point"), true),
+						GFS.bui_lerp(bullet.get("gap"), true),
 						bullet.get("delay"),
 						bullet.get("sleep"),
 						bullet.get("bullet_angle"),

@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dg4ccb2e5g34k"]
+
+[ext_resource type="Texture2D" uid="uid://cvae4rbcp4e81" path="res://assets/sprites/test_dummy.png" id="1_2i8xg"]
+
+[node name="Sprite2D" type="Sprite2D"]
+texture_filter = 1
+scale = Vector2(4, 4)
+texture = ExtResource("1_2i8xg")

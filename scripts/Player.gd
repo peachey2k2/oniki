@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 const SPEED = 300
 const HIT_COOLDOWN = 1
-const MARGIN = 10
+const MARGIN = 20
 const FADE_PER_SECOND = 8
 
 var direction:Vector2
@@ -16,7 +16,7 @@ var is_alive:bool = true
 @onready var Slash:Node = $Slash
 @onready var Sprite:Node = $PlayerSprite
 
-signal shoot		
+signal shoot
 
 func _ready():
 	pass
@@ -75,10 +75,11 @@ func slash_animation():
 	Slash.flip_v = !Slash.flip_v
 
 func _process(_delta):
-	position = Vector2(
-		clamp(position.x, MARGIN, get_viewport().get_visible_rect().size.x - MARGIN),
-		clamp(position.y, MARGIN, get_viewport().get_visible_rect().size.y - MARGIN)
-	)
+	if GFS.game_state == GFS.BATTLE:
+		position = Vector2(
+			clamp(position.x, GFS.BUI_X_START + MARGIN, GFS.BUI_X_END - MARGIN),
+			clamp(position.y, GFS.BUI_Y_START + MARGIN, GFS.BUI_Y_END - MARGIN)
+		)
 	if Input.is_action_just_pressed("interact") && !InteractBox.get_overlapping_areas().is_empty():
 		var closest_dist:float = INF
 		var closest_node:Node = null
