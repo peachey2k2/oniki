@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 const SPEED = 300
 const HIT_COOLDOWN = 1
-const MARGIN = 20
+const MARGIN = 5
 const FADE_PER_SECOND = 8
 
 var direction:Vector2

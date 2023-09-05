@@ -4,13 +4,14 @@ signal end_spell
 
 const PRE_SPELL_WAIT_TIME = 1
 
-@onready var BattleUI = $"../BattleUI"
+@onready var BattleUI = $"/root/Battle/BattleUI"
 @onready var BulletSpawner = preload("res://scenes/bullet_spawner.tscn")
 @onready var Spawners = $"../Spawners"
-@onready var TimeoutTimer = $"../BattleUI/Time/Timer"
-@onready var SpellName = $"../BattleUI/SpellName"
+@onready var TimeoutTimer = $"/root/Battle/BattleUI/Time/Timer"
+@onready var SpellName = $"/root/Battle/BattleUI/SpellName"
 @onready var Player = $"../Player"
 @onready var Shield = $Shield
+@onready var LifeBar = $"/root/Battle/BattleUI/LifeBarContainer"
 var id:String
 var BarCount:int
 var Timeout:float
@@ -29,7 +30,7 @@ func _ready():
 	BattleUI.get_node("LifeBarContainer").connect("bar_emptied", Callable(self, "_on_bar_emptied"))
 	TimeoutTimer.connect("timeout", Callable(self, "_on_spell_timed_out"))
 	
-	$"../BattleUI/LifeBarContainer".clear_health()
+	LifeBar.clear_health()
 	Player.position = GFS.bui_lerp(stats.get("player_pos"))
 	BattleUI.get_node("Graze").reset()
 	BattleUI.get_node("BarCount").text = str(stats.get("bar_count") - 1)
@@ -39,7 +40,7 @@ func _ready():
 			spell = bar.get(j)
 			position = GFS.bui_lerp(spell.get("enemy_pos"))
 			change_shield(spell.get("shield"))
-			$"../BattleUI/LifeBarContainer".fill_health(spell.get("health"))
+			LifeBar.fill_health(spell.get("health"))
 			TimeoutTimer.start(spell.get("time"))
 			SpellName.text = spell.get("name")
 			await get_tree().create_timer(PRE_SPELL_WAIT_TIME, false).timeout
@@ -50,7 +51,7 @@ func _ready():
 				BulletSpawner_ins = BulletSpawner.instantiate()
 				match spawner.get("pos_type"):
 					0: BulletSpawner_ins.position = GFS.bui_lerp(spawner.get("position"))
-					1: BulletSpawner_ins.position = GFS.bui_lerp(spawner.get("position"), true) + position
+					1: BulletSpawner_ins.position = GFS.bui_lerp(spawner.get("position")) + position
 				BulletSpawner_ins.rotation_speed = spawner.get("rotation_speed")
 				Spawners.add_child(BulletSpawner_ins)
 				match spawner.get("type"):
@@ -78,8 +79,8 @@ func _ready():
 						bullet.get("amount"),
 						bullet.get("repeat"),
 						bullet.get("speed"),
-						GFS.bui_lerp(bullet.get("start_point"), true),
-						GFS.bui_lerp(bullet.get("gap"), true),
+						GFS.bui_lerp(bullet.get("start_point")),
+						GFS.bui_lerp(bullet.get("gap")),
 						bullet.get("delay"),
 						bullet.get("sleep"),
 						bullet.get("bullet_angle"),

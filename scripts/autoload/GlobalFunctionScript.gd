@@ -2,10 +2,10 @@ extends Node
 
 const TIMER_START = 1000000
 
-const BUI_X_START = 510
-const BUI_X_END = 1410
-const BUI_Y_START = 90
-const BUI_Y_END = 990
+const BUI_X_START = 0
+const BUI_X_END = 880
+const BUI_Y_START = 0
+const BUI_Y_END = 880
 
 signal proceed_dialogue
 
@@ -24,6 +24,7 @@ var Overworld:Node
 var PauseHandler:Node
 var LastSprite:Node
 var CurrentArena:Node
+var ArenaViewport:Node
 
 var _dialogue:ClydeDialogue
 var in_dialogue:bool = false
@@ -39,6 +40,10 @@ func _process(_delta):
 		pass
 	if Input.is_action_just_pressed("interact") || Input.is_action_pressed("skip_dialogue"):
 		emit_signal("proceed_dialogue")
+	if Input.is_action_just_pressed("screenshot"):
+		var img = get_viewport().get_texture().get_image()
+		DirAccess.make_dir_absolute("user://screenshots")
+		img.save_png("user://screenshots/" + str(Time.get_unix_time_from_system()) + ".png")
 
 func _ready():
 	Rng.randomize()
@@ -117,15 +122,15 @@ func initiate_battle(id:String):
 	Enemy.id = id
 	Enemy.stats = BattleStats.get_stats(id)
 	CurrentArena = BattleArena.instantiate()
+	ArenaViewport = CurrentArena.get_node("./SubViewportContainer/Arena")
 	player_pos = Player.position
 	Enemy.add_child(Sprite.duplicate())
 	root.remove_child(Overworld)
 	root.add_child(CurrentArena)
-	#_on_screen_size_changed()
 	root.move_child(PauseHandler, -1)
 	Player.get_node("./ExtraColliders/Hitbox/CollisionShape2D").disabled = false
-	Player.reparent(CurrentArena)
-	CurrentArena.add_child(Enemy)
+	Player.reparent(ArenaViewport)
+	ArenaViewport.add_child(Enemy)
 	Player.connect("shoot", Callable(CurrentArena.get_node("BattleUI/LifeBarContainer"),"_on_player_shoot"))
 	Player.get_node("ExtraColliders/GrazeDetection").connect("area_entered", Callable(CurrentArena.get_node("BattleUI/Graze"),"_on_area_entered"))
 	LastSprite = Sprite
@@ -137,14 +142,14 @@ func restart_battle():
 	Player.is_alive = true
 	Player.process_mode = Node.PROCESS_MODE_INHERIT
 	Player.show()
-	for i in get_node("/root/Battle/Spawners").get_children():
+	for i in ArenaViewport.get_node("Spawners").get_children():
 		i.queue_free()
 	Enemy.free() #queue_free() removes it at the end of the frame which causes name conflict
 	Enemy = load("res://scenes/enemy.tscn").instantiate()
 	Enemy.id = id
 	Enemy.stats = BattleStats.get_stats(id)
 	Enemy.add_child(LastSprite.duplicate())
-	CurrentArena.add_child(Enemy)
+	ArenaViewport.add_child(Enemy)
 	game_state = BATTLE
 
 func end_battle():
@@ -169,10 +174,5 @@ func get_angle(node1:Node, node2:Node) -> float:
 func get_angle_as_vector(node1:Node, node2:Node) -> Vector2:
 	return (node2.global_transform.origin - node1.global_transform.origin).normalized()
 
-func bui_lerp(weight:Vector2, is_relative:bool = false) -> Vector2:
-	if is_relative:
-		return weight * 900
-	return Vector2(
-		lerp(BUI_X_START, BUI_X_END, weight.x),
-		lerp(BUI_Y_START, BUI_Y_END, weight.y)
-	)
+func bui_lerp(weight:Vector2) -> Vector2:
+	return weight * 880

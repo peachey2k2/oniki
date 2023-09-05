@@ -35,32 +35,32 @@ layout_mode = 2
 [node name="PauseMenu" type="VBoxContainer" parent="MainContainer"]
 layout_mode = 2
 
-[node name="ReturnToGame" type="Button" parent="MainContainer/PauseMenu"]
+[node name="return_to_game" type="Button" parent="MainContainer/PauseMenu"]
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 text = "Return to Game"
 
-[node name="RestartCurrentBattle" type="Button" parent="MainContainer/PauseMenu"]
+[node name="restart_current_battle" type="Button" parent="MainContainer/PauseMenu"]
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 text = "Restart Current Battle"
 
-[node name="LeaveBattle" type="Button" parent="MainContainer/PauseMenu"]
+[node name="leave_battle" type="Button" parent="MainContainer/PauseMenu"]
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 text = "Leave Battle"
 
-[node name="Options" type="Button" parent="MainContainer/PauseMenu"]
+[node name="options" type="Button" parent="MainContainer/PauseMenu"]
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 text = "Options"
 
-[node name="MainMenu" type="Button" parent="MainContainer/PauseMenu"]
+[node name="main_menu" type="Button" parent="MainContainer/PauseMenu"]
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 text = "Main Menu"
 
-[node name="Quit" type="Button" parent="MainContainer/PauseMenu"]
+[node name="quit" type="Button" parent="MainContainer/PauseMenu"]
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 text = "Quit"

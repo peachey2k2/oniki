@@ -1,26 +1,14 @@
-[gd_scene load_steps=14 format=3 uid="uid://bty05s2e3am5q"]
+[gd_scene load_steps=12 format=3 uid="uid://bty05s2e3am5q"]
 
 [ext_resource type="Script" path="res://scripts/Battle.gd" id="1_p0goo"]
+[ext_resource type="Texture2D" uid="uid://33qc36xfaf85" path="res://icon.png" id="2_ibp54"]
+[ext_resource type="Script" path="res://addons/deranged_additions/nodes/parallax_but_good.gd" id="3_p315c"]
+[ext_resource type="LabelSettings" uid="uid://cxotwanmjjyix" path="res://label_settings/normal.tres" id="4_8cyd8"]
 [ext_resource type="Script" path="res://scripts/FPS.gd" id="4_ufn6s"]
 [ext_resource type="Script" path="res://scripts/LifeBar.gd" id="5_taydl"]
 [ext_resource type="Script" path="res://scripts/TimeoutTimer.gd" id="6_7ngma"]
 [ext_resource type="Script" path="res://scripts/BulletRemover.gd" id="6_ctue6"]
 [ext_resource type="Script" path="res://scripts/GrazeCounter.gd" id="7_5eiw7"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_m7fuu"]
-font_size = 32
-
-[sub_resource type="LabelSettings" id="LabelSettings_pgn28"]
-font_size = 32
-
-[sub_resource type="LabelSettings" id="LabelSettings_3ekv2"]
-font_size = 32
-
-[sub_resource type="LabelSettings" id="LabelSettings_b5upw"]
-font_size = 32
-
-[sub_resource type="LabelSettings" id="LabelSettings_ndie8"]
-font_size = 32
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rlwpo"]
 size = Vector2(2000, 50)
@@ -38,10 +26,31 @@ grow_vertical = 2
 size_flags_vertical = 4
 script = ExtResource("1_p0goo")
 
-[node name="Camera2D" type="Camera2D" parent="."]
-anchor_mode = 0
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+z_index = 50
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -440.0
+offset_top = -440.0
+offset_right = 440.0
+offset_bottom = 440.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="Spawners" type="Node2D" parent="."]
+[node name="Arena" type="SubViewport" parent="SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(880, 880)
+render_target_update_mode = 4
+
+[node name="Camera2D" type="Camera2D" parent="SubViewportContainer/Arena"]
+anchor_mode = 0
+editor_draw_screen = false
+
+[node name="Spawners" type="Node2D" parent="SubViewportContainer/Arena"]
 
 [node name="BattleUI" type="Control" parent="."]
 z_index = 20
@@ -59,6 +68,17 @@ grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(290, 290)
 
+[node name="Background" type="Node" parent="BattleUI"]
+
+[node name="ParallaxButGood" type="TextureRect" parent="BattleUI/Background"]
+offset_right = 2176.0
+offset_bottom = 1280.0
+texture = ExtResource("2_ibp54")
+expand_mode = 1
+stretch_mode = 1
+script = ExtResource("3_p315c")
+scroll_speed = Vector2(50, 40)
+
 [node name="Frame" type="Control" parent="BattleUI"]
 layout_mode = 1
 anchors_preset = 15
@@ -67,85 +87,20 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="InnerRight" type="ColorRect" parent="BattleUI/Frame"]
+[node name="Inner" type="ColorRect" parent="BattleUI/Frame"]
 layout_mode = 1
-anchors_preset = 11
-anchor_left = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -10.0
-grow_horizontal = 0
-grow_vertical = 2
-
-[node name="OuterRight" type="ColorRect" parent="BattleUI/Frame/InnerRight"]
-z_index = 1
-layout_mode = 1
-anchors_preset = 11
-anchor_left = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -300.0
-offset_right = 1000.0
-offset_bottom = 300.0
-grow_horizontal = 0
-grow_vertical = 2
-color = Color(0, 0, 0, 1)
-
-[node name="InnerLeft" type="ColorRect" parent="BattleUI/Frame"]
-layout_mode = 1
-anchors_preset = 9
-anchor_bottom = 1.0
-offset_right = 10.0
-grow_vertical = 2
-
-[node name="OuterLeft" type="ColorRect" parent="BattleUI/Frame/InnerLeft"]
-z_index = 1
-layout_mode = 1
-anchors_preset = 9
-anchor_bottom = 1.0
-offset_left = -1000.0
-offset_top = -300.0
-offset_bottom = 300.0
-grow_vertical = 2
-color = Color(0, 0, 0, 1)
-
-[node name="InnerBottom" type="ColorRect" parent="BattleUI/Frame"]
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -10.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -450.0
+offset_top = -450.0
+offset_right = 450.0
+offset_bottom = 450.0
 grow_horizontal = 2
-grow_vertical = 0
-
-[node name="OuterBottom" type="ColorRect" parent="BattleUI/Frame/InnerBottom"]
-z_index = 1
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_bottom = 500.0
-grow_horizontal = 2
-grow_vertical = 0
-color = Color(0, 0, 0, 1)
-
-[node name="InnerTop" type="ColorRect" parent="BattleUI/Frame"]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 10.0
-grow_horizontal = 2
-
-[node name="OuterTop" type="ColorRect" parent="BattleUI/Frame/InnerTop"]
-z_index = 1
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_top = -500.0
-grow_horizontal = 2
-color = Color(0, 0, 0, 1)
+grow_vertical = 2
+pivot_offset = Vector2(450, 450)
 
 [node name="FPSCounter" type="Label" parent="BattleUI"]
 process_mode = 3
@@ -163,7 +118,7 @@ offset_bottom = 52.0
 grow_horizontal = 2
 grow_vertical = 0
 text = "placeholder"
-label_settings = SubResource("LabelSettings_m7fuu")
+label_settings = ExtResource("4_8cyd8")
 horizontal_alignment = 1
 script = ExtResource("4_ufn6s")
 
@@ -185,12 +140,13 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
+offset_left = 5.0
 offset_top = -10.0
-offset_right = 60.0
+offset_right = 65.0
 offset_bottom = 38.0
 grow_horizontal = 0
 text = "test"
-label_settings = SubResource("LabelSettings_pgn28")
+label_settings = ExtResource("4_8cyd8")
 script = ExtResource("6_7ngma")
 
 [node name="Timer" type="Timer" parent="BattleUI/Time"]
@@ -199,11 +155,12 @@ one_shot = true
 [node name="BarCount" type="Label" parent="BattleUI"]
 z_index = 5
 layout_mode = 1
-offset_left = -60.0
+offset_left = -65.0
 offset_top = -10.0
+offset_right = -5.0
 offset_bottom = 38.0
 text = "test"
-label_settings = SubResource("LabelSettings_3ekv2")
+label_settings = ExtResource("4_8cyd8")
 horizontal_alignment = 2
 
 [node name="SpellName" type="Label" parent="BattleUI"]
@@ -218,7 +175,7 @@ offset_right = 30.0
 offset_bottom = 1.0
 grow_horizontal = 2
 text = "test"
-label_settings = SubResource("LabelSettings_b5upw")
+label_settings = ExtResource("4_8cyd8")
 horizontal_alignment = 1
 
 [node name="Graze" type="Label" parent="BattleUI"]
@@ -227,12 +184,13 @@ layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = -60.0
+offset_left = -65.0
 offset_top = -38.0
+offset_right = -5.0
 offset_bottom = 10.0
 grow_vertical = 0
 text = "test"
-label_settings = SubResource("LabelSettings_ndie8")
+label_settings = ExtResource("4_8cyd8")
 horizontal_alignment = 2
 script = ExtResource("7_5eiw7")
 
