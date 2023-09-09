@@ -40,10 +40,9 @@ func set_extra_copies(value):
 
 func _physics_process(delta):
 	if !Engine.is_editor_hint():
-		print(screen_size, texture_size, scroll_speed)
 		position += scroll_speed * delta
 		position = Vector2(
-			wrap(position.x, -texture_size.x * (extra_copies+1), 0),
-			wrap(position.y, -texture_size.y * (extra_copies+1), 0)
+			wrap(position.x, -texture_size.x * (extra_copies+1), -texture_size.x * extra_copies),
+			wrap(position.y, -texture_size.y * (extra_copies+1), -texture_size.y * extra_copies)
 		)
 

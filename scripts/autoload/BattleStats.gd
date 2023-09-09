@@ -10,14 +10,6 @@ enum {OFF, ON}
 func get_stats(id:String) -> Dictionary:
 	return get(id)
 
-#bar_count:int - the amount of health bars
-#spell count:int - how many spells that phase/bar has
-
-#name:string - name of the spell, displayed at the top of the screen
-#health:int - how many hits it takes to capture that spell, displayed at top left
-#time:int - the initial value of the timeout timer, displayed at top right
-#spawner_count:int - amount of spawner objects to use
-
 var test_dummy = {
 	"player_pos": Vector2(0.5, 0.8),
 	"bar_count": 2,
@@ -34,7 +26,7 @@ var test_dummy = {
 			0:{
 				"spawner" :{
 					"type": LINEAR,
-					"position": Vector2(0, 0),
+					"position": Vector2(0, -0.1),
 					"pos_type": ABSOLUTE,
 					"speed": 0,
 					"towards": GENERIC,
@@ -44,17 +36,18 @@ var test_dummy = {
 					"bullet_type": MEDIUM,
 					"bullet_color": Color.RED,
 					"init_angle": 0,
-					"amount": 16,
-					"repeat": 1000,
-					"speed": 100,
+					"amount": 1,
+					"repeat": 100000,
+					"speed": 120,
 					"start_point": Vector2(0, 0),
-					"gap": Vector2(0.07, 0),
-					"delay": 0.5,
+					"is_random": true,
+					"gap": Vector2(1, 0),
+					"delay": 0.02,
 					"sleep": 0,
 					"bullet_angle": PI/2,
 					"bullet_skew": 1,
 					"towards": GENERIC,
-					"acceleration": 0,
+					"acceleration": 50,
 					"sine_freq": 0,
 					"sine_width": 0,
 				}

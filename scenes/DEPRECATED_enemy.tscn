@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://c1b6e6j2g6ul3"]
 
-[ext_resource type="Script" path="res://scripts/Enemy.gd" id="1_3cod2"]
+[ext_resource type="Script" path="res://scripts/DEPRECATED_Enemy.gd" id="1_3cod2"]
 [ext_resource type="Texture2D" uid="uid://cqidv1awi6e6i" path="res://assets/shield_outer.png" id="2_syoba"]
 [ext_resource type="Texture2D" uid="uid://c4jnb2jd0gx1w" path="res://assets/shield_inner.png" id="3_sgy80"]
 

@@ -7,6 +7,8 @@ const BUI_X_END = 880
 const BUI_Y_START = 0
 const BUI_Y_END = 880
 
+const BATTLE_RECT = Rect2(BUI_X_START, BUI_Y_START, 880, 880)
+
 signal proceed_dialogue
 
 @onready var BattleArena = preload("res://scenes/Battle.tscn")

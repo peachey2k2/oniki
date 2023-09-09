@@ -11,13 +11,15 @@ func _process(delta):
 	rotation += rotation_speed * delta
 
 func bullet_generic(velocity, bullet_pos, color, type, acceleration, angle, sine_freq, sine_width):
-	var Bullet_ins = type.instantiate()
+#	var Bullet_ins = type.instantiate()
+	var Bullet_ins = STGGlobal.get_bullet()
 	Bullet_ins.position = bullet_pos
 	Bullet_ins.acceleration = acceleration * angle
 	Bullet_ins.velocity = velocity.length() * angle
 	Bullet_ins.sine_freq = sine_freq
 	Bullet_ins.sine_width = sine_width
-	Bullet_ins.get_node("outer").modulate = color
+	Bullet_ins.called()
+#	Bullet_ins.get_child(0).modulate = color
 	add_child(Bullet_ins)
 	
 func bullet_on_player(velocity, bullet_pos, color, type, acceleration, angle, sine_freq, sine_width):
@@ -89,7 +91,8 @@ func linear(
 	repeat:int, 			# how many lines the function will create before stopping
 	speed:float, 			# vector to control the speed. it'll be rotated for every generated bullet. 
 	start_point:Vector2, 	# the starting point of the line
-	gap:Vector2,			#
+	is_random:bool,			#
+	gap:Vector2,			# gap between each bullet in the line
 	delay:float, 			# time delay between each spawn cycle (in seconds)
 	sleep:float,			# the wait time after every bullet
 	bullet_angle:float,		#
@@ -102,15 +105,26 @@ func linear(
 	rotation = init_angle
 	var velocity = Vector2(speed, 0)
 	var type:PackedScene = _get_bullet_type(bullet_type_id)
-	for i in repeat:
-		var last_pos:Vector2 = start_point
-		for j in amount:
-			match towards:
-				0: bullet_generic(velocity + 5*Vector2(_skew(skew_mul), _skew(skew_mul)), last_pos + 20*Vector2(_skew(skew_mul), _skew(skew_mul)), bullet_color, type, acceleration, Vector2.RIGHT.rotated(bullet_angle + _skew(skew_mul)), sine_freq, sine_width)
-				1: bullet_on_player(velocity + 5*Vector2(_skew(skew_mul), _skew(skew_mul)), last_pos +  20*Vector2(_skew(skew_mul), _skew(skew_mul)), bullet_color, type, acceleration, Vector2.RIGHT.rotated(bullet_angle + _skew(skew_mul)), sine_freq, sine_width)
-			await get_tree().create_timer(sleep, false).timeout
-			last_pos += gap
-		await get_tree().create_timer(delay, false).timeout
+	if is_random:
+		var end_point = start_point + gap
+		for i in repeat:
+			for j in amount:
+				var last_pos = lerp(start_point, end_point, GFS.Rng.randf())
+				match towards:
+					0: bullet_generic(velocity + 5*Vector2(_skew(skew_mul), _skew(skew_mul)), last_pos, bullet_color, type, acceleration, Vector2.RIGHT.rotated(bullet_angle + _skew(skew_mul)), sine_freq, sine_width)
+					1: bullet_on_player(velocity + 5*Vector2(_skew(skew_mul), _skew(skew_mul)), last_pos, bullet_color, type, acceleration, Vector2.RIGHT.rotated(bullet_angle + _skew(skew_mul)), sine_freq, sine_width)
+				await get_tree().create_timer(sleep, false).timeout
+			await get_tree().create_timer(delay, false).timeout
+	else:
+		for i in repeat:
+			var last_pos:Vector2 = start_point
+			for j in amount:
+				match towards:
+					0: bullet_generic(velocity + 5*Vector2(_skew(skew_mul), _skew(skew_mul)), last_pos, bullet_color, type, acceleration, Vector2.RIGHT.rotated(bullet_angle + _skew(skew_mul)), sine_freq, sine_width)
+					1: bullet_on_player(velocity + 5*Vector2(_skew(skew_mul), _skew(skew_mul)), last_pos, bullet_color, type, acceleration, Vector2.RIGHT.rotated(bullet_angle + _skew(skew_mul)), sine_freq, sine_width)
+				await get_tree().create_timer(sleep, false).timeout
+				last_pos += gap
+			await get_tree().create_timer(delay, false).timeout
 	
 
 

@@ -15,8 +15,9 @@ config/features=PackedStringArray("4.1")
 
 [autoload]
 
-BattleStats="*res://scripts/autoload/BattleStats.gd"
 GFS="*res://scripts/autoload/GlobalFunctionScript.gd"
+BattleStats="*res://scripts/autoload/BattleStats.gd"
+STGGlobal="*res://addons/GodotSTG/STGGlobal.gd"
 
 [display]
 
@@ -28,7 +29,7 @@ window/vsync/vsync_mode=0
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/clyde/plugin.cfg", "res://addons/deranged_additions/plugin.cfg")
+enabled=PackedStringArray("res://addons/GodotSTG/plugin.cfg", "res://addons/clyde/plugin.cfg", "res://addons/deranged_additions/plugin.cfg")
 
 [filesystem]
 
