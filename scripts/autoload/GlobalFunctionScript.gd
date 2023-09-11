@@ -27,6 +27,7 @@ var PauseHandler:Node
 var LastSprite:Node
 var CurrentArena:Node
 var ArenaViewport:Node
+var Controller:Node
 
 var _dialogue:ClydeDialogue
 var in_dialogue:bool = false
@@ -37,7 +38,7 @@ var clock_real:float
 var clock_timer:SceneTreeTimer
 var clock_real_timer:SceneTreeTimer
 
-func _process(_delta):
+func _physics_process(_delta):
 	if Input.is_action_just_pressed("debug"):
 		pass
 	if Input.is_action_just_pressed("interact") || Input.is_action_pressed("skip_dialogue"):
@@ -54,6 +55,7 @@ func _ready():
 	_dialogue.load_dialogue("test")
 	
 	get_viewport().connect("size_changed", Callable(self, "_on_screen_size_changed"))
+	STGGlobal.end_battle.connect(Callable(self, "unload_battle"))
 	
 	clock_timer = get_tree().create_timer(TIMER_START, false)
 	clock_real_timer = get_tree().create_timer(TIMER_START, true)
@@ -97,7 +99,7 @@ func _print_dialogue(content:Dictionary):
 
 func _on_dialogue_event_triggered(event_name:String):
 	if event_name.match("battle_*"):
-		initiate_battle(event_name.trim_prefix("battle_"))
+		load_battle(event_name.trim_prefix("battle_"))
 
 func time(count_while_paused:bool) -> float:
 	if count_while_paused:
@@ -114,18 +116,18 @@ func start():
 	Player = $"/root/Overworld/Player"
 	game_state = WORLD
 
-func initiate_battle(id:String):
+func load_battle(id:String):
 	game_state = NONE
+	Controller = load("res://scenes/battles/" + id + ".tscn").instantiate()
 	_clear_speech_boxes()
+	player_pos = Player.position
 	var Sprite:Node = load("res://scenes/SpriteTemplate.tscn").instantiate()
-	Sprite.texture.resource_path = "res://assets/sprites/" + id + ".jpg"
+	Sprite.texture = load("res://assets/sprites/" + id + ".png")
 	in_dialogue = false
-	Enemy = load("res://scenes/enemy.tscn").instantiate()
+	Enemy = load("res://scenes/Enemy.tscn").instantiate()
 	Enemy.id = id
-	Enemy.stats = BattleStats.get_stats(id)
 	CurrentArena = BattleArena.instantiate()
 	ArenaViewport = CurrentArena.get_node("./SubViewportContainer/Arena")
-	player_pos = Player.position
 	Enemy.add_child(Sprite.duplicate())
 	root.remove_child(Overworld)
 	root.add_child(CurrentArena)
@@ -136,25 +138,22 @@ func initiate_battle(id:String):
 	Player.connect("shoot", Callable(CurrentArena.get_node("BattleUI/LifeBarContainer"),"_on_player_shoot"))
 	Player.get_node("ExtraColliders/GrazeDetection").connect("area_entered", Callable(CurrentArena.get_node("BattleUI/Graze"),"_on_area_entered"))
 	LastSprite = Sprite
+	ArenaViewport.add_child(Controller)
+	Controller.start(ArenaViewport.get_node("Spawners"), Player, Enemy, BATTLE_RECT)
 	game_state = BATTLE
 
-func restart_battle():
+func reload_battle():
 	game_state = NONE
-	var id:String = Enemy.id
-	Player.is_alive = true
-	Player.process_mode = Node.PROCESS_MODE_INHERIT
-	Player.show()
+	Player.resurrect()
 	for i in ArenaViewport.get_node("Spawners").get_children():
-		i.queue_free()
-	Enemy.free() #queue_free() removes it at the end of the frame which causes name conflict
-	Enemy = load("res://scenes/enemy.tscn").instantiate()
-	Enemy.id = id
-	Enemy.stats = BattleStats.get_stats(id)
-	Enemy.add_child(LastSprite.duplicate())
-	ArenaViewport.add_child(Enemy)
+		i.queue_free() # subject to change in order to repool the bullets
+	Controller.free()
+	Controller = load("res://scenes/battles/" + Enemy.id + ".tscn").instantiate()
+	ArenaViewport.add_child(Controller)
+	Controller.start(ArenaViewport.get_node("Spawners"), Player, Enemy, BATTLE_RECT)
 	game_state = BATTLE
 
-func end_battle():
+func unload_battle():
 	game_state = NONE
 	Player.is_alive = true
 	Player.process_mode = Node.PROCESS_MODE_INHERIT

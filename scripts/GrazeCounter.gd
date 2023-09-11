@@ -5,6 +5,7 @@ var grazed := []
 
 func _ready():
 	grazed.resize(50)
+	STGGlobal.battle_start.connect(Callable(self, "reset"))
 
 func _on_area_entered(area):
 	if !grazed.has(area):

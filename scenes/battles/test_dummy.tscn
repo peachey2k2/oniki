@@ -1,0 +1,56 @@
+[gd_scene load_steps=12 format=3 uid="uid://bl58xsn1r4b2l"]
+
+[ext_resource type="Script" path="res://addons/GodotSTG/battle_controller.gd" id="1_d455w"]
+[ext_resource type="Script" path="res://addons/GodotSTG/battle_stats_sub_objects/bar.gd" id="2_7n7u6"]
+[ext_resource type="Script" path="res://addons/GodotSTG/battle_stats_sub_objects/spell.gd" id="3_7byd1"]
+[ext_resource type="Script" path="res://addons/GodotSTG/battle_stats_sub_objects/sequence.gd" id="4_hgx2v"]
+[ext_resource type="Script" path="res://addons/GodotSTG/spawners/circular.gd" id="5_xxkb1"]
+[ext_resource type="Script" path="res://addons/GodotSTG/battle_stats.gd" id="6_17363"]
+
+[sub_resource type="PackedDataContainer" id="PackedDataContainer_pfrlu"]
+script = ExtResource("5_xxkb1")
+init_angle = 0.0
+amount = 8
+repeat = 1000
+tilt = 10.0
+speed = 300.0
+distance = 50.0
+stretch = 1.0
+delay = 0.5
+acceleration = 0.0
+sine_freq = 0.0
+sine_width = 0.0
+position = Vector2(0, 0)
+position_type = 1
+towards = 0
+rotation_speed = 0
+bullet_index = 0
+
+[sub_resource type="PackedDataContainer" id="PackedDataContainer_hud77"]
+script = ExtResource("4_hgx2v")
+end_at_hp = -1
+end_at_time = -1
+spawners = Array[Resource("res://addons/GodotSTG/battle_stats_sub_objects/spawner.gd")]([SubResource("PackedDataContainer_pfrlu")])
+
+[sub_resource type="PackedDataContainer" id="PackedDataContainer_bheam"]
+script = ExtResource("3_7byd1")
+name = "test"
+health = 10
+time = 30
+enemy_pos = Vector2(0.5, 0.5)
+enemy_movement = 0
+shield = 0
+sequences = Array[ExtResource("4_hgx2v")]([SubResource("PackedDataContainer_hud77")])
+
+[sub_resource type="PackedDataContainer" id="PackedDataContainer_ufk1n"]
+script = ExtResource("2_7n7u6")
+spells = Array[ExtResource("3_7byd1")]([SubResource("PackedDataContainer_bheam")])
+
+[sub_resource type="PackedDataContainer" id="PackedDataContainer_ciymr"]
+script = ExtResource("6_17363")
+player_position = Vector2(0.5, 0.7)
+bars = Array[ExtResource("2_7n7u6")]([SubResource("PackedDataContainer_ufk1n")])
+
+[node name="test_dummy" type="Node2D"]
+script = ExtResource("1_d455w")
+stats = SubResource("PackedDataContainer_ciymr")

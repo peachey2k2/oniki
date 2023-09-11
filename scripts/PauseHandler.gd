@@ -34,12 +34,12 @@ func _on_return_to_game_pressed():
 
 func _on_restart_current_battle_pressed():
 	if GFS.game_state == 3:
-		GFS.restart_battle()
+		GFS.reload_battle()
 		unpause()
 
 func _on_leave_battle_pressed():
 	if GFS.game_state == 3:
-		GFS.end_battle()
+		GFS.unload_battle()
 		unpause()
 
 func _on_options_pressed():

@@ -34,7 +34,8 @@ func spawn(container:Node2D):
 	var velocity = speed * Vector2.from_angle(init_angle)
 	for i in repeat:
 		for j in amount:
-			container.spawn_bullet(velocity.normalized() * distance, Vector2(velocity.x, velocity.y * stretch), velocity.normalized() * acceleration)
+			var velocity_normalized = velocity.normalized()
+			container.spawn_bullet.call(velocity_normalized * distance, Vector2(velocity.x, velocity.y * stretch), velocity_normalized * acceleration)
 			velocity = velocity.rotated(gap)
 		velocity = velocity.rotated(tilt_rad)
 		await tree.create_timer(delay, false).timeout

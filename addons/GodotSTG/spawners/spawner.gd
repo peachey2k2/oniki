@@ -4,12 +4,16 @@ class_name STGSpawnerNode extends Node2D
 var rotation_speed:float
 var bullet:STGBullet
 var pool:Array
+var spawn_bullet:Callable
+
+func _ready():
+	spawn_bullet = Callable(self, "_spawn_regular")
 
 func _physics_process(delta):
 	if Engine.is_editor_hint(): return
 	rotate(rotation_speed*delta)
 
-func spawn_bullet(pos, vel, acc):
+func _spawn_regular(pos, vel, acc):
 	var ins = get_bullet()
 	ins.position = pos
 	ins.velocity = vel
@@ -27,3 +31,8 @@ func get_bullet():
 	out.set_deferred("process_mode", Node.PROCESS_MODE_INHERIT)
 	out.show()
 	return out
+
+func remove():
+	for _bullet in get_children():
+		_bullet.remove()
+	queue_free()

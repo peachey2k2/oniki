@@ -94,3 +94,8 @@ func _on_Hitbox_area_entered(_area):
 	is_alive = false
 	hide()
 	set_deferred("process_mode", Node.PROCESS_MODE_DISABLED)
+
+func resurrect():
+	is_alive = true
+	process_mode = Node.PROCESS_MODE_INHERIT
+	show()

@@ -10,20 +10,11 @@ var sine_width:float
 @onready var sine_direction:Vector2
 var index:int
 
-var sprite_outer:Node
-var sprite_inner:Node
-var collision:Node
-
 func _init():
+	if Engine.is_editor_hint(): return
 	collision_mask = 0
 	monitoring = false
 	input_pickable = false
-	sprite_outer = Sprite2D.new()
-	sprite_inner = Sprite2D.new()
-	collision = CollisionShape2D.new()
-	add_child(sprite_outer)
-	add_child(sprite_inner)
-	add_child(collision)
 
 func called():
 	init_pos = position
@@ -36,3 +27,7 @@ func _physics_process(delta):
 	init_pos += velocity*delta
 	velocity += acceleration * delta / 2
 	position = init_pos + sine_direction * sine_width * sin((GFS.time(false) - start_time) * sine_freq)
+
+func remove():
+	# animations
+	STGGlobal.repool(self)
