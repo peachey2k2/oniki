@@ -1,21 +1,32 @@
-[gd_scene load_steps=2 format=3 uid="uid://c42q8rbehh660"]
+[gd_scene load_steps=3 format=3 uid="uid://c42q8rbehh660"]
 
 [ext_resource type="Script" path="res://scripts/PauseHandler.gd" id="1_o40ta"]
+[ext_resource type="Theme" uid="uid://banndw0q5ph2x" path="res://themes/theme.tres" id="2_k5rhx"]
 
-[node name="PauseHandler" type="Control"]
+[node name="PauseHandler" type="CanvasLayer"]
 process_mode = 3
-z_index = 4096
+layer = 5
+script = ExtResource("1_o40ta")
+
+[node name="Control" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
-script = ExtResource("1_o40ta")
 
-[node name="MainContainer" type="MarginContainer" parent="."]
-z_index = 1000
+[node name="ColorRect" type="ColorRect" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.392157)
+
+[node name="MainContainer" type="MarginContainer" parent="Control"]
+custom_minimum_size = Vector2(200, 1)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -23,44 +34,98 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -100.0
-offset_top = -100.0
+offset_top = -82.0
 offset_right = 100.0
-offset_bottom = 100.0
+offset_bottom = 82.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Panel" type="Panel" parent="MainContainer"]
+[node name="Panel" type="Panel" parent="Control/MainContainer"]
 layout_mode = 2
+theme = ExtResource("2_k5rhx")
 
-[node name="PauseMenu" type="VBoxContainer" parent="MainContainer"]
+[node name="Pause" type="VBoxContainer" parent="Control/MainContainer"]
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
+size_flags_horizontal = 4
 
-[node name="return_to_game" type="Button" parent="MainContainer/PauseMenu"]
+[node name="return_to_game" type="Button" parent="Control/MainContainer/Pause"]
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
+theme = ExtResource("2_k5rhx")
 text = "Return to Game"
+alignment = 0
 
-[node name="restart_current_battle" type="Button" parent="MainContainer/PauseMenu"]
+[node name="restart_current_battle" type="Button" parent="Control/MainContainer/Pause"]
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
+theme = ExtResource("2_k5rhx")
 text = "Restart Current Battle"
+alignment = 0
 
-[node name="leave_battle" type="Button" parent="MainContainer/PauseMenu"]
+[node name="leave_battle" type="Button" parent="Control/MainContainer/Pause"]
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
+theme = ExtResource("2_k5rhx")
 text = "Leave Battle"
+alignment = 0
 
-[node name="options" type="Button" parent="MainContainer/PauseMenu"]
+[node name="options" type="Button" parent="Control/MainContainer/Pause"]
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
+theme = ExtResource("2_k5rhx")
 text = "Options"
+alignment = 0
 
-[node name="main_menu" type="Button" parent="MainContainer/PauseMenu"]
+[node name="saves" type="Button" parent="Control/MainContainer/Pause"]
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
-text = "Main Menu"
+theme = ExtResource("2_k5rhx")
+text = "Saves"
+alignment = 0
 
-[node name="quit" type="Button" parent="MainContainer/PauseMenu"]
+[node name="quit" type="Button" parent="Control/MainContainer/Pause"]
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
+theme = ExtResource("2_k5rhx")
 text = "Quit"
+alignment = 0
+
+[node name="Options" type="VBoxContainer" parent="Control/MainContainer"]
+visible = false
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+
+[node name="fullscreen" type="CheckButton" parent="Control/MainContainer/Options"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+theme = ExtResource("2_k5rhx")
+text = "Fullscreen"
+
+[node name="vsync" type="CheckButton" parent="Control/MainContainer/Options"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+theme = ExtResource("2_k5rhx")
+text = "Vsync"
+
+[node name="Saves" type="VBoxContainer" parent="Control/MainContainer"]
+visible = false
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+
+[node name="button" type="Button" parent="Control/MainContainer/Saves"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+theme = ExtResource("2_k5rhx")
+text = "text"
+alignment = 0
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="Control/MainContainer"]
+visible = false
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+
+[node name="VBoxContainer4" type="VBoxContainer" parent="Control/MainContainer"]
+visible = false
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2

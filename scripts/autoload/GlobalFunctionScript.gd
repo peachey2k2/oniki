@@ -9,10 +9,14 @@ const BUI_Y_END = 880
 
 const BATTLE_RECT = Rect2(BUI_X_START, BUI_Y_START, 880, 880)
 
+const CHOICE_BOX_POS = Vector2(0, 200)
+
 signal proceed_dialogue
 
 @onready var BattleArena = preload("res://scenes/Battle.tscn")
 @onready var SpeechBoxDefault = preload("res://scenes/SpeechBox.tscn")
+@onready var ChoiceBox = preload("res://scenes/ChoiceBox.tscn")
+@onready var ChoiceButton = preload("res://scenes/ChoiceButton.tscn")
 @onready var root:Node = get_tree().root
 @onready var Rng:RandomNumberGenerator = RandomNumberGenerator.new()
 
@@ -59,6 +63,8 @@ func _ready():
 	
 	clock_timer = get_tree().create_timer(TIMER_START, false)
 	clock_real_timer = get_tree().create_timer(TIMER_START, true)
+	
+	start()
 
 func _clear_speech_boxes():
 	for i in speech_boxes:
@@ -86,6 +92,16 @@ func _print_dialogue(content:Dictionary):
 	var nodes_list:Array
 	match game_state:
 		WORLD: nodes_list = Overworld.get_children()
+	assert(content.get("speaker") != "Player", "nooooooo you can't make the silent protag-kun speak without a choice dialogue, that ruins the lore!!!!! :soyjak:")
+	if content.get("type") == "options":
+		var _options:Array = []
+		for _option in content.get("options"):
+			_options.append(_option.get("label"))
+		var _choice_box = choice_box(_options)
+		Player.get_node("PlayerCamera").add_child(_choice_box)
+		_choice_box.position = CHOICE_BOX_POS - (_choice_box.size / 2)
+		_choice_box.get_child(1).get_child(0).grab_focus()
+		return
 	for i in nodes_list:
 		if i.name == content.get("speaker"):
 			var SpeechBox:Node = i.get_node_or_null("SpeechBox")
@@ -99,7 +115,17 @@ func _print_dialogue(content:Dictionary):
 
 func _on_dialogue_event_triggered(event_name:String):
 	if event_name.match("battle_*"):
+		proceed_dialogue.emit()
 		load_battle(event_name.trim_prefix("battle_"))
+
+func choice_box(_options:Array) -> MarginContainer:
+	var ChoiceBox_ins = ChoiceBox.instantiate()
+	var _container = ChoiceBox_ins.get_node("Container")
+	for _option in _options:
+		var _button = ChoiceButton.instantiate()
+		_button.text = _option
+		_container.add_child(_button)
+	return ChoiceBox_ins
 
 func time(count_while_paused:bool) -> float:
 	if count_while_paused:
@@ -109,11 +135,14 @@ func time(count_while_paused:bool) -> float:
 
 func start():
 	game_state = NONE
+	await STGGlobal.pool_all()
 	Overworld = load("res://scenes/overworld.tscn").instantiate()
 	PauseHandler = load("res://scenes/PauseHandler.tscn").instantiate()
-	root.add_child(Overworld)
-	root.add_child(PauseHandler)
-	Player = $"/root/Overworld/Player"
+	Player = load("res://scenes/Player.tscn").instantiate()
+	root.add_child.call_deferred(Overworld)
+	root.add_child.call_deferred(PauseHandler)
+	root.add_child.call_deferred(Player)
+	root.get_node("MenuRoot").queue_free()
 	game_state = WORLD
 
 func load_battle(id:String):
@@ -144,9 +173,10 @@ func load_battle(id:String):
 
 func reload_battle():
 	game_state = NONE
+	Controller.stats = null
 	Player.resurrect()
 	for i in ArenaViewport.get_node("Spawners").get_children():
-		i.queue_free() # subject to change in order to repool the bullets
+		i.remove()
 	Controller.free()
 	Controller = load("res://scenes/battles/" + Enemy.id + ".tscn").instantiate()
 	ArenaViewport.add_child(Controller)

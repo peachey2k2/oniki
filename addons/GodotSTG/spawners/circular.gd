@@ -29,12 +29,12 @@ var tilt_rad:float
 
 func spawn(container:Node2D):
 	var tree = container.get_tree()
-	pool = container.pool
 	var gap = PI*2/amount
 	var velocity = speed * Vector2.from_angle(init_angle)
 	for i in repeat:
 		for j in amount:
 			var velocity_normalized = velocity.normalized()
+			if container == null: return
 			container.spawn_bullet.call(velocity_normalized * distance, Vector2(velocity.x, velocity.y * stretch), velocity_normalized * acceleration)
 			velocity = velocity.rotated(gap)
 		velocity = velocity.rotated(tilt_rad)

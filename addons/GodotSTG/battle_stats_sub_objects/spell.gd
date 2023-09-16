@@ -10,4 +10,5 @@ enum MOVEMENT{STATIC, RANDOM}
 @export var enemy_pos:Vector2
 @export var enemy_movement:MOVEMENT
 @export var shield:SHIELD
+@export var randomize_sequences:bool = false
 @export var sequences:Array[STGSequence]

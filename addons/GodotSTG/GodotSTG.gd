@@ -5,8 +5,8 @@ var bullets_directory:String
 var settings:Array[Dictionary] = [
 	{
 		"name": "bullet_directory",
-		"default": "res://addons/GodotSTG/bullets/default/",
-		"type": TYPE_STRING_NAME,
+		"default": "res://addons/GodotSTG/bullets/default",
+		"type": TYPE_STRING,
 		"hint": PROPERTY_HINT_DIR,
 		"hint_string": ""
 	},{
@@ -21,7 +21,6 @@ var settings:Array[Dictionary] = [
 func _enter_tree():
 	add_autoload_singleton("STGGlobal", "res://addons/GodotSTG/STGGlobal.gd")
 	_setup_settings()
-	
 
 func _exit_tree():
 	remove_autoload_singleton("STGGlobal")

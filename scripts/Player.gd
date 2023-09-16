@@ -29,7 +29,7 @@ func _physics_process(delta):
 	if Input.is_action_pressed("skip_dialogue") && GFS.game_state == GFS.WORLD:
 		direction*=3
 		Sprite.speed_scale = 2
-	elif Input.is_action_pressed("focus"):
+	if Input.is_action_pressed("focus") && !Input.is_action_pressed("skip_dialogue"):
 		direction*=0.45
 		$ExtraColliders.modulate.a = clamp($ExtraColliders.modulate.a + FADE_PER_SECOND * delta, 0, 1)
 		Sprite.speed_scale = 0.5

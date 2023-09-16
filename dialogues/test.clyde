@@ -1,8 +1,11 @@
 
 == 1
-Player: line 1
+TestDummy: line 1
+* choice 1
+* choice 2
+* choice 3
+* choice 4
 TestDummy: line 2
-Player: line 3
-TestDummy: line 4
+TestDummy: line 3
 TestDummy: text {trigger battle_test_dummy}
 -> END

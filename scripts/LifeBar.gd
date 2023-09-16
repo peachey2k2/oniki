@@ -14,6 +14,7 @@ func _on_player_shoot():
 	if currLife != 0 && GFS.Enemy.monitoring && GFS.Enemy.has_overlapping_areas() && STGGlobal.controller.shield_state == 0: #Z
 		currLife -= 1
 		get_child(currLife).color.a = 0
+		STGGlobal.damage_taken.emit(currLife)
 		if currLife == 0:
 			STGGlobal.bar_emptied.emit()
 			fill_health(currLife)
