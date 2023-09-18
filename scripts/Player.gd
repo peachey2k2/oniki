@@ -13,6 +13,7 @@ var is_alive:bool = true
 
 @onready var GrazeBox:Node = $ExtraColliders/GrazeDetection
 @onready var InteractBox:Node = $ExtraColliders/InteractDetection
+@onready var Hitbox:Node = $ExtraColliders/Hitbox
 @onready var Slash:Node = $Slash
 @onready var Sprite:Node = $PlayerSprite
 

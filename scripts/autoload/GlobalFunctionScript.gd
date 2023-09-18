@@ -48,7 +48,10 @@ var clock_real_timer:SceneTreeTimer
 
 func _physics_process(_delta):
 	if Input.is_action_just_pressed("debug"):
-		pass
+		var _parent = Player.get_parent()
+		_parent.remove_child(Player)
+		_parent.add_child(Player)
+		
 	if (Input.is_action_just_pressed("interact") || Input.is_action_pressed("skip_dialogue")) && last_choice_box == null:
 		emit_signal("proceed_dialogue")
 	if Input.is_action_just_pressed("screenshot"):
@@ -191,6 +194,8 @@ func load_battle(id:String):
 func reload_battle():
 	game_state = NONE
 	Controller.stats = null
+	ArenaViewport.remove_child(Player)
+	ArenaViewport.add_child(Player)
 	Player.resurrect()
 	for i in ArenaViewport.get_node("Spawners").get_children():
 		i.remove()
