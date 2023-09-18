@@ -53,9 +53,24 @@ shadow_size = 1
 shadow_offset = Vector2(10, 10)
 anti_aliasing = false
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vwmqe"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v32ip"]
+bg_color = Color(0, 0, 0, 0.615686)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_detail = 1
+expand_margin_left = 1.0
+expand_margin_top = 1.0
+expand_margin_right = 1.0
+expand_margin_bottom = 1.0
+shadow_color = Color(0, 0, 0, 0.431373)
+shadow_size = 1
+shadow_offset = Vector2(10, 10)
+anti_aliasing = false
 
 [resource]
+BoxContainer/constants/separation = 0
 Button/colors/font_color = Color(0.87451, 0.87451, 0.87451, 1)
 Button/colors/font_disabled_color = Color(0.87451, 0.87451, 0.87451, 0.501961)
 Button/colors/font_focus_color = Color(0.87451, 0.87451, 0.87451, 1)
@@ -67,5 +82,6 @@ Button/styles/focus = SubResource("StyleBoxFlat_2unmp")
 Button/styles/hover = SubResource("StyleBoxFlat_nw3ch")
 Button/styles/normal = SubResource("StyleBoxFlat_24q5t")
 Button/styles/pressed = SubResource("StyleBoxFlat_r2jrn")
+Label/fonts/font = ExtResource("1_e01en")
 Panel/styles/panel = SubResource("StyleBoxFlat_p4gou")
-PanelContainer/styles/panel = SubResource("StyleBoxFlat_vwmqe")
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_v32ip")

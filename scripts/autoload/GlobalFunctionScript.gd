@@ -12,10 +12,13 @@ const BATTLE_RECT = Rect2(BUI_X_START, BUI_Y_START, 880, 880)
 const CHOICE_BOX_POS = Vector2(0, 200)
 
 signal proceed_dialogue
+signal dialogue_start
+signal dialogue_end
+signal option_selected(index:int)
 
 @onready var BattleArena = preload("res://scenes/Battle.tscn")
 @onready var SpeechBoxDefault = preload("res://scenes/SpeechBox.tscn")
-@onready var ChoiceBox = preload("res://scenes/ChoiceBox.tscn")
+@onready var ChoiceBoxDefault = preload("res://scenes/ChoiceBox.tscn")
 @onready var ChoiceButton = preload("res://scenes/ChoiceButton.tscn")
 @onready var root:Node = get_tree().root
 @onready var Rng:RandomNumberGenerator = RandomNumberGenerator.new()
@@ -35,7 +38,8 @@ var Controller:Node
 
 var _dialogue:ClydeDialogue
 var in_dialogue:bool = false
-var speech_boxes:Array = []
+var last_speech_box:Node
+var last_choice_box:Node
 
 var clock:float
 var clock_real:float
@@ -45,7 +49,7 @@ var clock_real_timer:SceneTreeTimer
 func _physics_process(_delta):
 	if Input.is_action_just_pressed("debug"):
 		pass
-	if Input.is_action_just_pressed("interact") || Input.is_action_pressed("skip_dialogue"):
+	if (Input.is_action_just_pressed("interact") || Input.is_action_pressed("skip_dialogue")) && last_choice_box == null:
 		emit_signal("proceed_dialogue")
 	if Input.is_action_just_pressed("screenshot"):
 		var img = get_viewport().get_texture().get_image()
@@ -60,72 +64,86 @@ func _ready():
 	
 	get_viewport().connect("size_changed", Callable(self, "_on_screen_size_changed"))
 	STGGlobal.end_battle.connect(Callable(self, "unload_battle"))
+	option_selected.connect(Callable(self, "_on_option_selected"))
+	dialogue_end.connect(Callable(self, "_on_dialogue_end"))
 	
 	clock_timer = get_tree().create_timer(TIMER_START, false)
 	clock_real_timer = get_tree().create_timer(TIMER_START, true)
 	
 	start()
 
-func _clear_speech_boxes():
-	for i in speech_boxes:
-		i.queue_free()
-	speech_boxes.clear()
-
 func play_dialogue(id:String):
 	if !in_dialogue:
 		in_dialogue = true
+		dialogue_start.emit()
 		_dialogue.start(id)
-		while true:
-			if !in_dialogue:
-				return
+		while in_dialogue:
 			var next_content = _dialogue.get_content()
 			if next_content == null || next_content.get("tags").has("END"):
-				await proceed_dialogue
+#				await proceed_dialogue
 				in_dialogue = false
-				_clear_speech_boxes()
+				dialogue_end.emit()
 				return
 			print(next_content) #print the next line of dialogue
 			_print_dialogue(next_content)
+			if next_content.get("tags").has("NEXT"):
+				continue
+			await get_tree().create_timer(0.1, false).timeout
 			await proceed_dialogue
+		dialogue_end.emit()
+		return
 
 func _print_dialogue(content:Dictionary):
 	var nodes_list:Array
 	match game_state:
 		WORLD: nodes_list = Overworld.get_children()
 	assert(content.get("speaker") != "Player", "nooooooo you can't make the silent protag-kun speak without a choice dialogue, that ruins the lore!!!!! :soyjak:")
-	if content.get("type") == "options":
-		var _options:Array = []
-		for _option in content.get("options"):
-			_options.append(_option.get("label"))
-		var _choice_box = choice_box(_options)
-		Player.get_node("PlayerCamera").add_child(_choice_box)
-		_choice_box.position = CHOICE_BOX_POS - (_choice_box.size / 2)
-		_choice_box.get_child(1).get_child(0).grab_focus()
-		return
-	for i in nodes_list:
-		if i.name == content.get("speaker"):
-			var SpeechBox:Node = i.get_node_or_null("SpeechBox")
-			if SpeechBox == null:
-				SpeechBox = SpeechBoxDefault.instantiate()
-				SpeechBox.position = Vector2(0, -100)
-				i.add_child(SpeechBox)
-				speech_boxes.append(SpeechBox)
-			SpeechBox.get_child(0).text = content.get("text")
-			return
+	match content.get("type"):
+		"options":
+			var _options:Array = []
+			for _option in content.get("options"):
+				_options.append(_option.get("label"))
+			var _choice_box = choice_box(_options)
+			Player.get_node("PlayerCamera").add_child(_choice_box)
+			_choice_box.position = CHOICE_BOX_POS - (_choice_box.size / 2)
+			_choice_box.get_child(1).get_child(0).grab_focus()
+			last_choice_box = _choice_box
+		"line":
+			for _node in nodes_list:
+				if _node.name == content.get("speaker"):
+					var SpeechBox = SpeechBoxDefault.instantiate()
+					if last_speech_box != null: last_speech_box.free()
+					if last_choice_box != null: last_choice_box.free()
+					SpeechBox.get_child(0).text = content.get("text")
+					_node.add_child(SpeechBox)
+					SpeechBox.position = Vector2(0, -60) - (SpeechBox.size / 2)
+					last_speech_box = SpeechBox
+					return
+		_:
+			assert(false, "fun fact: this assert is untriggerable.")
 
 func _on_dialogue_event_triggered(event_name:String):
 	if event_name.match("battle_*"):
-		proceed_dialogue.emit()
+		dialogue_end.emit()
 		load_battle(event_name.trim_prefix("battle_"))
 
 func choice_box(_options:Array) -> MarginContainer:
-	var ChoiceBox_ins = ChoiceBox.instantiate()
+	var ChoiceBox_ins = ChoiceBoxDefault.instantiate()
 	var _container = ChoiceBox_ins.get_node("Container")
 	for _option in _options:
 		var _button = ChoiceButton.instantiate()
 		_button.text = _option
 		_container.add_child(_button)
 	return ChoiceBox_ins
+
+func _on_option_selected(index:int):
+	_dialogue.choose(index)
+	print(index)
+	proceed_dialogue.emit()
+
+func _on_dialogue_end():
+	if last_speech_box != null: last_speech_box.free()
+	if last_choice_box != null: last_choice_box.free()
 
 func time(count_while_paused:bool) -> float:
 	if count_while_paused:
@@ -141,14 +159,13 @@ func start():
 	Player = load("res://scenes/Player.tscn").instantiate()
 	root.add_child.call_deferred(Overworld)
 	root.add_child.call_deferred(PauseHandler)
-	root.add_child.call_deferred(Player)
+	Overworld.add_child.call_deferred(Player)
 	root.get_node("MenuRoot").queue_free()
 	game_state = WORLD
 
 func load_battle(id:String):
 	game_state = NONE
 	Controller = load("res://scenes/battles/" + id + ".tscn").instantiate()
-	_clear_speech_boxes()
 	player_pos = Player.position
 	var Sprite:Node = load("res://scenes/SpriteTemplate.tscn").instantiate()
 	Sprite.texture = load("res://assets/sprites/" + id + ".png")
@@ -185,9 +202,9 @@ func reload_battle():
 
 func unload_battle():
 	game_state = NONE
-	Player.is_alive = true
-	Player.process_mode = Node.PROCESS_MODE_INHERIT
-	Player.show()
+	Player.resurrect()
+	for i in ArenaViewport.get_node("Spawners").get_children():
+		i.remove()
 	root.remove_child(CurrentArena)
 	root.add_child(Overworld)
 	Player.get_node("./ExtraColliders/Hitbox/CollisionShape2D").disabled = true

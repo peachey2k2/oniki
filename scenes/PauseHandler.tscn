@@ -34,9 +34,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -100.0
-offset_top = -82.0
+offset_top = -72.0
 offset_right = 100.0
-offset_bottom = 82.0
+offset_bottom = 72.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -48,6 +48,7 @@ theme = ExtResource("2_k5rhx")
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_horizontal = 4
+theme = ExtResource("2_k5rhx")
 
 [node name="return_to_game" type="Button" parent="Control/MainContainer/Pause"]
 custom_minimum_size = Vector2(0, 20)

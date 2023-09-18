@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bty05s2e3am5q"]
+[gd_scene load_steps=17 format=3 uid="uid://bty05s2e3am5q"]
 
 [ext_resource type="Script" path="res://scripts/Battle.gd" id="1_p0goo"]
 [ext_resource type="Texture2D" uid="uid://cdams53qwdqbu" path="res://assets/backgrounds/dot.png" id="2_fq3wh"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://scripts/FPS.gd" id="4_ufn6s"]
 [ext_resource type="Script" path="res://scripts/LifeBar.gd" id="5_taydl"]
 [ext_resource type="Script" path="res://scripts/TimeoutTimer.gd" id="6_7ngma"]
+[ext_resource type="Theme" uid="uid://banndw0q5ph2x" path="res://themes/theme.tres" id="6_8pmc4"]
 [ext_resource type="Script" path="res://scripts/BulletRemover.gd" id="6_ctue6"]
 [ext_resource type="Script" path="res://scripts/GrazeCounter.gd" id="7_5eiw7"]
 [ext_resource type="Script" path="res://scripts/BarCount.gd" id="9_1jldx"]
@@ -189,6 +190,7 @@ offset_right = 91.5
 offset_bottom = 52.0
 grow_horizontal = 2
 grow_vertical = 0
+theme = ExtResource("6_8pmc4")
 text = "placeholder"
 label_settings = ExtResource("4_8cyd8")
 horizontal_alignment = 1
@@ -204,6 +206,7 @@ offset_top = -10.0
 offset_right = 305.0
 offset_bottom = 38.0
 grow_horizontal = 0
+theme = ExtResource("6_8pmc4")
 text = "test"
 label_settings = ExtResource("4_8cyd8")
 script = ExtResource("6_7ngma")
@@ -214,6 +217,7 @@ offset_left = -400.0
 offset_top = -10.0
 offset_right = -5.0
 offset_bottom = 38.0
+theme = ExtResource("6_8pmc4")
 text = "test"
 label_settings = ExtResource("4_8cyd8")
 horizontal_alignment = 2
@@ -229,6 +233,7 @@ offset_top = -47.0
 offset_right = 30.0
 offset_bottom = 1.0
 grow_horizontal = 2
+theme = ExtResource("6_8pmc4")
 text = "test"
 label_settings = ExtResource("4_8cyd8")
 horizontal_alignment = 1
@@ -243,6 +248,7 @@ offset_top = -38.0
 offset_right = -5.0
 offset_bottom = 10.0
 grow_vertical = 0
+theme = ExtResource("6_8pmc4")
 text = "test"
 label_settings = ExtResource("4_8cyd8")
 horizontal_alignment = 2

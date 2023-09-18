@@ -19,39 +19,48 @@ var is_alive:bool = true
 signal shoot
 
 func _ready():
+	GFS.dialogue_start.connect(Callable(self, "_on_dialogue_start"))
+	GFS.dialogue_end.connect(Callable(self, "_on_dialogue_end"))
+
+func _on_dialogue_start():
 	pass
+#	process_mode = Node.PROCESS_MODE_DISABLED
+
+func _on_dialogue_end():
+	pass
+#	process_mode = Node.PROCESS_MODE_INHERIT
 
 func _physics_process(delta):
+	if !GFS.in_dialogue:
+		direction.x = int(Input.is_action_pressed("ui_right")) - int(Input.is_action_pressed("ui_left"))
+		direction.y = int(Input.is_action_pressed("ui_down")) - int(Input.is_action_pressed("ui_up"))
+		
+		if Input.is_action_pressed("skip_dialogue"):
+			direction*=3
+			Sprite.speed_scale = 2
+		if Input.is_action_pressed("focus") && !Input.is_action_pressed("skip_dialogue"):
+			direction*=0.45
+			$ExtraColliders.modulate.a = clamp($ExtraColliders.modulate.a + FADE_PER_SECOND * delta, 0, 1)
+			Sprite.speed_scale = 0.5
+		else:
+			$ExtraColliders.modulate.a = clamp($ExtraColliders.modulate.a - FADE_PER_SECOND * delta, 0, 1)
+			Sprite.speed_scale = 1
+		velocity = direction*SPEED
+		move_and_slide()
+		
+		if Input.is_action_pressed("hit") && !hitOnCooldown && is_alive:
+			hitOnCooldown = true
+			slash_animation()
+			emit_signal("shoot")
+			await get_tree().create_timer(HIT_COOLDOWN, false).timeout
+			hitOnCooldown = false
 	
-	direction.x = int(Input.is_action_pressed("ui_right")) - int(Input.is_action_pressed("ui_left"))
-	direction.y = int(Input.is_action_pressed("ui_down")) - int(Input.is_action_pressed("ui_up"))
-	
-	if Input.is_action_pressed("skip_dialogue") && GFS.game_state == GFS.WORLD:
-		direction*=3
-		Sprite.speed_scale = 2
-	if Input.is_action_pressed("focus") && !Input.is_action_pressed("skip_dialogue"):
-		direction*=0.45
-		$ExtraColliders.modulate.a = clamp($ExtraColliders.modulate.a + FADE_PER_SECOND * delta, 0, 1)
-		Sprite.speed_scale = 0.5
-	else:
-		$ExtraColliders.modulate.a = clamp($ExtraColliders.modulate.a - FADE_PER_SECOND * delta, 0, 1)
-		Sprite.speed_scale = 1
-	velocity = direction*SPEED
-	move_and_slide()
-	
-	if velocity != Vector2.ZERO:
+	if velocity != Vector2.ZERO && !GFS.in_dialogue:
 		facing = velocity.angle()
 		directional_string  = _get_direction_string(facing)
 		Sprite.play("walk_" + directional_string)
 	else:
 		Sprite.play("stop_" + directional_string)
-	
-	if Input.is_action_pressed("hit") && !hitOnCooldown && is_alive:
-		hitOnCooldown = true
-		slash_animation()
-		emit_signal("shoot")
-		await get_tree().create_timer(HIT_COOLDOWN, false).timeout
-		hitOnCooldown = false
 	
 	$"ExtraColliders/HitDetection/Sprite2D".rotate(0.3 * delta)
 	$"ExtraColliders/GrazeDetection/Sprite2D".rotate(-0.4 * delta)

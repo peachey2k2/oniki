@@ -24,6 +24,7 @@ func called_low(pos, vel, color_outer, color_inner):
 	velocity = vel
 	$outer.modulate = color_outer
 	$inner.modulate = color_inner
+	set_deferred("process_mode", PROCESS_MODE_INHERIT)
 
 func called(pos, vel, acc, color_outer, color_inner):
 	adjusted_process = Callable(self, "_adjusted_process")
@@ -35,6 +36,9 @@ func called(pos, vel, acc, color_outer, color_inner):
 	init_pos = position
 	start_time = GFS.time(false)
 	sine_direction = velocity.rotated(PI/2).normalized()
+	set_deferred("process_mode", PROCESS_MODE_INHERIT)
+
+var last_pos:Vector2
 
 func _physics_process(delta):
 	if Engine.is_editor_hint(): return

@@ -17,6 +17,7 @@ config/features=PackedStringArray("4.1")
 
 STGGlobal="*res://addons/GodotSTG/STGGlobal.gd"
 GFS="*res://scripts/autoload/GlobalFunctionScript.gd"
+Panku="*res://addons/panku_console/console.tscn"
 
 [display]
 
@@ -28,7 +29,7 @@ window/vsync/vsync_mode=0
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/GodotSTG/plugin.cfg", "res://addons/clyde/plugin.cfg", "res://addons/deranged_additions/plugin.cfg")
+enabled=PackedStringArray("res://addons/GodotSTG/plugin.cfg", "res://addons/clyde/plugin.cfg", "res://addons/deranged_additions/plugin.cfg", "res://addons/panku_console/plugin.cfg")
 
 [filesystem]
 

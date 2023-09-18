@@ -23,7 +23,7 @@ func _ready():
 				i.connect("pressed", Callable(self, "_on_" + i.name + "_pressed"))
 
 func _process(_delta):
-	if Input.is_action_just_pressed("pause"):
+	if Input.is_action_just_pressed("pause") && !GFS.in_dialogue:
 		if tree.is_paused():
 			back()
 		else:
@@ -61,6 +61,7 @@ func pause():
 func unpause():
 	tree.set_pause(false)
 	emit_signal("game_unpaused")
+	menu_tree = []
 	hide()
 
 # Menu

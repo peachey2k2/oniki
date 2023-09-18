@@ -23,14 +23,12 @@ func _physics_process(delta):
 
 func _spawn_low(pos, vel, _acc):
 	var ins = get_bullet()
-	ins.process_mode = Node.PROCESS_MODE_INHERIT
 	ins.called_low(pos, vel, color_outer, color_inner)
 	add_child(ins)
 	ins.show()
 
 func _spawn_regular(pos, vel, acc):
 	var ins = get_bullet()
-	ins.process_mode = Node.PROCESS_MODE_INHERIT
 	ins.called(pos, vel, acc, color_outer, color_inner)
 	add_child(ins)
 	ins.show()
@@ -40,7 +38,6 @@ func get_bullet():
 	assert(pool_size > 0, "Pool is out of bullets.")
 	var out = pool[pool_size-1]
 	pool.pop_back()
-	out.set_deferred("process_mode", Node.PROCESS_MODE_INHERIT)
 	out.show()
 	return out
 

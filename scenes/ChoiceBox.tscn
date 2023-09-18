@@ -3,6 +3,8 @@
 [ext_resource type="Theme" uid="uid://banndw0q5ph2x" path="res://themes/theme.tres" id="1_4cdgs"]
 
 [node name="ChoiceBox" type="MarginContainer"]
+process_mode = 1
+z_index = 200
 custom_minimum_size = Vector2(1, 1)
 offset_right = 4.0
 offset_bottom = 4.0

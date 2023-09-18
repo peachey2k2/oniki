@@ -1,11 +1,7 @@
 
 == 1
-TestDummy: line 1
-* choice 1
-* choice 2
-* choice 3
-* choice 4
-TestDummy: line 2
-TestDummy: line 3
-TestDummy: text {trigger battle_test_dummy}
--> END
+TestDummy: Start battle? #NEXT
++ Yes
+	text {trigger battle_test_dummy}
++ No
+	-> END

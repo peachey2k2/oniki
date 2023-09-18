@@ -1,8 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://bkm55b4d253yv"]
+[gd_scene load_steps=3 format=3 uid="uid://bkm55b4d253yv"]
 
 [ext_resource type="Theme" uid="uid://banndw0q5ph2x" path="res://themes/theme.tres" id="1_ij777"]
+[ext_resource type="Script" path="res://scripts/ChoiceButton.gd" id="2_a8kn8"]
 
 [node name="Button" type="Button"]
 theme = ExtResource("1_ij777")
 text = "placeholder"
 alignment = 0
+script = ExtResource("2_a8kn8")
