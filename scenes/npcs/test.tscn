@@ -2,14 +2,15 @@
 
 [ext_resource type="Script" path="res://scripts/test_dummy.gd" id="1_a1226"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_g0pq0"]
-size = Vector2(30, 60)
+[sub_resource type="CircleShape2D" id="CircleShape2D_66qdv"]
+radius = 16.0
 
 [node name="NPC" type="Area2D"]
-collision_layer = 2
+collision_layer = 3
 collision_mask = 0
 script = ExtResource("1_a1226")
 metadata/dialogue_id = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_g0pq0")
+position = Vector2(0, 18)
+shape = SubResource("CircleShape2D_66qdv")

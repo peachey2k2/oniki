@@ -1,86 +1,69 @@
-[gd_scene load_steps=14 format=3 uid="uid://bl58xsn1r4b2l"]
+[gd_scene load_steps=13 format=3 uid="uid://bl58xsn1r4b2l"]
 
 [ext_resource type="Script" path="res://addons/GodotSTG/battle_controller.gd" id="1_d455w"]
 [ext_resource type="Script" path="res://addons/GodotSTG/battle_stats_sub_objects/bar.gd" id="2_7n7u6"]
 [ext_resource type="Script" path="res://addons/GodotSTG/battle_stats_sub_objects/spell.gd" id="3_7byd1"]
 [ext_resource type="Script" path="res://addons/GodotSTG/battle_stats_sub_objects/sequence.gd" id="4_hgx2v"]
-[ext_resource type="Script" path="res://addons/GodotSTG/spawners/circular.gd" id="5_xxkb1"]
+[ext_resource type="Script" path="res://addons/GodotSTG/spawners/circular.gd" id="5_ipw26"]
 [ext_resource type="Script" path="res://addons/GodotSTG/battle_stats.gd" id="6_17363"]
 
-[sub_resource type="PackedDataContainer" id="PackedDataContainer_pfrlu"]
-script = ExtResource("5_xxkb1")
-init_angle = 0.0
-amount = 8
-repeat = 1000
-tilt = 10.0
-speed = 300.0
-distance = 50.0
-stretch = 1.0
-delay = 0.033
-acceleration = 0.0
-sine_freq = 0.0
-sine_width = 0.0
-position = Vector2(0, 0)
-position_type = 1
-towards = 0
-rotation_speed = 0
-bullet_index = 0
-bullet_outer_color = Color(0, 0, 1, 1)
-bullet_inner_color = Color(1, 1, 1, 1)
-bullet_type = 0
-
-[sub_resource type="PackedDataContainer" id="PackedDataContainer_hud77"]
-script = ExtResource("4_hgx2v")
-wait_before = 1.0
-end_at_hp = 9
-end_at_time = -1
-clear_after_done = true
-spawners = Array[Resource("res://addons/GodotSTG/battle_stats_sub_objects/spawner.gd")]([SubResource("PackedDataContainer_pfrlu")])
-
-[sub_resource type="PackedDataContainer" id="PackedDataContainer_tr1a7"]
-script = ExtResource("5_xxkb1")
+[sub_resource type="Resource" id="Resource_ux8x5"]
+script = ExtResource("5_ipw26")
 init_angle = 0.0
 amount = 10
 repeat = 1000
-tilt = 0.0
+tilt = 30.87
 speed = 200.0
 distance = 0.0
 stretch = 1.0
-delay = 0.1
+delay = 0.2
 acceleration = 0.0
 sine_freq = 0.0
 sine_width = 0.0
 position = Vector2(0, 0)
 position_type = 1
 towards = 0
-rotation_speed = 0
-bullet_index = 1
+rotation_speed = 0.02
+bullet_index = 0
 bullet_outer_color = Color(1, 0, 0, 1)
 bullet_inner_color = Color(1, 1, 1, 1)
-bullet_type = 0
+bullet_type = 1
 
-[sub_resource type="PackedDataContainer" id="PackedDataContainer_hrtie"]
+[sub_resource type="PackedDataContainer" id="PackedDataContainer_hud77"]
 script = ExtResource("4_hgx2v")
 wait_before = 1.0
 end_at_hp = -1
 end_at_time = -1
 clear_after_done = true
-spawners = Array[Resource("res://addons/GodotSTG/battle_stats_sub_objects/spawner.gd")]([SubResource("PackedDataContainer_tr1a7")])
+spawners = Array[Resource("res://addons/GodotSTG/battle_stats_sub_objects/spawner.gd")]([SubResource("Resource_ux8x5")])
 
 [sub_resource type="PackedDataContainer" id="PackedDataContainer_bheam"]
 script = ExtResource("3_7byd1")
 name = "test"
-health = 10
+health = 5
 time = 30
+bar_color = Color(0.886275, 0.592157, 0.498039, 1)
 enemy_pos = Vector2(0.5, 0.5)
 enemy_movement = 0
-shield = 1
+shield = 0
 randomize_sequences = false
-sequences = Array[ExtResource("4_hgx2v")]([SubResource("PackedDataContainer_hud77"), SubResource("PackedDataContainer_hrtie")])
+sequences = Array[ExtResource("4_hgx2v")]([SubResource("PackedDataContainer_hud77")])
+
+[sub_resource type="PackedDataContainer" id="PackedDataContainer_8v7jv"]
+script = ExtResource("3_7byd1")
+name = "test"
+health = 5
+time = 30
+bar_color = Color(0.560784, 0.894118, 0.937255, 1)
+enemy_pos = Vector2(0.5, 0.5)
+enemy_movement = 0
+shield = 0
+randomize_sequences = false
+sequences = Array[ExtResource("4_hgx2v")]([SubResource("PackedDataContainer_hud77")])
 
 [sub_resource type="PackedDataContainer" id="PackedDataContainer_ufk1n"]
 script = ExtResource("2_7n7u6")
-spells = Array[ExtResource("3_7byd1")]([SubResource("PackedDataContainer_bheam")])
+spells = Array[ExtResource("3_7byd1")]([SubResource("PackedDataContainer_bheam"), SubResource("PackedDataContainer_8v7jv")])
 
 [sub_resource type="PackedDataContainer" id="PackedDataContainer_ciymr"]
 script = ExtResource("6_17363")

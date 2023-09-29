@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://bv5frfkbx0f2s"]
+
+[ext_resource type="Shader" path="res://themes/outline.gdshader" id="1_1a0vi"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nqe3o"]
+shader = ExtResource("1_1a0vi")
+shader_parameter/line_color = Color(1, 1, 1, 1)
+shader_parameter/line_thickness = 1.0
+
+[sub_resource type="GDScript" id="GDScript_26f68"]
+script/source = "extends Control
+"
+
+[node name="OutlineShader" type="Control"]
+material = SubResource("ShaderMaterial_nqe3o")
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_26f68")
+metadata/_edit_use_anchors_ = true

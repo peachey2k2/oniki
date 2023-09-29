@@ -1,6 +1,6 @@
 ## Oversimplified and standalone node for parallax scrolling.
 @tool
-extends TextureRect
+class_name ParallaxButGood extends TextureRect
 
 ## How much the node will move per second.
 @export var scroll_speed:Vector2 = Vector2(0, 0)

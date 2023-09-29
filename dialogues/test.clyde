@@ -2,6 +2,6 @@
 == 1
 TestDummy: Start battle? #NEXT
 + Yes
-	text {trigger battle_test_dummy}
+	null {trigger battle_test_dummy}
 + No
 	-> END

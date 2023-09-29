@@ -176,7 +176,7 @@ texture_filter = 1
 position = Vector2(0, -8)
 scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_fiwbo")
-animation = &"stop_right"
+animation = &"stop_left"
 
 [node name="Slash" type="Sprite2D" parent="."]
 visible = false
@@ -247,3 +247,4 @@ debug_color = Color(0.592157, 0.556863, 0.541176, 0.0784314)
 [node name="PlayerCamera" type="Camera2D" parent="."]
 
 [connection signal="area_entered" from="ExtraColliders/Hitbox" to="." method="_on_Hitbox_area_entered"]
+[connection signal="area_exited" from="ExtraColliders/InteractDetection" to="." method="_on_interact_detection_area_exited"]

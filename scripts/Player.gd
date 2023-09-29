@@ -1,8 +1,8 @@
 extends CharacterBody2D
 
 const SPEED = 300
-const HIT_COOLDOWN = 1
-const MARGIN = 5
+const HIT_COOLDOWN = 0.8
+const MARGIN = 10
 const FADE_PER_SECOND = 8
 
 var direction:Vector2
@@ -10,6 +10,9 @@ var hitOnCooldown:bool = false
 var facing:float = 0
 var directional_string  = "right"
 var is_alive:bool = true
+
+var closest_dist:float = INF
+var closest_node:Node = null
 
 @onready var GrazeBox:Node = $ExtraColliders/GrazeDetection
 @onready var InteractBox:Node = $ExtraColliders/InteractDetection
@@ -20,6 +23,7 @@ var is_alive:bool = true
 signal shoot
 
 func _ready():
+#	material.set_shader_parameter("line_color", Color.WHITE)
 	GFS.dialogue_start.connect(Callable(self, "_on_dialogue_start"))
 	GFS.dialogue_end.connect(Callable(self, "_on_dialogue_end"))
 
@@ -32,6 +36,8 @@ func _on_dialogue_end():
 #	process_mode = Node.PROCESS_MODE_INHERIT
 
 func _physics_process(delta):
+	if !Hitbox.monitoring:
+		Hitbox.monitoring = true
 	if !GFS.in_dialogue:
 		direction.x = int(Input.is_action_pressed("ui_right")) - int(Input.is_action_pressed("ui_left"))
 		direction.y = int(Input.is_action_pressed("ui_down")) - int(Input.is_action_pressed("ui_up"))
@@ -49,13 +55,6 @@ func _physics_process(delta):
 		velocity = direction*SPEED
 		move_and_slide()
 		
-		if Input.is_action_pressed("hit") && !hitOnCooldown && is_alive:
-			hitOnCooldown = true
-			slash_animation()
-			emit_signal("shoot")
-			await get_tree().create_timer(HIT_COOLDOWN, false).timeout
-			hitOnCooldown = false
-	
 	if velocity != Vector2.ZERO && !GFS.in_dialogue:
 		facing = velocity.angle()
 		directional_string  = _get_direction_string(facing)
@@ -65,6 +64,25 @@ func _physics_process(delta):
 	
 	$"ExtraColliders/HitDetection/Sprite2D".rotate(0.3 * delta)
 	$"ExtraColliders/GrazeDetection/Sprite2D".rotate(-0.4 * delta)
+	
+	closest_dist = INF
+	closest_node = null
+	if !InteractBox.get_overlapping_areas().is_empty():
+		for i in InteractBox.get_overlapping_areas():
+			var dist:float = GFS.get_distance(self, i)
+			i.material = null
+			if dist < closest_dist:
+				closest_dist = dist
+				closest_node = i
+		closest_node.material = GFS.OutlineMaterial
+
+func hit():
+	Hitbox.monitoring = false
+	hitOnCooldown = true
+	slash_animation()
+	emit_signal("shoot")
+	await get_tree().create_timer(HIT_COOLDOWN, false).timeout
+	hitOnCooldown = false
 
 func _get_direction_string(angle:float) -> String:
 	var angle_deg = round(rad_to_deg(angle))
@@ -90,15 +108,13 @@ func _process(_delta):
 			clamp(position.x, GFS.BUI_X_START + MARGIN, GFS.BUI_X_END - MARGIN),
 			clamp(position.y, GFS.BUI_Y_START + MARGIN, GFS.BUI_Y_END - MARGIN)
 		)
-	if Input.is_action_just_pressed("interact") && !InteractBox.get_overlapping_areas().is_empty():
-		var closest_dist:float = INF
-		var closest_node:Node = null
-		for i in InteractBox.get_overlapping_areas():
-			var dist:float = GFS.get_distance(self, i)
-			if dist < closest_dist:
-				closest_dist = dist
-				closest_node = i
-		closest_node.on_interact()
+	
+	if Input.is_action_pressed("interact"):
+		if closest_node == null:
+			if !hitOnCooldown && is_alive:
+				hit()
+		elif Input.is_action_just_pressed("interact"):
+			closest_node.on_interact()
 
 func _on_Hitbox_area_entered(_area):
 	is_alive = false
@@ -109,3 +125,9 @@ func resurrect():
 	is_alive = true
 	process_mode = Node.PROCESS_MODE_INHERIT
 	show()
+
+
+func _on_interact_detection_area_exited(area):
+	area.material = null
+	if area == closest_node:
+		closest_node = null

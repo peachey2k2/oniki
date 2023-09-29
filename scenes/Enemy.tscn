@@ -4,8 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://cqidv1awi6e6i" path="res://assets/shield_outer.png" id="2_h1goy"]
 [ext_resource type="Texture2D" uid="uid://c4jnb2jd0gx1w" path="res://assets/shield_inner.png" id="3_jw6hw"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_kjryw"]
-size = Vector2(32, 64)
+[sub_resource type="CircleShape2D" id="CircleShape2D_p2nc7"]
+radius = 32.0
 
 [node name="Enemy" type="Area2D"]
 z_index = 2
@@ -16,7 +16,7 @@ monitorable = false
 script = ExtResource("1_i3u5o")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_kjryw")
+shape = SubResource("CircleShape2D_p2nc7")
 
 [node name="Shield" type="Node2D" parent="."]
 modulate = Color(1, 0.00392157, 0, 1)

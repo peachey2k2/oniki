@@ -48,9 +48,9 @@ func _adjusted_process_low(delta):
 	position += velocity*delta
 
 func _adjusted_process(delta):
-	velocity += acceleration * delta / 2
+	velocity += acceleration * delta * 0.5
 	init_pos += velocity*delta
-	velocity += acceleration * delta / 2
+	velocity += acceleration * delta * 0.5
 	position = init_pos + sine_direction * sine_width * sin((GFS.time(false) - start_time) * sine_freq)
 
 func remove():

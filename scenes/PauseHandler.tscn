@@ -1,14 +1,20 @@
-[gd_scene load_steps=3 format=3 uid="uid://c42q8rbehh660"]
+[gd_scene load_steps=5 format=3 uid="uid://c42q8rbehh660"]
 
-[ext_resource type="Script" path="res://scripts/PauseHandler.gd" id="1_o40ta"]
+[ext_resource type="Script" path="res://scripts/autoload/PauseHandler.gd" id="1_bwbya"]
 [ext_resource type="Theme" uid="uid://banndw0q5ph2x" path="res://themes/theme.tres" id="2_k5rhx"]
+[ext_resource type="Shader" path="res://themes/blur.gdshader" id="2_p3pmp"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_l4520"]
+shader = ExtResource("2_p3pmp")
+shader_parameter/blur_strength = 0.001
 
 [node name="PauseHandler" type="CanvasLayer"]
 process_mode = 3
 layer = 5
-script = ExtResource("1_o40ta")
+script = ExtResource("1_bwbya")
 
 [node name="Control" type="Control" parent="."]
+process_mode = 2
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -16,7 +22,17 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="TextureRect" type="TextureRect" parent="Control"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
 [node name="ColorRect" type="ColorRect" parent="Control"]
+material = SubResource("ShaderMaterial_l4520")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -26,6 +42,7 @@ grow_vertical = 2
 color = Color(0, 0, 0, 0.392157)
 
 [node name="MainContainer" type="MarginContainer" parent="Control"]
+visible = false
 custom_minimum_size = Vector2(200, 1)
 layout_mode = 1
 anchors_preset = 8
@@ -96,6 +113,27 @@ alignment = 0
 visible = false
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
+theme = ExtResource("2_k5rhx")
+
+[node name="resolution" type="Button" parent="Control/MainContainer/Options"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+theme = ExtResource("2_k5rhx")
+text = "Resolution"
+alignment = 0
+
+[node name="Label" type="Label" parent="Control/MainContainer/Options/resolution"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_k5rhx")
+theme_override_colors/font_color = Color(1, 1, 1, 0.627451)
+text = "1920x1080"
+horizontal_alignment = 2
+vertical_alignment = 1
 
 [node name="fullscreen" type="CheckButton" parent="Control/MainContainer/Options"]
 custom_minimum_size = Vector2(0, 20)
@@ -113,13 +151,109 @@ text = "Vsync"
 visible = false
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("2_k5rhx")
 
-[node name="button" type="Button" parent="Control/MainContainer/Saves"]
+[node name="_slot_1" type="Button" parent="Control/MainContainer/Saves"]
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 theme = ExtResource("2_k5rhx")
-text = "text"
+keep_pressed_outside = true
+text = "Slot 1"
 alignment = 0
+
+[node name="Label" type="Label" parent="Control/MainContainer/Saves/_slot_1"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_k5rhx")
+theme_override_colors/font_color = Color(1, 1, 1, 0.627451)
+text = "empty"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="_slot_2" type="Button" parent="Control/MainContainer/Saves"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+theme = ExtResource("2_k5rhx")
+text = "Slot 2"
+alignment = 0
+
+[node name="Label" type="Label" parent="Control/MainContainer/Saves/_slot_2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_k5rhx")
+theme_override_colors/font_color = Color(1, 1, 1, 0.627451)
+text = "empty"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="_slot_3" type="Button" parent="Control/MainContainer/Saves"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+theme = ExtResource("2_k5rhx")
+text = "Slot 3"
+alignment = 0
+
+[node name="Label" type="Label" parent="Control/MainContainer/Saves/_slot_3"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_k5rhx")
+theme_override_colors/font_color = Color(1, 1, 1, 0.627451)
+text = "empty"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="_slot_4" type="Button" parent="Control/MainContainer/Saves"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+theme = ExtResource("2_k5rhx")
+text = "Slot 4"
+alignment = 0
+
+[node name="Label" type="Label" parent="Control/MainContainer/Saves/_slot_4"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_k5rhx")
+theme_override_colors/font_color = Color(1, 1, 1, 0.627451)
+text = "empty"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="_slot_5" type="Button" parent="Control/MainContainer/Saves"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+theme = ExtResource("2_k5rhx")
+text = "Slot 5"
+alignment = 0
+
+[node name="Label" type="Label" parent="Control/MainContainer/Saves/_slot_5"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_k5rhx")
+theme_override_colors/font_color = Color(1, 1, 1, 0.627451)
+text = "empty"
+horizontal_alignment = 2
+vertical_alignment = 1
 
 [node name="VBoxContainer3" type="VBoxContainer" parent="Control/MainContainer"]
 visible = false

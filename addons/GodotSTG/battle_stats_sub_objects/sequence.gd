@@ -1,5 +1,5 @@
 @tool
-class_name STGSequence extends PackedDataContainer
+class_name STGSequence extends Resource
 
 @export var wait_before:float = 1
 @export var end_at_hp:int = -1

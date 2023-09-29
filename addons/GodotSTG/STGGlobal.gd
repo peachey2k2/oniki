@@ -4,7 +4,7 @@ signal battle_start
 signal shield_changed(value:int)
 signal spell_name_changed(value:String)
 signal bar_changed(value:int)
-signal life_changed(value:int)
+signal life_changed(values:Array[int], colors:Array[Color])
 signal end_sequence
 signal end_spell
 signal end_battle
@@ -19,15 +19,9 @@ var settings:Array[Dictionary] = [
 	{
 		"name": "bullet_directory",
 		"default": "res://addons/GodotSTG/bullets/default",
-		"type": TYPE_STRING_NAME,
-		"hint": PROPERTY_HINT_DIR,
-		"hint_string": ""
 	},{
 		"name": "collision_layer",
 		"default": 2,
-		"type": TYPE_INT,
-		"hint": PROPERTY_HINT_LAYERS_2D_PHYSICS,
-		"hint_string": ""
 	}
 ]
 

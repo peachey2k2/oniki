@@ -3,7 +3,7 @@
 [ext_resource type="Theme" uid="uid://banndw0q5ph2x" path="res://themes/theme.tres" id="1_4cdgs"]
 
 [node name="ChoiceBox" type="MarginContainer"]
-process_mode = 1
+process_mode = 3
 z_index = 200
 custom_minimum_size = Vector2(1, 1)
 offset_right = 4.0
@@ -11,6 +11,8 @@ offset_bottom = 4.0
 size_flags_horizontal = 6
 size_flags_vertical = 6
 theme = ExtResource("1_4cdgs")
+metadata/is_for_dialogue = false
+metadata/menu_type = ""
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 2

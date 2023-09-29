@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" path="res://scripts/Battle.gd" id="1_p0goo"]
 [ext_resource type="Texture2D" uid="uid://cdams53qwdqbu" path="res://assets/backgrounds/dot.png" id="2_fq3wh"]
+[ext_resource type="Script" path="res://scripts/FrameCollision.gd" id="3_547x7"]
 [ext_resource type="Script" path="res://addons/deranged_additions/nodes/parallax_but_good.gd" id="3_p315c"]
 [ext_resource type="LabelSettings" uid="uid://cxotwanmjjyix" path="res://label_settings/normal.tres" id="4_8cyd8"]
-[ext_resource type="Script" path="res://scripts/FPS.gd" id="4_ufn6s"]
 [ext_resource type="Script" path="res://scripts/LifeBar.gd" id="5_taydl"]
 [ext_resource type="Script" path="res://scripts/TimeoutTimer.gd" id="6_7ngma"]
 [ext_resource type="Theme" uid="uid://banndw0q5ph2x" path="res://themes/theme.tres" id="6_8pmc4"]
@@ -70,6 +70,9 @@ anchor_mode = 0
 editor_draw_screen = false
 
 [node name="Spawners" type="Node2D" parent="SubViewportContainer/Arena"]
+process_thread_group = 1
+process_thread_group_order = 0
+process_thread_messages = 0
 z_index = 1
 
 [node name="BulletRemover" type="Area2D" parent="SubViewportContainer/Arena"]
@@ -94,6 +97,29 @@ shape = SubResource("RectangleShape2D_rlwpo")
 
 [node name="Right" type="CollisionShape2D" parent="SubViewportContainer/Arena/BulletRemover"]
 position = Vector2(550, 0)
+shape = SubResource("RectangleShape2D_jq4nx")
+
+[node name="FrameCollision" type="Area2D" parent="SubViewportContainer/Arena"]
+z_index = 50
+position = Vector2(440, 440)
+collision_layer = 0
+collision_mask = 32
+script = ExtResource("3_547x7")
+
+[node name="Up" type="CollisionShape2D" parent="SubViewportContainer/Arena/FrameCollision"]
+position = Vector2(0, -465)
+shape = SubResource("RectangleShape2D_rlwpo")
+
+[node name="Left" type="CollisionShape2D" parent="SubViewportContainer/Arena/FrameCollision"]
+position = Vector2(-465, 0)
+shape = SubResource("RectangleShape2D_jq4nx")
+
+[node name="Down" type="CollisionShape2D" parent="SubViewportContainer/Arena/FrameCollision"]
+position = Vector2(0, 465)
+shape = SubResource("RectangleShape2D_rlwpo")
+
+[node name="Right" type="CollisionShape2D" parent="SubViewportContainer/Arena/FrameCollision"]
+position = Vector2(465, 0)
 shape = SubResource("RectangleShape2D_jq4nx")
 
 [node name="BattleUI" type="Control" parent="."]
@@ -175,26 +201,7 @@ offset_right = -15.0
 offset_bottom = 23.0
 grow_horizontal = 2
 script = ExtResource("5_taydl")
-
-[node name="FPSCounter" type="Label" parent="BattleUI"]
-process_mode = 3
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -91.5
-offset_top = 4.0
-offset_right = 91.5
-offset_bottom = 52.0
-grow_horizontal = 2
-grow_vertical = 0
-theme = ExtResource("6_8pmc4")
-text = "placeholder"
-label_settings = ExtResource("4_8cyd8")
-horizontal_alignment = 1
-script = ExtResource("4_ufn6s")
+metadata/_edit_use_anchors_ = true
 
 [node name="Time" type="Label" parent="BattleUI"]
 layout_mode = 1

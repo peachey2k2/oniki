@@ -1,11 +1,5 @@
 @tool
-class_name STGStats extends PackedDataContainer
-
-enum {STATIC, RANDOM}
-enum {CIRCULAR, LINEAR}
-enum {ABSOLUTE, RELATIVE}
-enum {SMALL, MEDIUM, LARGE, XLARGE}
-
+class_name STGStats extends Resource
 
 func get_stats(id:String) -> Dictionary:
 	return get(id)
