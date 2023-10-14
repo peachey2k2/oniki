@@ -19,24 +19,31 @@ func _init():
 	input_pickable = false
 
 func called_low(pos, vel, color_outer, color_inner):
+	STGGlobal.get_bullet(index)
 	adjusted_process = Callable(self, "_adjusted_process_low")
 	position = pos
 	velocity = vel
-	$outer.modulate = color_outer
-	$inner.modulate = color_inner
+	$sprite.texture.gradient.colors = [color_inner, color_inner, color_outer, color_outer, Color.TRANSPARENT]
 	set_deferred("process_mode", PROCESS_MODE_INHERIT)
 
 func called(pos, vel, acc, color_outer, color_inner):
+	STGGlobal.get_bullet(index)
 	adjusted_process = Callable(self, "_adjusted_process")
 	position = pos
 	velocity = vel
 	acceleration = acc
-	$outer.modulate = color_outer
-	$inner.modulate = color_inner
+	$sprite.texture.gradient.colors = [color_inner, color_inner, color_outer, color_outer, Color.TRANSPARENT]
 	init_pos = position
 	start_time = GFS.time(false)
 	sine_direction = velocity.rotated(PI/2).normalized()
 	set_deferred("process_mode", PROCESS_MODE_INHERIT)
+
+## function to modify the bullet. you can pass "null" to omit the first 3 variables.
+func modify(pos, vel, acc, color_outer, color_inner):
+	if pos != null: position = pos
+	if vel != null: velocity = velocity
+	if acc != null: acceleration = acc
+	$sprite.texture.gradient.colors = [color_inner, color_inner, color_outer, color_outer, Color.TRANSPARENT]
 
 var last_pos:Vector2
 

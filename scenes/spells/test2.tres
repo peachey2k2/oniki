@@ -1,0 +1,49 @@
+[gd_resource type="PackedDataContainer" script_class="STGSpell" load_steps=8 format=3 uid="uid://gvdy42sx458q"]
+
+[ext_resource type="Script" path="res://addons/GodotSTG/resources/spell.gd" id="1_pxt8l"]
+[ext_resource type="Script" path="res://addons/GodotSTG/resources/sequence.gd" id="2_o2y67"]
+[ext_resource type="Script" path="res://addons/GodotSTG/resources/bullet_modifier.gd" id="3_ptxtd"]
+[ext_resource type="Script" path="res://addons/GodotSTG/spawners/curve.gd" id="4_2l2m8"]
+
+[sub_resource type="Resource" id="Resource_ysn2u"]
+script = ExtResource("3_ptxtd")
+index = 0
+outer_color = Color(1, 0, 0, 1)
+inner_color = Color(1, 1, 1, 1)
+type = 1
+speed = 0.0
+acceleration = 0.0
+sine_freq = 0.0
+sine_width = 0.0
+
+[sub_resource type="Resource" id="Resource_hunps"]
+script = ExtResource("4_2l2m8")
+repeat = 5
+delay = 0.0
+position = Vector2(0, 0)
+position_type = 0
+towards = 0
+rotation_speed = 0.0
+bullet = SubResource("Resource_ysn2u")
+offset = Vector2(0, 0)
+trigger_check = 0
+
+[sub_resource type="PackedDataContainer" id="PackedDataContainer_cx05h"]
+script = ExtResource("2_o2y67")
+wait_before = 1.0
+end_at_hp = -1
+end_at_time = -1
+clear_after_done = true
+spawners = Array[Resource("res://addons/GodotSTG/resources/spawner.gd")]([SubResource("Resource_hunps")])
+
+[resource]
+script = ExtResource("1_pxt8l")
+name = "test"
+health = 5
+time = 30
+bar_color = Color(0.886275, 0.592157, 0.498039, 1)
+enemy_pos = Vector2(0.5, 0.5)
+enemy_movement = 0
+shield = 0
+randomize_sequences = false
+sequences = Array[ExtResource("2_o2y67")]([SubResource("PackedDataContainer_cx05h")])

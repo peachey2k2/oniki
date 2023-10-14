@@ -1,74 +1,19 @@
-[gd_scene load_steps=13 format=3 uid="uid://bl58xsn1r4b2l"]
+[gd_scene load_steps=8 format=3 uid="uid://bl58xsn1r4b2l"]
 
 [ext_resource type="Script" path="res://addons/GodotSTG/battle_controller.gd" id="1_d455w"]
-[ext_resource type="Script" path="res://addons/GodotSTG/battle_stats_sub_objects/bar.gd" id="2_7n7u6"]
-[ext_resource type="Script" path="res://addons/GodotSTG/battle_stats_sub_objects/spell.gd" id="3_7byd1"]
-[ext_resource type="Script" path="res://addons/GodotSTG/battle_stats_sub_objects/sequence.gd" id="4_hgx2v"]
-[ext_resource type="Script" path="res://addons/GodotSTG/spawners/circular.gd" id="5_ipw26"]
+[ext_resource type="Script" path="res://addons/GodotSTG/resources/bar.gd" id="2_apiam"]
+[ext_resource type="PackedDataContainer" uid="uid://8w3edb6ef414" path="res://scenes/spells/test1.tres" id="3_cwelt"]
+[ext_resource type="PackedDataContainer" uid="uid://gvdy42sx458q" path="res://scenes/spells/test2.tres" id="4_ljdsm"]
 [ext_resource type="Script" path="res://addons/GodotSTG/battle_stats.gd" id="6_17363"]
 
-[sub_resource type="Resource" id="Resource_ux8x5"]
-script = ExtResource("5_ipw26")
-init_angle = 0.0
-amount = 10
-repeat = 1000
-tilt = 30.87
-speed = 200.0
-distance = 0.0
-stretch = 1.0
-delay = 0.2
-acceleration = 0.0
-sine_freq = 0.0
-sine_width = 0.0
-position = Vector2(0, 0)
-position_type = 1
-towards = 0
-rotation_speed = 0.02
-bullet_index = 0
-bullet_outer_color = Color(1, 0, 0, 1)
-bullet_inner_color = Color(1, 1, 1, 1)
-bullet_type = 1
-
-[sub_resource type="PackedDataContainer" id="PackedDataContainer_hud77"]
-script = ExtResource("4_hgx2v")
-wait_before = 1.0
-end_at_hp = -1
-end_at_time = -1
-clear_after_done = true
-spawners = Array[Resource("res://addons/GodotSTG/battle_stats_sub_objects/spawner.gd")]([SubResource("Resource_ux8x5")])
-
-[sub_resource type="PackedDataContainer" id="PackedDataContainer_bheam"]
-script = ExtResource("3_7byd1")
-name = "test"
-health = 5
-time = 30
-bar_color = Color(0.886275, 0.592157, 0.498039, 1)
-enemy_pos = Vector2(0.5, 0.5)
-enemy_movement = 0
-shield = 0
-randomize_sequences = false
-sequences = Array[ExtResource("4_hgx2v")]([SubResource("PackedDataContainer_hud77")])
-
-[sub_resource type="PackedDataContainer" id="PackedDataContainer_8v7jv"]
-script = ExtResource("3_7byd1")
-name = "test"
-health = 5
-time = 30
-bar_color = Color(0.560784, 0.894118, 0.937255, 1)
-enemy_pos = Vector2(0.5, 0.5)
-enemy_movement = 0
-shield = 0
-randomize_sequences = false
-sequences = Array[ExtResource("4_hgx2v")]([SubResource("PackedDataContainer_hud77")])
-
 [sub_resource type="PackedDataContainer" id="PackedDataContainer_ufk1n"]
-script = ExtResource("2_7n7u6")
-spells = Array[ExtResource("3_7byd1")]([SubResource("PackedDataContainer_bheam"), SubResource("PackedDataContainer_8v7jv")])
+script = ExtResource("2_apiam")
+spells = Array[Resource("res://addons/GodotSTG/resources/spell.gd")]([ExtResource("3_cwelt"), ExtResource("4_ljdsm")])
 
 [sub_resource type="PackedDataContainer" id="PackedDataContainer_ciymr"]
 script = ExtResource("6_17363")
 player_position = Vector2(0.5, 0.7)
-bars = Array[ExtResource("2_7n7u6")]([SubResource("PackedDataContainer_ufk1n")])
+bars = Array[ExtResource("2_apiam")]([SubResource("PackedDataContainer_ufk1n")])
 
 [node name="test_dummy" type="Node2D"]
 script = ExtResource("1_d455w")

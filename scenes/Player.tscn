@@ -179,7 +179,7 @@ sprite_frames = SubResource("SpriteFrames_fiwbo")
 animation = &"stop_left"
 
 [node name="Slash" type="Sprite2D" parent="."]
-visible = false
+modulate = Color(1, 1, 1, 0)
 scale = Vector2(0.9, 0.9)
 texture = ExtResource("3_sjd7i")
 

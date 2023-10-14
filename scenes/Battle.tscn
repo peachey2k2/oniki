@@ -34,6 +34,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 4
+mouse_filter = 2
 script = ExtResource("1_p0goo")
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
@@ -50,6 +51,7 @@ offset_right = 440.0
 offset_bottom = 440.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="Arena" type="SubViewport" parent="SubViewportContainer"]
 handle_input_locally = false
@@ -63,6 +65,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 texture = SubResource("CanvasTexture_csmdb")
 
 [node name="Camera2D" type="Camera2D" parent="SubViewportContainer/Arena"]
@@ -121,6 +124,8 @@ shape = SubResource("RectangleShape2D_rlwpo")
 [node name="Right" type="CollisionShape2D" parent="SubViewportContainer/Arena/FrameCollision"]
 position = Vector2(465, 0)
 shape = SubResource("RectangleShape2D_jq4nx")
+
+[node name="Temp" type="Node2D" parent="SubViewportContainer/Arena"]
 
 [node name="BattleUI" type="Control" parent="."]
 z_index = 1

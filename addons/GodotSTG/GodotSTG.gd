@@ -15,6 +15,12 @@ var settings:Array[Dictionary] = [
 		"type": TYPE_INT,
 		"hint": PROPERTY_HINT_LAYERS_2D_PHYSICS,
 		"hint_string": ""
+	},{
+		"name": "pool_size",
+		"default": 5000,
+		"type": TYPE_INT,
+		"hint": PROPERTY_HINT_RANGE,
+		"hint_string": "100,20000,1,or_greater"
 	}
 ] #TODO: fix this mess.
 

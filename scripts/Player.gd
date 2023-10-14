@@ -97,9 +97,9 @@ func slash_animation():
 		Slash.rotation = GFS.get_angle(self, GFS.Enemy)
 	else:
 		Slash.rotation = facing
-	Slash.show()
-	await get_tree().create_timer(0.1, false).timeout
-	Slash.hide()
+	Slash.modulate = Color.WHITE
+	var tw = create_tween()
+	tw.tween_property(Slash, "modulate", Color.TRANSPARENT, 0.1)
 	Slash.flip_v = !Slash.flip_v
 
 func _process(_delta):

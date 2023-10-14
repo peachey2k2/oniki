@@ -44,6 +44,8 @@ var Controller:Node
 var PlayerCamera:Node
 var FpsCounter:Node
 var Ball:Node
+var SpawnerContainer:Node
+var Temporary:Node
 
 var _dialogue:ClydeDialogue
 var in_dialogue:bool = false
@@ -262,7 +264,9 @@ func load_battle(id:String):
 	LastSprite = Sprite
 	ArenaViewport.add_child(Controller)
 	ArenaViewport.add_child(Ball)
-	Controller.start(ArenaViewport.get_node("Spawners"), Player, Enemy, BATTLE_RECT)
+	SpawnerContainer = ArenaViewport.get_node("Spawners")
+	Temporary = ArenaViewport.get_node("Temp")
+	Controller.start(SpawnerContainer, Player, Enemy, BATTLE_RECT)
 	FpsCounter.reparent(root)
 	FpsCounter.position = Vector2(0, 0)
 	game_state = BATTLE
@@ -278,6 +282,8 @@ func reload_battle():
 	ArenaViewport.add_child(Ball)
 	for i in ArenaViewport.get_node("Spawners").get_children():
 		i.remove()
+	for i in Temporary.get_children():
+		i.queue_free()
 	Controller.free()
 	Controller = load("res://scenes/battles/" + Enemy.id + ".tscn").instantiate()
 	ArenaViewport.add_child(Controller)
@@ -289,6 +295,8 @@ func unload_battle():
 	Player.resurrect()
 	for i in ArenaViewport.get_node("Spawners").get_children():
 		i.remove()
+	for i in Temporary.get_children():
+		i.queue_free()
 	root.remove_child(CurrentArena)
 	root.add_child(Overworld)
 	Player.get_node("./ExtraColliders/Hitbox/CollisionShape2D").disabled = true

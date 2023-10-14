@@ -12,11 +12,7 @@ input_pickable = false
 monitoring = false
 script = ExtResource("1_s54jb")
 
-[node name="outer" type="Sprite2D" parent="."]
-
-[node name="inner" type="Sprite2D" parent="."]
-process_mode = 4
-z_index = 1
+[node name="sprite" type="Sprite2D" parent="."]
 
 [node name="collision" type="CollisionShape2D" parent="."]
 z_index = 2

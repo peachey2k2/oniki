@@ -38,7 +38,7 @@ func trail(start, end):
 	Laser.add_point(start)
 	Laser.add_point(end)
 	Laser.color_outer = Color.TRANSPARENT
-	GFS.ArenaViewport.add_child(Laser)
+	GFS.Temporary.add_child(Laser)
 	var tween = create_tween()
 	tween.tween_property(Laser, "modulate", Color.TRANSPARENT, 0.5)
 	await tween.finished

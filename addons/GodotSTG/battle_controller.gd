@@ -55,22 +55,17 @@ func start(spawner_container:Node2D, player:Node2D, enemy:Node2D, arena_rect:Rec
 			enemy.monitoring = true
 			while !is_spell_over:
 				for curr_sequence in curr_spell.sequences:
-					if is_spell_over:
-						break
+					if is_spell_over: break
 					hp_threshold = curr_sequence.end_at_hp
 					time_threshold = curr_sequence.end_at_time
 					await tree.create_timer(curr_sequence.wait_before, false).timeout
 					for curr_spawner in curr_sequence.spawners:
 						var spawner = STGSpawnerNode.new()
-						spawner.pool = STGGlobal.pools[curr_spawner.bullet_index]
-						spawner.color_outer = curr_spawner.bullet_outer_color
-						spawner.color_inner = curr_spawner.bullet_inner_color
-						spawner.bullet_type = curr_spawner.bullet_type
+						spawner.data = curr_spawner
 						spawner_container.add_child(spawner)
 						match curr_spawner.position_type:
 							0: spawner.position = lerp4arena(curr_spawner.position)
 							1: spawner.position = lerp4arena(curr_spawner.position) + enemy.position
-						spawner.rotation_speed = curr_spawner.rotation_speed
 						curr_spawner.spawn(spawner)
 					await STGGlobal.end_sequence
 			await STGGlobal.end_spell
