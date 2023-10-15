@@ -1,9 +1,20 @@
-[gd_resource type="PackedDataContainer" script_class="STGSpell" load_steps=10 format=3 uid="uid://8w3edb6ef414"]
+[gd_resource type="PackedDataContainer" script_class="STGSpell" load_steps=9 format=3 uid="uid://8w3edb6ef414"]
 
 [ext_resource type="Script" path="res://addons/GodotSTG/resources/spell.gd" id="1_51pkt"]
 [ext_resource type="Script" path="res://addons/GodotSTG/resources/sequence.gd" id="2_wj8xh"]
 [ext_resource type="Script" path="res://addons/GodotSTG/resources/bullet_modifier.gd" id="3_13xeo"]
 [ext_resource type="Script" path="res://addons/GodotSTG/spawners/circular.gd" id="4_wgpol"]
+
+[sub_resource type="Resource" id="Resource_bvs3r"]
+script = ExtResource("3_13xeo")
+index = 0
+outer_color = Color(1, 0, 0, 1)
+inner_color = Color(1, 1, 1, 1)
+type = 1
+speed = 240.0
+acceleration = -150.0
+sine_freq = 0.0
+sine_width = 0.0
 
 [sub_resource type="Resource" id="Resource_2crky"]
 script = ExtResource("3_13xeo")
@@ -11,24 +22,11 @@ index = 0
 outer_color = Color(1, 0, 0, 1)
 inner_color = Color(1, 1, 1, 1)
 type = 1
-speed = 200.0
+speed = 240.0
 acceleration = 0.0
 sine_freq = 0.0
 sine_width = 0.0
-
-[sub_resource type="Resource" id="Resource_bvs3r"]
-script = ExtResource("3_13xeo")
-index = 0
-outer_color = Color(0, 0, 1, 1)
-inner_color = Color(1, 1, 1, 1)
-type = 1
-speed = 0.0
-acceleration = 0.0
-sine_freq = 0.0
-sine_width = 0.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_l8osw"]
-radius = 250.0
+zoned = SubResource("Resource_bvs3r")
 
 [sub_resource type="Resource" id="Resource_ux8x5"]
 script = ExtResource("4_wgpol")
@@ -42,12 +40,11 @@ delay = 0.2
 position = Vector2(0, 0)
 position_type = 1
 towards = 0
+rotation = 0.0
 rotation_speed = 0.0
 bullet = SubResource("Resource_2crky")
-shape = SubResource("CircleShape2D_l8osw")
 offset = Vector2(0, 0)
 trigger_check = 0
-new_bullet = SubResource("Resource_bvs3r")
 
 [sub_resource type="PackedDataContainer" id="PackedDataContainer_hud77"]
 script = ExtResource("2_wj8xh")

@@ -9,6 +9,7 @@ enum TRIGGER_CHECK{EXITED, ENTERED}
 @export var position:Vector2
 @export var position_type:POS_TYPE
 @export var towards:TOWARDS
+@export var rotation:float
 @export var rotation_speed:float
 
 @export_group("Bullet")

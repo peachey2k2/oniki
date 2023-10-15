@@ -23,6 +23,7 @@ delay = 0.0
 position = Vector2(0, 0)
 position_type = 0
 towards = 0
+rotation = 0.0
 rotation_speed = 0.0
 bullet = SubResource("Resource_ysn2u")
 offset = Vector2(0, 0)

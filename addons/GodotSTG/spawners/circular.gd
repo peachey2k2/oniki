@@ -2,7 +2,10 @@
 class_name CircularSpawner extends STGSpawner
 
 @export_group("Pattern")
-@export var init_angle:float
+@export var init_angle:float:
+	set(val):
+		init_angle_rad = deg_to_rad(val)
+		init_angle = val
 ## amount of bullets per circle
 @export var amount:int
 ## how many circles the function will create before stopping
@@ -20,13 +23,13 @@ class_name CircularSpawner extends STGSpawner
 @export var delay:float
 ## the wait time after every bullet
 
-var rotation = init_angle
+var init_angle_rad:float
 var tilt_rad:float
 
 func spawn(container:Node2D):
 	var tree = container.get_tree()
 	var gap = PI*2/amount
-	var velocity = bullet.speed * Vector2.from_angle(init_angle)
+	var velocity = bullet.speed * Vector2.from_angle(init_angle_rad)
 	for i in repeat:
 		for j in amount:
 			var velocity_normalized = velocity.normalized()

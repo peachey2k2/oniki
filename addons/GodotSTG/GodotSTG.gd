@@ -10,17 +10,17 @@ var settings:Array[Dictionary] = [
 		"hint": PROPERTY_HINT_DIR,
 		"hint_string": ""
 	},{
-		"name": "collision_layer",
-		"default": 2,
-		"type": TYPE_INT,
-		"hint": PROPERTY_HINT_LAYERS_2D_PHYSICS,
-		"hint_string": ""
-	},{
 		"name": "pool_size",
 		"default": 5000,
 		"type": TYPE_INT,
 		"hint": PROPERTY_HINT_RANGE,
 		"hint_string": "100,20000,1,or_greater"
+	},{
+		"name": "collision_layer",
+		"default": 0b10, #2
+		"type": TYPE_INT,
+		"hint": PROPERTY_HINT_LAYERS_2D_PHYSICS,
+		"hint_string": ""
 	}
 ] #TODO: fix this mess.
 

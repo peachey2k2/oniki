@@ -11,3 +11,4 @@ enum TYPE{LOW, REGULAR, HIGH}
 @export var acceleration:float
 @export var sine_freq:float
 @export var sine_width:float
+@export var zoned:STGBulletModifier

@@ -9,6 +9,8 @@ var coll:CollisionShape2D
 
 func _ready():
 	
+	rotation_degrees = data.rotation
+	
 	# configuring the callable. there are different "spawn" functions with increased
 	# complexity so we don't run calculations for stuff that we won't need.
 	var type_string
@@ -20,6 +22,7 @@ func _ready():
 	
 	# configuring the zone logic
 	area = STGGlobal.zone_template.instantiate()
+	area.collision_mask = STGGlobal.COLLISION_LAYER
 	coll = area.get_child(0)
 	coll.shape = data.shape
 	add_child(area)
@@ -28,9 +31,10 @@ func _ready():
 	else:
 		area.area_entered.connect(Callable(self, "_zone_triggered"))
 
-func _zone_triggered(bullet):
-	if !(bullet is STGBullet): return
-	bullet.modify(null, null, null, data.new_bullet.outer_color, data.new_bullet.inner_color)
+func _zone_triggered(area):
+	if !(area is STGBullet) || !(area.data.zoned): return
+	area.data = area.data.zoned
+	area.modify(area.data)
 
 func _physics_process(delta):
 	if Engine.is_editor_hint(): return
@@ -39,12 +43,14 @@ func _physics_process(delta):
 func _spawn_low(pos, vel, _acc):
 	var ins = STGGlobal.get_bullet(data.bullet.index)
 	ins.called_low(pos, vel, data.bullet.outer_color, data.bullet.inner_color)
+	ins.data = data.bullet
 	add_child(ins)
 	ins.show()
 
 func _spawn_regular(pos, vel, acc):
 	var ins = STGGlobal.get_bullet(data.bullet.index)
 	ins.called(pos, vel, acc, data.bullet.outer_color, data.bullet.inner_color)
+	ins.data = data.bullet
 	add_child(ins)
 	ins.show()
 

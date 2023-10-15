@@ -252,7 +252,7 @@ func load_battle(id:String):
 	Enemy.add_child(Sprite.duplicate())
 	root.remove_child(Overworld)
 	root.add_child(CurrentArena)
-	Ball = BallDefault.instantiate()
+#	Ball = BallDefault.instantiate()
 	# i have no fucking clue why, but the engine shits itself
 	# if this move_child() isn't called deferred.
 	root.move_child.call_deferred(PauseHandler, -1)
@@ -277,8 +277,8 @@ func reload_battle():
 	ArenaViewport.remove_child(Player)
 	ArenaViewport.add_child(Player)
 	Player.resurrect()
-	Ball.free()
-	Ball = BallDefault.instantiate()
+#	Ball.free()
+#	Ball = BallDefault.instantiate()
 	ArenaViewport.add_child(Ball)
 	for i in ArenaViewport.get_node("Spawners").get_children():
 		i.remove()

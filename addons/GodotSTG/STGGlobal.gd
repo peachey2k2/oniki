@@ -21,17 +21,18 @@ var settings:Array[Dictionary] = [
 		"name": "bullet_directory",
 		"default": "res://addons/GodotSTG/bullets/default",
 	},{
-		"name": "collision_layer",
-		"default": 2,
-	},{
 		"name": "pool_size",
 		"default": 5000,
+	},{
+		"name": "collision_layer",
+		"default": 0b10,
 	}
 ]
 
 var BULLET_DIRECTORY
-var COLLISION_LAYER
 var POOL_SIZE
+var COLLISION_LAYER
+var ZONE_LAYER
 
 var pool:Array[STGBullet]
 var data_arr:Array[STGBulletData]
@@ -54,7 +55,7 @@ func pool_all():
 func get_bullet(idx:int) -> STGBullet:
 	assert(pool.size() > 0, "Pool is out of bullets.")
 	var bullet = pool[-1]
-	pool.pop_back() 
+	pool.pop_back()
 	var data = data_arr[idx]
 	bullet.get_child(1).shape = data.collision
 	# we replace the texture and gradient with their duplicates, which is the
