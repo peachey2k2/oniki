@@ -40,6 +40,10 @@ var data_arr:Array[STGBulletData]
 func _ready():
 	for _setting in settings:
 		set((_setting.get("name").to_upper()), ProjectSettings.get_setting("godotstg/" + _setting.get("name"), _setting.get("default")))
+	
+	# global clocks cuz yeah
+	clock_timer      = get_tree().create_timer(TIMER_START, false)
+	clock_real_timer = get_tree().create_timer(TIMER_START, true)
 
 # further testing revealed that pooling is actually SLOWER, at least for my case.
 # i'm either gonna remove the pooling system or make it toggleable and disabled by default.
@@ -70,3 +74,18 @@ func repool(bullet:STGBullet):
 	bullet.hide()
 	bullet.get_parent().remove_child(bullet)
 	pool.append(bullet)
+
+# global clocks
+const TIMER_START = 10000000
+
+var clock:float
+var clock_real:float
+var clock_timer:SceneTreeTimer
+var clock_real_timer:SceneTreeTimer
+
+# this will always return how much time has passed since the game started.
+func time(count_while_paused:bool = true) -> float:
+	if count_while_paused:
+		return TIMER_START - clock_real_timer.get_time_left()
+	else:
+		return TIMER_START - clock_timer.get_time_left()

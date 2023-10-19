@@ -26,13 +26,16 @@ func _ready():
 	coll = area.get_child(0)
 	coll.shape = data.shape
 	add_child(area)
-	if data.trigger_check == 0:
-		area.area_exited.connect(Callable(self, "_zone_triggered"))
-	else:
-		area.area_entered.connect(Callable(self, "_zone_triggered"))
+	area.area_exited.connect(Callable(self, "_zone_exited"))
+	area.area_entered.connect(Callable(self, "_zone_entered"))
 
-func _zone_triggered(area):
-	if !(area is STGBullet) || !(area.data.zoned): return
+func _zone_exited(area):
+	if !(area is STGBullet) || !(area.data.zoned) || area.data.trigger_check != 0: return
+	area.data = area.data.zoned
+	area.modify(area.data)
+
+func _zone_entered(area):
+	if !(area is STGBullet) || !(area.data.zoned) || area.data.trigger_check != 1: return
 	area.data = area.data.zoned
 	area.modify(area.data)
 

@@ -2,8 +2,6 @@ extends Node
 
 const AUTOSAVE_INTERVAL = 30
 
-const TIMER_START = 1000000
-
 const BUI_X_START = 0
 const BUI_X_END = 880
 const BUI_Y_START = 0
@@ -52,11 +50,6 @@ var in_dialogue:bool = false
 var last_speech_box:Node
 var last_choice_box:Node
 
-var clock:float
-var clock_real:float
-var clock_timer:SceneTreeTimer
-var clock_real_timer:SceneTreeTimer
-
 func _physics_process(_delta):
 	if Input.is_action_just_pressed("quicksave") && game_state == WORLD:
 		save_data()
@@ -92,10 +85,6 @@ func _ready():
 	STGGlobal.end_battle.connect(Callable(self, "unload_battle"))
 	option_selected.connect(Callable(self, "_on_option_selected"))
 	dialogue_end.connect(Callable(self, "_on_dialogue_end"))
-	
-	# global clocks cuz yeah
-	clock_timer = get_tree().create_timer(TIMER_START, false)
-	clock_real_timer = get_tree().create_timer(TIMER_START, true)
 	
 	# function to initialize the actual game
 	start()
@@ -217,12 +206,6 @@ func _on_dialogue_end():
 	if last_speech_box != null: last_speech_box.free()
 	if last_choice_box != null: last_choice_box.free()
 
-func time(count_while_paused:bool) -> float:
-	if count_while_paused:
-		return TIMER_START - clock_real_timer.get_time_left()
-	else:
-		return TIMER_START - clock_timer.get_time_left()
-
 func start():
 	game_state = NONE
 	await STGGlobal.pool_all()
@@ -263,7 +246,7 @@ func load_battle(id:String):
 	Player.get_node("ExtraColliders/GrazeDetection").connect("area_entered", Callable(CurrentArena.get_node("BattleUI/Graze"),"_on_area_entered"))
 	LastSprite = Sprite
 	ArenaViewport.add_child(Controller)
-	ArenaViewport.add_child(Ball)
+#	ArenaViewport.add_child(Ball)
 	SpawnerContainer = ArenaViewport.get_node("Spawners")
 	Temporary = ArenaViewport.get_node("Temp")
 	Controller.start(SpawnerContainer, Player, Enemy, BATTLE_RECT)
@@ -279,7 +262,7 @@ func reload_battle():
 	Player.resurrect()
 #	Ball.free()
 #	Ball = BallDefault.instantiate()
-	ArenaViewport.add_child(Ball)
+#	ArenaViewport.add_child(Ball)
 	for i in ArenaViewport.get_node("Spawners").get_children():
 		i.remove()
 	for i in Temporary.get_children():
