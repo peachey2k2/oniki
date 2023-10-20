@@ -52,12 +52,12 @@ radius = 250.0
 [sub_resource type="Resource" id="Resource_ux8x5"]
 script = ExtResource("4_wgpol")
 init_angle = 0.0
-amount = 10
+amount = 20
 repeat = 100000000
 tilt = 30.87
 distance = 0.0
 stretch = 1.0
-delay = 0.2
+delay = 0.1
 position = Vector2(0, 0)
 position_type = 1
 towards = 0

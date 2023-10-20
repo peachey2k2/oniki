@@ -6,15 +6,15 @@ enum {MODIFY_OMIT_POSITION, MODIFY_OMIT_VELOCITY, MODIFY_OMIT_ACCELERATION, MODI
 @export var Sprite:Sprite2D
 @export var Collision:CollisionShape2D
 
-@onready var init_pos:Vector2
-@onready var start_time:float
-@onready var sine_direction:Vector2
+var init_pos:Vector2
+var start_time:float
+var sine_direction:Vector2
 var velocity:Vector2 = Vector2(0,0)
 var acceleration:Vector2
 var sine_freq:float
 var sine_width:float
 var data:STGBulletModifier
-var index:int: set = set_index
+var index:int
 var adjusted_process:Callable
 var last_pos:Vector2
 var lifespan:SceneTreeTimer
@@ -79,8 +79,5 @@ func _adjusted_process(delta):
 func remove():
 	# animations
 	if !lifespan: lifespan.free()
+	STGGlobal.bullet_count -= 1
 	queue_free()
-
-func set_index(val):
-	index = val
-	return self

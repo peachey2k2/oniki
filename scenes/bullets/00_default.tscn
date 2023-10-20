@@ -2,12 +2,12 @@
 
 [ext_resource type="Script" path="res://addons/GodotSTG/bullets/bullet.gd" id="1_863jw"]
 
-[sub_resource type="Gradient" id="Gradient_6plw4"]
+[sub_resource type="Gradient" id="Gradient_0h7al"]
 offsets = PackedFloat32Array(0, 0.646119, 0.812785, 0.999, 1)
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 0.000406644, 0.000406645, 0.000406644, 1.02438, 0, 0, 0, 1, 0, 0, 0, 0)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_5p4ft"]
-gradient = SubResource("Gradient_6plw4")
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_t8ymv"]
+gradient = SubResource("Gradient_0h7al")
 width = 32
 height = 32
 fill = 1
@@ -29,7 +29,7 @@ Sprite = NodePath("sprite")
 Collision = NodePath("collision")
 
 [node name="sprite" type="Sprite2D" parent="."]
-texture = SubResource("GradientTexture2D_5p4ft")
+texture = SubResource("GradientTexture2D_t8ymv")
 
 [node name="collision" type="CollisionShape2D" parent="."]
 z_index = 2

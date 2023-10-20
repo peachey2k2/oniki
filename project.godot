@@ -18,8 +18,8 @@ config/features=PackedStringArray("4.1")
 
 PauseHandler="*res://scenes/PauseHandler.tscn"
 GFS="*res://scripts/autoload/GlobalFunctionScript.gd"
-Panku="*res://addons/panku_console/console.tscn"
 STGGlobal="*res://addons/GodotSTG/STGGlobal.gd"
+Panku="*res://addons/panku_console/console.tscn"
 
 [display]
 
