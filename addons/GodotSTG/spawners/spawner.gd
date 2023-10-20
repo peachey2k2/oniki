@@ -61,4 +61,5 @@ func remove():
 	for _bullet in get_children():
 		if _bullet is STGBullet:
 			_bullet.remove()
+	get_tree().create_timer(5, false)
 	queue_free()

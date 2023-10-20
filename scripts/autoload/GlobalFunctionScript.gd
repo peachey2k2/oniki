@@ -208,7 +208,7 @@ func _on_dialogue_end():
 
 func start():
 	game_state = NONE
-	await STGGlobal.pool_all()
+#	await STGGlobal.pool_all()
 	Overworld = load("res://scenes/overworld.tscn").instantiate()
 	Player = load("res://scenes/Player.tscn").instantiate()
 	FpsCounter = load("res://scenes/FpsCounter.tscn").instantiate()

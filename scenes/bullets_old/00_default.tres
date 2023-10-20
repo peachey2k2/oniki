@@ -1,6 +1,6 @@
 [gd_resource type="PackedDataContainer" script_class="STGBulletData" load_steps=5 format=3 uid="uid://dtvb2jmtso33f"]
 
-[ext_resource type="Script" path="res://addons/GodotSTG/resources/bullet_data.gd" id="3_bjim2"]
+[ext_resource type="Script" path="res://addons/GodotSTG/resources/bullet_data.gd" id="1_2vw3h"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6lwm7"]
 radius = 7.0
@@ -18,7 +18,6 @@ fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0, 0.5)
 
 [resource]
-script = ExtResource("3_bjim2")
+script = ExtResource("1_2vw3h")
 texture = SubResource("GradientTexture2D_av24e")
 collision = SubResource("CircleShape2D_6lwm7")
-pool_size = 1000
