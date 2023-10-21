@@ -27,23 +27,23 @@ func _ready():
 	Sprite.texture = Sprite.texture.duplicate()
 	Sprite.texture.gradient = Sprite.texture.gradient.duplicate() #this kills the fps. fix it later.
 
-func called_low(pos, vel, color_outer, color_inner):
+func called_low(pos, vel, id):
 	adjusted_process = Callable(self, "_adjusted_process_low")
 	position = pos
 	velocity = vel
-	Sprite.texture.gradient.colors = [color_inner, color_inner, color_outer, color_outer, Color.TRANSPARENT]
+	Sprite.texture = STGGlobal.textures[id]
 	set_deferred("process_mode", PROCESS_MODE_INHERIT)
 	await tree_entered
 	if data.lifespan > 0:
 		lifespan = get_tree().create_timer(data.lifespan, false)
 		lifespan.timeout.connect(Callable(self, "remove"))
 
-func called(pos, vel, acc, color_outer, color_inner):
+func called(pos, vel, acc, id):
 	adjusted_process = Callable(self, "_adjusted_process")
 	position = pos
 	velocity = vel
 	acceleration = acc
-	Sprite.texture.gradient.colors = [color_inner, color_inner, color_outer, color_outer, Color.TRANSPARENT]
+	Sprite.texture = STGGlobal.textures[id]
 	init_pos = position
 	start_time = STGGlobal.time(false)
 	sine_direction = velocity.rotated(PI/2).normalized()
@@ -58,7 +58,7 @@ func modify(mod:STGBulletModifier, flags:int = MODIFY_OMIT_POSITION):
 #	if !(flags & 1):  position = pos
 	if !(flags & 2):  velocity = velocity.normalized() * mod.speed
 	if !(flags & 4):  acceleration = velocity.normalized() * mod.acceleration
-	if !(flags & 8):  Sprite.texture.gradient.colors = [mod.inner_color, mod.inner_color, mod.outer_color, mod.outer_color, Color.TRANSPARENT]
+	if !(flags & 8):  Sprite.texture = STGGlobal.textures[mod.id]
 	if !(flags & 16) && mod.lifespan > 0:
 		lifespan = get_tree().create_timer(mod.lifespan, false)
 		lifespan.timeout.connect(Callable(self, "remove"))
@@ -78,6 +78,6 @@ func _adjusted_process(delta):
 
 func remove():
 	# animations
-	if !lifespan: lifespan.free()
+	if lifespan: lifespan.free()
 	STGGlobal.bullet_count -= 1
 	queue_free()

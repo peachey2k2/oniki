@@ -45,14 +45,14 @@ func _physics_process(delta):
 
 func _spawn_low(pos, vel, _acc):
 	var ins = STGGlobal.get_bullet(data.bullet.index)
-	ins.called_low(pos, vel, data.bullet.outer_color, data.bullet.inner_color)
+	ins.called_low(pos, vel, data.bullet.id)
 	ins.data = data.bullet
 	add_child(ins)
 	ins.show()
 
 func _spawn_regular(pos, vel, acc):
 	var ins = STGGlobal.get_bullet(data.bullet.index)
-	ins.called(pos, vel, acc, data.bullet.outer_color, data.bullet.inner_color)
+	ins.called(pos, vel, acc, data.bullet.id)
 	ins.data = data.bullet
 	add_child(ins)
 	ins.show()

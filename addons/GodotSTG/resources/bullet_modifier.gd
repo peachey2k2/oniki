@@ -15,3 +15,6 @@ enum TRIGGER_CHECK{EXITED, ENTERED}
 @export var sine_width:float
 @export var zoned:STGBulletModifier
 @export var trigger_check:TRIGGER_CHECK = TRIGGER_CHECK.EXITED
+
+# this is automatically set at runtime. dw about it.
+var id:int = -1

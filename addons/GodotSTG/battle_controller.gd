@@ -53,6 +53,15 @@ func start(spawner_container:Node2D, player:Node2D, enemy:Node2D, arena_rect:Rec
 			timer.start()
 			STGGlobal.spell_name_changed.emit(curr_spell.name)
 			enemy.monitoring = true
+			#
+			for seq in curr_spell.sequences:
+				for spw in seq.spawners:
+					var blt = spw.bullet
+					while true:
+						STGGlobal.create_texture(blt)
+						if !(blt.zoned): break
+						else:            blt = blt.zoned
+			#
 			while !is_spell_over:
 				for curr_sequence in curr_spell.sequences:
 					if is_spell_over: break

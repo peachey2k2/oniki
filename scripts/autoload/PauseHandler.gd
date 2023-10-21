@@ -65,8 +65,8 @@ func _ready():
 					i.pressed.connect(Callable(self, "_on" + i.name + "_pressed"))
 
 func _process(_delta):
-	if !DisplayServer.window_is_focused() && !GFS.in_dialogue && !tree.is_paused():
-		pause()
+#	if !DisplayServer.window_is_focused() && !GFS.in_dialogue && !tree.is_paused():
+#		pause()
 	if Input.is_action_just_pressed("pause") && !GFS.in_dialogue:
 		if tree.is_paused():
 			back()
