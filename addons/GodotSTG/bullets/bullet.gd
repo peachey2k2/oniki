@@ -79,5 +79,4 @@ func _adjusted_process(delta):
 func remove():
 	# animations
 	if lifespan: lifespan.free()
-	STGGlobal.bullet_count -= 1
 	queue_free()

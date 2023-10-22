@@ -43,6 +43,7 @@ var PlayerCamera:Node
 var FpsCounter:Node
 var Ball:Node
 var SpawnerContainer:Node
+var SharedArea:Node
 var Temporary:Node
 
 var _dialogue:ClydeDialogue
@@ -233,6 +234,7 @@ func load_battle(id:String):
 	CurrentArena = BattleArena.instantiate()
 	ArenaViewport = CurrentArena.get_node("./SubViewportContainer/Arena")
 	Enemy.add_child(Sprite.duplicate())
+	Enemy.z_index = -1
 	root.remove_child(Overworld)
 	root.add_child(CurrentArena)
 #	Ball = BallDefault.instantiate()
@@ -249,7 +251,9 @@ func load_battle(id:String):
 #	ArenaViewport.add_child(Ball)
 	SpawnerContainer = ArenaViewport.get_node("Spawners")
 	Temporary = ArenaViewport.get_node("Temp")
-	Controller.start(SpawnerContainer, Player, Enemy, BATTLE_RECT)
+	Controller.player = Player
+	Controller.enemy = Enemy
+	Controller.start(SpawnerContainer, BATTLE_RECT)
 	FpsCounter.reparent(root)
 	FpsCounter.position = Vector2(0, 0)
 	game_state = BATTLE
@@ -269,8 +273,10 @@ func reload_battle():
 		i.queue_free()
 	Controller.free()
 	Controller = load("res://scenes/battles/" + Enemy.id + ".tscn").instantiate()
+	Controller.player = Player
+	Controller.enemy = Enemy
 	ArenaViewport.add_child(Controller)
-	Controller.start(ArenaViewport.get_node("Spawners"), Player, Enemy, BATTLE_RECT)
+	Controller.start(ArenaViewport.get_node("Spawners"), BATTLE_RECT)
 	game_state = BATTLE
 
 func unload_battle():

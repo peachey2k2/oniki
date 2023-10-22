@@ -18,4 +18,15 @@ enum TOWARDS{GENERIC, PLAYER}
 @export var shape:Shape2D = null
 @export var offset:Vector2 = Vector2(0, 0)
 
-var pool:Array
+var real_pos:Vector2
+
+func spawn(container:Node2D):
+	if Engine.is_editor_hint(): return
+	if position_type:
+		real_pos = position + STGGlobal.controller.enemy.position
+	else:
+		real_pos = position
+	_spawn(container)
+
+func _spawn(_c):
+	pass

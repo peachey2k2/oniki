@@ -98,7 +98,9 @@ toggle_console={
 
 [physics]
 
+2d/run_on_separate_thread=true
 common/physics_jitter_fix=0.0
+2d/solver/solver_iterations=8
 
 [rendering]
 

@@ -1,6 +1,6 @@
 [![Discord](https://img.shields.io/discord/1146846558508302366.svg?colorB=7289DA&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHYAAABWAgMAAABnZYq0AAAACVBMVEUAAB38%2FPz%2F%2F%2F%2Bm8P%2F9AAAAAXRSTlMAQObYZgAAAAFiS0dEAIgFHUgAAAAJcEhZcwAACxMAAAsTAQCanBgAAAAHdElNRQfhBxwQJhxy2iqrAAABoElEQVRIx7WWzdGEIAyGgcMeKMESrMJ6rILZCiiBg4eYKr%2Fd1ZAfgXFm98sJfAyGNwno3G9sLucgYGpQ4OGVRxQTREMDZjF7ILSWjoiHo1n%2BE03Aw8p7CNY5IhkYd%2F%2F6MtO3f8BNhR1QWnarCH4tr6myl0cWgUVNcfMcXACP1hKrGMt8wcAyxide7Ymcgqale7hN6846uJCkQxw6GG7h2MH4Czz3cLqD1zHu0VOXMfZjHLoYvsdd0Q7ZvsOkafJ1P4QXxrWFd14wMc60h8JKCbyQvImzlFjyGoZTKzohwWR2UzSONHhYXBQOaKKsySsahwGGDnb%2FiYPJw22sCqzirSULYy1qtHhXGbtgrM0oagBV4XiTJok3GoLoDNH8ooTmBm7ZMsbpFzi2bgPGoXWXME6XT%2BRJ4GLddxJ4PpQy7tmfoU2HPN6cKg%2BledKHBKlF8oNSt5w5g5o8eXhu1IOlpl5kGerDxIVT%2BztzKepulD8utXqpChamkzzuo7xYGk%2FkpSYuviLXun5bzdRf0Krejzqyz7Z3p0I1v2d6HmA07dofmS48njAiuMgAAAAASUVORK5CYII%3D)](https://discord.gg/ZuUWPaSrHa)
 # oniki (this is a meme name that'll probably change later idk)
-This is a side project I've been working for a while. The idea is that it'll be an open-world-ish bullet-hell RPG with \[REDACTED\] and \[REDACTED\]. It's still at its toddler stages though. I'm currently working on the battle system. Since I'm planning on making this a pretty big game, it'll take quite a while for even a demo to be out.
+This is a side project I've been working on for a while. The idea is that it'll be an open-world-ish bullet-hell RPG with \[REDACTED\] and \[REDACTED\]. It's still at its toddler stages though. Since I'm planning on making this a pretty big game, it'll take quite a while for even a demo to be out.
 
 ## Progress
 Do these numbers even mean anything? Probably no, I just pull them out of my ass. This does look kinda cool tho so whatever.
@@ -24,6 +24,8 @@ GodotSTG is the plugin I'm working on right now. The plan is to have a plugin th
   - [ ] Enemy movement (either within a `Path2D` or random slight movements)
   - [X] Optimisation via reducing the amount of nodes in every bullet (there are currently 2: one for the sprite and one for the collision. THere used to be 4, the other 2 were a `VisibleOnScreenNotifier2D`(switched to slightly off-screen colliders) and a second `Sprite2D`(2 sprites were there so I could change the outer and inner color seperately using `CanvasItem.modulate`, but there was a less expensive approach, which was to use a `GradientTexture2D` for bullet sprites.))
   - [ ] ~Optimisation via the use of object pooling~ (further testing revealed that pooling (or at least for my implementations) is SLOWER. This is mainly because godot doesn't have a garbage collector, and it's pretty fast at instantiating nodes too.)
+  - [X] Optimisation via low-level tomfuckery (Appaerently I can just manage all my logic through the `PhysicsServer2D` API. This lets me create colliders with way less overhead. It's a bit more tedious to set up since it requires you to do most of the dirty work, but I got about 4.5x the FPS with this approach (right now, I'm getting around 350 FPS with 2.5k bullets))
+  - [ ] Optimisation via literal black magic (In case if the last few options aren't enough (they probably are, even touhou games have a 2k bullet cap), I still have a few more options; mainly multithreading, GDExtension and actually recompiling the engine. I know I said I'd have a boss with 20 phases but this is too much, even for me. It'd be funny to rewrite the Godot's entire physics server in HolyC or Brainfuck or something though.)
   - [ ] More pattern options
   - [X] An ID system to switch between battle objects (This is so I can start a battle from the dialogue system. Clyde offers a trigger system that allows it to emit a signal with the trigger name as a parameter. Then I can just trim its prefix (battle triggers are called "battle_x" where x is the file name for the battle, this is so I can use triggers for other purposes in the future) and just pass the ID to a `load_battle()` function)
   - [ ] Releasing GodotSTG as a standalone plugin (I'm waiting on this until it feels like an actually complete plugin. I also want to write an extensive guide on how to use it.)
@@ -50,3 +52,15 @@ IDK how, but I already have mostly finished this one. It was somehow easier than
 ### Lore/Story
 Oh yeah, this'll be a fun one. I have a broad idea on how the story will go and the major points. I should probably start writing the lore on some document or something. When writing this readme, I figured it basically catalyzes my drive to work on the game, since it gives me a way to work on the game that doesn't involve coding or anything. There is also the fact that the flesh is weak, and the machine is eternal. I can easily forget about some cool plot point, which would be a shame.
   - [ ] idk what to put here
+
+
+
+
+
+
+
+
+
+
+
+Tom is a genius.

@@ -1,0 +1,9 @@
+[gd_resource type="PackedDataContainer" script_class="STGBulletData" load_steps=3 format=3 uid="uid://cb78q7lixi0qg"]
+
+[ext_resource type="Script" path="res://addons/GodotSTG/resources/bullet_data.gd" id="3_fu57m"]
+[ext_resource type="Texture2D" uid="uid://bfwu7s7bjrwpd" path="res://circle_gradient.tres" id="4_2g6ym"]
+
+[resource]
+script = ExtResource("3_fu57m")
+texture = ExtResource("4_2g6ym")
+collision_radius = 13.0

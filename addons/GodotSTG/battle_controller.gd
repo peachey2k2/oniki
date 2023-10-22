@@ -15,6 +15,9 @@ var is_spell_over:bool
 var hp_threshold:int
 var time_threshold:int
 
+var player:Node2D
+var enemy:Node2D
+
 func _ready():
 	if Engine.is_editor_hint(): return
 	tree = get_tree()
@@ -34,7 +37,11 @@ func lerp4arena(weight:Vector2) -> Vector2:
 	)
 
 # TODO: fix this. please.
-func start(spawner_container:Node2D, player:Node2D, enemy:Node2D, arena_rect:Rect2):
+func start(spawner_container:Node2D, arena_rect:Rect2):
+	assert(player, "\"player\" has to be set in order for start() to work.")
+	assert(enemy, "\"enemy\" has to be set in order for start() to work.")	
+	STGGlobal.shared_area = STGGlobal.area_template.instantiate()
+	add_child(STGGlobal.shared_area)
 	STGGlobal.controller = self
 	STGGlobal.battle_start.emit()
 	_spawner_container = spawner_container
@@ -53,7 +60,6 @@ func start(spawner_container:Node2D, player:Node2D, enemy:Node2D, arena_rect:Rec
 			timer.start()
 			STGGlobal.spell_name_changed.emit(curr_spell.name)
 			enemy.monitoring = true
-			#
 			for seq in curr_spell.sequences:
 				for spw in seq.spawners:
 					var blt = spw.bullet
@@ -61,7 +67,6 @@ func start(spawner_container:Node2D, player:Node2D, enemy:Node2D, arena_rect:Rec
 						STGGlobal.create_texture(blt)
 						if !(blt.zoned): break
 						else:            blt = blt.zoned
-			#
 			while !is_spell_over:
 				for curr_sequence in curr_spell.sequences:
 					if is_spell_over: break
@@ -82,6 +87,13 @@ func start(spawner_container:Node2D, player:Node2D, enemy:Node2D, arena_rect:Rec
 		bar_count -= 1
 		STGGlobal.bar_changed.emit(bar_count)
 	STGGlobal.end_battle.emit()
+
+func _physics_process(delta):
+	queue_redraw()
+
+func _draw():
+	for blt in STGGlobal.b:
+		draw_texture(blt.texture, blt.position - blt.texture.get_size() * 0.5)
 
 func emit_life(_bar):
 	var values:Array

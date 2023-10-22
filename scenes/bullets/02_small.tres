@@ -1,0 +1,24 @@
+[gd_resource type="PackedDataContainer" script_class="STGPackedBulletContainer" load_steps=5 format=3 uid="uid://q5bt75e6eocq"]
+
+[ext_resource type="Script" path="res://addons/GodotSTG/resources/bullet_data.gd" id="1_osmcx"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6lwm7"]
+radius = 3.0
+
+[sub_resource type="Gradient" id="Gradient_6plw4"]
+offsets = PackedFloat32Array(0, 0.646119, 0.812785, 0.999, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 0.000406644, 0.000406645, 0.000406644, 1.02438, 0, 0, 0, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_8l561"]
+gradient = SubResource("Gradient_6plw4")
+width = 16
+height = 16
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0, 0.5)
+
+[resource]
+script = ExtResource("1_osmcx")
+texture = SubResource("GradientTexture2D_8l561")
+collision = SubResource("CircleShape2D_6lwm7")
+pool_size = 1000
