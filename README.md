@@ -5,9 +5,10 @@ This is a side project I've been working for a while. The idea is that it'll be 
 ## Progress
 Do these numbers even mean anything? Probably no, I just pull them out of my ass. This does look kinda cool tho so whatever.
 1. [GodotSTG](#godotstg) ![](https://geps.dev/progress/45)
-2. [Overworld](#overworld)![](https://geps.dev/progress/3)
+2. [Overworld](#overworld) ![](https://geps.dev/progress/3)
 3. [Pause Menu](#pause-menu) ![](https://geps.dev/progress/70)
 4. [Lore/Story](#lorestory) ![](https://geps.dev/progress/1)
+
 Overall: ![](https://geps.dev/progress/4)
 
 ## Checklist
@@ -21,7 +22,7 @@ GodotSTG is the plugin I'm working on right now. The plan is to have a plugin th
   - [X] Pattern sequencing (seperating patterns into sets that can run one after another, and these sequences can also be tied to health/time thresholds)
   - [X] Zones (Areas where patterns entering/exiting is checked and this can be used to change the behaviour of bullets)
   - [ ] Enemy movement (either within a `Path2D` or random slight movements)
-  - [X] Optimisation via reducing the amount of nodes in every bullet (there are currently 2: one for the sprite and one for the collision. THere used to be 4, the other 2 were a `VisibleOnScreenNotifier2D`(switched to slightly off-screen colliders) and a second `Sprite2D``(2 sprites were there so I could change the outer and inner color seperately using `CanvasItem.modulate`, but there was a less expensive approach, which was to use a `GradientTexture2D` for bullet sprites.))
+  - [X] Optimisation via reducing the amount of nodes in every bullet (there are currently 2: one for the sprite and one for the collision. THere used to be 4, the other 2 were a `VisibleOnScreenNotifier2D`(switched to slightly off-screen colliders) and a second `Sprite2D`(2 sprites were there so I could change the outer and inner color seperately using `CanvasItem.modulate`, but there was a less expensive approach, which was to use a `GradientTexture2D` for bullet sprites.))
   - [ ] ~Optimisation via the use of object pooling~ (further testing revealed that pooling (or at least for my implementations) is SLOWER. This is mainly because godot doesn't have a garbage collector, and it's pretty fast at instantiating nodes too.)
   - [ ] More pattern options
   - [X] An ID system to switch between battle objects (This is so I can start a battle from the dialogue system. Clyde offers a trigger system that allows it to emit a signal with the trigger name as a parameter. Then I can just trim its prefix (battle triggers are called "battle_x" where x is the file name for the battle, this is so I can use triggers for other purposes in the future) and just pass the ID to a `load_battle()` function)
