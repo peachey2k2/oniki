@@ -271,7 +271,8 @@ func reload_battle():
 		i.remove()
 	for i in Temporary.get_children():
 		i.queue_free()
-	Controller.free()
+	Controller.kill()
+	await get_tree().process_frame
 	Controller = load("res://scenes/battles/" + Enemy.id + ".tscn").instantiate()
 	Controller.player = Player
 	Controller.enemy = Enemy

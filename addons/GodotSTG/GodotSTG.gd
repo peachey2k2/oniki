@@ -5,7 +5,7 @@ var bullets_directory:String
 var settings:Array[Dictionary] = [
 	{
 		"name": "bullet_directory",
-		"default": "res://addons/GodotSTG/bullets/default",
+		"default": "res://addons/GodotSTG/bullets/default/",
 		"type": TYPE_STRING,
 		"hint": PROPERTY_HINT_DIR,
 		"hint_string": ""

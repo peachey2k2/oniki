@@ -1,6 +1,27 @@
-[gd_scene load_steps=2 format=3 uid="uid://wflaa3gqulya"]
+[gd_scene load_steps=2 format=3 uid="uid://cykvn2y6f143p"]
 
-[ext_resource type="Script" path="res://addons/GodotSTG/spawners/spawner.gd" id="1_jhjlk"]
+[sub_resource type="GDScript" id="GDScript_fq1sb"]
+script/source = "#@tool
+## DEPRECATED!!! DO NOT USE LOOOOOOOOOOOOOOOOOOOOOOOOOOOL
+#class_name STGSpawnerNode extends Node2D
+#
+#var index:int
+#var tex:Texture2D
+#var data:STGSpawner:
+#	set(val):
+#		data = val
+#		index = data.bullet.index
+#		tex = STGGlobal.textures[data.bullet.id]
+#
+#func spawn_bullet(pos, vel, acc):
+#	var _data = STGGlobal.bdata[index].duplicate()
+#	_data.position = pos
+#	_data.velocity = vel
+#	_data.acceleration = acc
+#	_data.lifespan = -1
+#	_data.texture = tex
+#	STGGlobal.create_bullet(_data)
+"
 
 [node name="Spawner" type="Node2D"]
-script = ExtResource("1_jhjlk")
+script = SubResource("GDScript_fq1sb")

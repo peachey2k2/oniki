@@ -20,13 +20,27 @@ enum TOWARDS{GENERIC, PLAYER}
 
 var real_pos:Vector2
 
-func spawn(container:Node2D):
+func spawn():
 	if Engine.is_editor_hint(): return
+	bdata = STGGlobal.bdata[bullet.index]
+	tex = STGGlobal.textures[bullet.id]
 	if position_type:
 		real_pos = position + STGGlobal.controller.enemy.position
 	else:
 		real_pos = position
-	_spawn(container)
+	_spawn()
 
-func _spawn(_c):
+func _spawn():
 	pass
+
+var bdata:STGBulletData
+var tex:Texture2D
+
+func spawn_bullet(pos, vel, acc):
+	var _bdata = bdata.duplicate()
+	_bdata.position = pos
+	_bdata.velocity = vel
+	_bdata.acceleration = acc
+	_bdata.lifespan = -1
+	_bdata.texture = tex
+	STGGlobal.create_bullet(_bdata)

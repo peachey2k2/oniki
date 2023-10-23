@@ -26,15 +26,14 @@ class_name CircularSpawner extends STGSpawner
 var init_angle_rad:float
 var tilt_rad:float
 
-func _spawn(container:Node2D):
-	var tree = container.get_tree()
+func _spawn():
 	var gap = PI*2/amount
 	var velocity = bullet.speed * Vector2.from_angle(init_angle_rad)
 	for i in repeat:
 		for j in amount:
 			var velocity_normalized = velocity.normalized()
-			if container == null: return
-			container.spawn_bullet(real_pos + velocity_normalized * distance, Vector2(velocity.x, velocity.y * stretch), velocity_normalized * bullet.acceleration)
+#			if container == null: return
+			spawn_bullet(real_pos + velocity_normalized * distance, Vector2(velocity.x, velocity.y * stretch), velocity_normalized * bullet.acceleration)
 			velocity = velocity.rotated(gap)
 		velocity = velocity.rotated(tilt_rad)
-		await tree.create_timer(delay, false).timeout
+		await STGGlobal.get_tree().create_timer(delay, false).timeout

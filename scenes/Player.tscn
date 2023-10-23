@@ -210,6 +210,7 @@ debug_color = Color(0, 0.6, 0.701961, 0.533333)
 [node name="HitDetection" type="Area2D" parent="ExtraColliders"]
 collision_layer = 4
 collision_mask = 0
+monitoring = false
 
 [node name="Sprite2D" type="Sprite2D" parent="ExtraColliders/HitDetection"]
 modulate = Color(1, 1, 1, 0.490196)
@@ -223,6 +224,7 @@ debug_color = Color(0.65098, 0.513726, 0.176471, 0.196078)
 [node name="GrazeDetection" type="Area2D" parent="ExtraColliders"]
 collision_layer = 0
 collision_mask = 2
+monitorable = false
 
 [node name="Sprite2D" type="Sprite2D" parent="ExtraColliders/GrazeDetection"]
 modulate = Color(1, 1, 1, 0.498039)

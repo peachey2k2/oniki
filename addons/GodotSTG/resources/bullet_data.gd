@@ -1,4 +1,3 @@
-# NOT DEPRECATED!! DO USE
 @tool
 class_name STGBulletData extends Resource
 
@@ -10,4 +9,4 @@ var velocity:Vector2
 var acceleration:Vector2
 var lifespan:float
 
-var area:RID
+var rid:RID

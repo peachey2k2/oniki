@@ -126,7 +126,6 @@ func resurrect():
 	process_mode = Node.PROCESS_MODE_INHERIT
 	show()
 
-
 func _on_interact_detection_area_exited(area):
 	area.material = null
 	if area == closest_node:

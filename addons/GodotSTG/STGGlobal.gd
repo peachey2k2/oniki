@@ -20,7 +20,7 @@ var controller:Node
 var settings:Array[Dictionary] = [
 	{
 		"name": "bullet_directory",
-		"default": "res://addons/GodotSTG/bullets/default",
+		"default": "res://addons/GodotSTG/bullets/default/",
 	},{
 		"name": "collision_layer",
 		"default": 0b10,
@@ -40,7 +40,16 @@ var shared_area:Area2D:
 		shared_area = val
 		shared_area.collision_layer = COLLISION_LAYER
 var area_rid:RID
+#	set(val):
+#		area_rid = val
+#		PhysicsServer2D.area_set_collision_layer(area_rid, COLLISION_LAYER)
 var b:Array[STGBulletData]
+var bqueue:Array[STGBulletData]
+var arena_rect:Rect2:
+	set(val):
+		arena_rect = val
+		arena_rect_margined = val.grow(100)
+var arena_rect_margined:Rect2
 
 const TIMER_START = 10000000
 var clock:float
@@ -73,17 +82,22 @@ func create_bullet(data:STGBulletData):
 	var shape_rid = PhysicsServer2D.circle_shape_create()
 	PhysicsServer2D.shape_set_data(shape_rid, data.collision_radius)
 	PhysicsServer2D.area_add_shape(area_rid, shape_rid, t)
+	data.rid = shape_rid
 	b.append(data)
 
 func _physics_process(delta):
+	bqueue.clear()
 	for i in b.size():
 		var blt = b[i]
-		var t = Transform2D(0, blt.position)
-#		t.origin = blt.position
 		blt.velocity += blt.acceleration * delta * 0.5
 		blt.position += blt.velocity * delta
 		blt.velocity += blt.acceleration * delta * 0.5
-		PhysicsServer2D.area_set_shape_transform(area_rid, i, t)
+		if !arena_rect_margined.has_point(blt.position):
+			bqueue.append(blt)
+		PhysicsServer2D.area_set_shape_transform(area_rid, i, Transform2D(0, blt.position))
+	for blt in bqueue:
+		PhysicsServer2D.free_rid(blt.rid)
+		b.erase(blt)
 
 func create_texture(mod:STGBulletModifier):
 	if mod.id != -1: return #todo: also check whether this exact texture is already saved (same index and colors)
@@ -92,6 +106,17 @@ func create_texture(mod:STGBulletModifier):
 	tex.gradient.colors = [mod.inner_color, mod.inner_color, mod.outer_color, mod.outer_color, Color.TRANSPARENT]
 	mod.id = textures.size()
 	textures.append(tex)
+
+func clear():
+	for i in b:
+		PhysicsServer2D.free_rid(i.rid)
+	b = []
+
+func lerp4arena(weight:Vector2) -> Vector2:
+	return Vector2(
+		lerp(arena_rect.position.x, arena_rect.end.x, weight.x),
+		lerp(arena_rect.position.y, arena_rect.end.y, weight.y)
+	)
 
 # this will always return how much time has passed since the game started.
 func time(count_pauses:bool = true) -> float:
