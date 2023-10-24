@@ -21,6 +21,11 @@ GFS="*res://scripts/autoload/GlobalFunctionScript.gd"
 STGGlobal="*res://addons/GodotSTG/STGGlobal.gd"
 Panku="*res://addons/panku_console/console.tscn"
 
+[debug]
+
+file_logging/log_path="user://logs/latest.txt"
+file_logging/max_log_files=10
+
 [display]
 
 window/size/viewport_width=1920
@@ -105,3 +110,5 @@ common/physics_jitter_fix=0.0
 [rendering]
 
 renderer/rendering_method="gl_compatibility"
+textures/default_filters/anisotropic_filtering_level=0
+viewport/transparent_background=true

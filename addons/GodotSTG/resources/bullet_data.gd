@@ -10,3 +10,4 @@ var acceleration:Vector2
 var lifespan:float
 
 var rid:RID
+var idx:int

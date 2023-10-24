@@ -32,9 +32,9 @@ func _ready():
 func start(spawner_container:Node2D, arena_rect:Rect2):
 	assert(player, "\"player\" has to be set in order for start() to work.")
 	assert(enemy, "\"enemy\" has to be set in order for start() to work.")	
-	STGGlobal.shared_area = STGGlobal.area_template.instantiate()
 #	STGGlobal.area_rid = PhysicsServer2D.area_create()
-	add_child(STGGlobal.shared_area)
+#	add_child(STGGlobal.shared_area)
+	STGGlobal.shared_area.reparent(self, false)
 	STGGlobal.controller = self
 	STGGlobal.battle_start.emit()
 	STGGlobal.arena_rect = arena_rect
@@ -73,6 +73,9 @@ func start(spawner_container:Node2D, arena_rect:Rect2):
 		bar_count -= 1
 		STGGlobal.bar_changed.emit(bar_count)
 	STGGlobal.end_battle.emit()
+
+func _exit_tree():
+	STGGlobal.shared_area.reparent(STGGlobal, false)
 
 func kill():
 	process_mode = Node.PROCESS_MODE_DISABLED

@@ -15,6 +15,18 @@ var settings:Array[Dictionary] = [
 		"type": TYPE_INT,
 		"hint": PROPERTY_HINT_LAYERS_2D_PHYSICS,
 		"hint_string": ""
+	},{
+		"name": "removal_margin",
+		"default": 100,
+		"type": TYPE_INT,
+		"hint": PROPERTY_HINT_RANGE,
+		"hint_string": "0,1000,1,or_greater"
+	},{
+		"name": "pool_size",
+		"default": 5000,
+		"type": TYPE_INT,
+		"hint": PROPERTY_HINT_RANGE,
+		"hint_string": "100,20000,1,or_greater"
 	}
 ] #TODO: fix this mess.
 
