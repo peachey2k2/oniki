@@ -173,7 +173,7 @@ func _on_saves_pressed():
 	switch_menu(Saves, 4)
 
 func _on_quit_pressed():
-	tree.quit()
+	STGGlobal.exit()
 
 # Options
 

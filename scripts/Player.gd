@@ -16,7 +16,7 @@ var closest_node:Node = null
 
 @onready var GrazeBox:Node = $ExtraColliders/GrazeDetection
 @onready var InteractBox:Node = $ExtraColliders/InteractDetection
-@onready var Hitbox:Node = $ExtraColliders/Hitbox
+@onready var Hitbox:Area2D = $ExtraColliders/Hitbox
 @onready var Slash:Node = $Slash
 @onready var Sprite:Node = $PlayerSprite
 
@@ -26,6 +26,7 @@ func _ready():
 #	material.set_shader_parameter("line_color", Color.WHITE)
 	GFS.dialogue_start.connect(Callable(self, "_on_dialogue_start"))
 	GFS.dialogue_end.connect(Callable(self, "_on_dialogue_end"))
+	Hitbox.area_entered.connect(Callable(self, "_on_hitbox_area_entered"))
 
 func _on_dialogue_start():
 	pass
@@ -36,8 +37,8 @@ func _on_dialogue_end():
 #	process_mode = Node.PROCESS_MODE_INHERIT
 
 func _physics_process(delta):
-	if !Hitbox.monitoring:
-		Hitbox.monitoring = true
+#	if !Hitbox.monitoring:
+#		Hitbox.monitoring = true
 	if !GFS.in_dialogue:
 		direction.x = int(Input.is_action_pressed("ui_right")) - int(Input.is_action_pressed("ui_left"))
 		direction.y = int(Input.is_action_pressed("ui_down")) - int(Input.is_action_pressed("ui_up"))
@@ -77,7 +78,7 @@ func _physics_process(delta):
 		closest_node.material = GFS.OutlineMaterial
 
 func hit():
-	Hitbox.monitoring = false
+#	Hitbox.monitoring = false
 	hitOnCooldown = true
 	slash_animation()
 	emit_signal("shoot")
@@ -116,7 +117,7 @@ func _process(_delta):
 		elif Input.is_action_just_pressed("interact"):
 			closest_node.on_interact()
 
-func _on_Hitbox_area_entered(_area):
+func _on_hitbox_area_entered(_area):
 	is_alive = false
 	hide()
 	set_deferred("process_mode", Node.PROCESS_MODE_DISABLED)

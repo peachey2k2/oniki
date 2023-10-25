@@ -248,5 +248,4 @@ debug_color = Color(0.592157, 0.556863, 0.541176, 0.0784314)
 
 [node name="PlayerCamera" type="Camera2D" parent="."]
 
-[connection signal="area_entered" from="ExtraColliders/Hitbox" to="." method="_on_Hitbox_area_entered"]
 [connection signal="area_exited" from="ExtraColliders/InteractDetection" to="." method="_on_interact_detection_area_exited"]

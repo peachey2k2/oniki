@@ -52,7 +52,6 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="Arena" type="SubViewport" parent="SubViewportContainer"]
-disable_3d = true
 transparent_bg = true
 handle_input_locally = false
 size = Vector2i(880, 880)
@@ -164,8 +163,7 @@ texture = SubResource("GradientTexture1D_ksak3")
 
 [node name="ParallaxButGood" type="TextureRect" parent="BattleUI/Background"]
 modulate = Color(1, 1, 1, 0.0745098)
-offset_left = -1.0
-offset_right = 2175.0
+offset_right = 2176.0
 offset_bottom = 1280.0
 texture = ExtResource("2_fq3wh")
 expand_mode = 1

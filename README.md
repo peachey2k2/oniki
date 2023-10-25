@@ -4,7 +4,7 @@ This is a side project I've been working on for a while. The idea is that it'll 
 
 ## Progress
 Do these numbers even mean anything? Probably no, I just pull them out of my ass. This does look kinda cool tho so whatever.
-1. [GodotSTG](#godotstg) ![](https://geps.dev/progress/45)
+1. [GodotSTG](#godotstg) ![](https://geps.dev/progress/60)
 2. [Overworld](#overworld) ![](https://geps.dev/progress/3)
 3. [Pause Menu](#pause-menu) ![](https://geps.dev/progress/70)
 4. [Lore/Story](#lorestory) ![](https://geps.dev/progress/1)
@@ -23,7 +23,7 @@ GodotSTG is the plugin I'm working on right now. The plan is to have a plugin th
   - [X] Zones (Areas where patterns entering/exiting is checked and this can be used to change the behaviour of bullets)
   - [ ] Enemy movement (either within a `Path2D` or random slight movements)
   - [X] Optimisation via reducing the amount of nodes in every bullet (there are currently 2: one for the sprite and one for the collision. THere used to be 4, the other 2 were a `VisibleOnScreenNotifier2D`(switched to slightly off-screen colliders) and a second `Sprite2D`(2 sprites were there so I could change the outer and inner color seperately using `CanvasItem.modulate`, but there was a less expensive approach, which was to use a `GradientTexture2D` for bullet sprites.))
-  - [ ] ~Optimisation via the use of object pooling~ (further testing revealed that pooling (or at least for my implementations) is SLOWER. This is mainly because godot doesn't have a garbage collector, and it's pretty fast at instantiating nodes too.)
+  - [X] ~Optimisation via the use of object pooling~ ~(further testing revealed that pooling (or at least for my implementations) is SLOWER. This is mainly because godot doesn't have a garbage collector, and it's pretty fast at instantiating nodes too.)~ (further FURTHER testing revealed that while the last statement is true, when you use too many RIDs, not having it causes some problems since Godot caches RIDs or something, I cba to fact-check)
   - [X] Optimisation via low-level tomfuckery (Appaerently I can just manage all my logic through the `PhysicsServer2D` API. This lets me create colliders with way less overhead. It's a bit more tedious to set up since it requires you to do most of the dirty work, but I got about 4.5x the FPS with this approach (right now, I'm getting around 350 FPS with 2.5k bullets))
   - [ ] Optimisation via literal black magic (In case if the last few options aren't enough (they probably are, even touhou games have a 2k bullet cap), I still have a few more options; mainly multithreading, GDExtension and actually recompiling the engine. I know I said I'd have a boss with 20 phases but this is too much, even for me. It'd be funny to rewrite the Godot's entire physics server in HolyC or Brainfuck or something though.)
   - [ ] More pattern options

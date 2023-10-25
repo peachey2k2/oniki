@@ -31,6 +31,7 @@ func spawn():
 	_spawn()
 
 func _spawn():
+	assert(false, "No \"_spawn()\" found.")
 	pass
 
 var bdata:STGBulletData

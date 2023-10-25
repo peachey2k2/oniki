@@ -12,7 +12,7 @@ signal end_battle
 signal bar_emptied
 signal damage_taken(new_amount:int)
 
-@onready var bullet_template = preload("res://addons/GodotSTG/bullets/_template.tscn")
+#@onready var bullet_template = preload("res://addons/GodotSTG/bullets/_template.tscn")
 @onready var zone_template = preload("res://addons/GodotSTG/resources/zone.tscn")
 @onready var area_template = preload("res://addons/GodotSTG/resources/shared_area.tscn")
 
@@ -54,6 +54,7 @@ var shared_area:Area2D:
 		shared_area = val
 		shared_area.collision_layer = COLLISION_LAYER
 var area_rid:RID
+@onready var dummy_area_rid:RID = PhysicsServer2D.area_create()
 #	set(val):
 #		area_rid = val
 #		PhysicsServer2D.area_set_collision_layer(area_rid, COLLISION_LAYER)
@@ -145,6 +146,19 @@ func lerp4arena(weight:Vector2) -> Vector2:
 		lerp(arena_rect.position.x, arena_rect.end.x, weight.x),
 		lerp(arena_rect.position.y, arena_rect.end.y, weight.y)
 	)
+
+func _notification(what):
+	if what == NOTIFICATION_WM_CLOSE_REQUEST: exit()
+
+func exit():
+	get_tree().paused = true
+#	for i in bpool:
+#		PhysicsServer2D.free_rid(i)
+#	for i in b:
+#		PhysicsServer2D.free_rid(i.rid)
+	
+	print("Exited.") # this leaks at exit. memory management is hard. sorry. #todo: fix
+	get_tree().quit()
 
 # this will always return how much time has passed since the game started.
 func time(count_pauses:bool = true) -> float:
