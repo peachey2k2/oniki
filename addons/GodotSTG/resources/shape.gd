@@ -1,4 +1,3 @@
-@tool
 class_name STGShape extends Resource
 
 var rid:RID

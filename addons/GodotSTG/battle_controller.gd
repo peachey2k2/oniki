@@ -1,4 +1,3 @@
-@tool
 class_name BattleController extends Node2D
 
 @export_category("BattleController")
@@ -15,6 +14,7 @@ var time_threshold:int
 
 var player:Node2D
 var enemy:Node2D
+var arena_rect:Rect2
 
 func _ready():
 	if Engine.is_editor_hint(): return
@@ -29,11 +29,11 @@ func _ready():
 	add_child(timer)
 
 # TODO: fix this. please.
-func start(spawner_container:Node2D, arena_rect:Rect2):
+func start():
 	assert(player, "\"player\" has to be set in order for start() to work.")
-	assert(enemy, "\"enemy\" has to be set in order for start() to work.")	
-#	STGGlobal.area_rid = PhysicsServer2D.area_create()
-#	add_child(STGGlobal.shared_area)
+	assert(enemy, "\"enemy\" has to be set in order for start() to work.")
+	assert(arena_rect, "\"arena_rect\" has to be set in order for start() to work.")
+	disconnect_stopper()
 	STGGlobal.shared_area.reparent(self, false)
 	STGGlobal.controller = self
 	STGGlobal.battle_start.emit()
@@ -65,6 +65,7 @@ func start(spawner_container:Node2D, arena_rect:Rect2):
 					hp_threshold = curr_sequence.end_at_hp
 					time_threshold = curr_sequence.end_at_time
 					await tree.create_timer(curr_sequence.wait_before, false).timeout
+					
 					for curr_spawner in curr_sequence.spawners:
 						curr_spawner.spawn()
 					await STGGlobal.end_sequence
@@ -74,12 +75,14 @@ func start(spawner_container:Node2D, arena_rect:Rect2):
 		STGGlobal.bar_changed.emit(bar_count)
 	STGGlobal.end_battle.emit()
 
-func _exit_tree():
-	STGGlobal.shared_area.reparent(STGGlobal, false)
-
 func kill():
 	process_mode = Node.PROCESS_MODE_DISABLED
 	STGGlobal.clear()
+	STGGlobal.shared_area.reparent(STGGlobal, false)
+	STGGlobal.stop_spawner.emit()
+	STGGlobal.clear()
+	queue_redraw()
+	await STGGlobal.cleared
 	queue_free()
 
 func _physics_process(delta):
@@ -106,25 +109,28 @@ func _on_timer_timeout():
 	pass
 
 func _on_bar_emptied():
-#	for i in _spawner_container.get_children():
-#		i.remove()
 	is_spell_over = true
 	STGGlobal.end_sequence.emit()
 	STGGlobal.end_spell.emit()
+	STGGlobal.stop_spawner.emit()
 
 func _on_spell_timed_out():
-#	for i in _spawner_container.get_children():
-#		i.remove()
 	is_spell_over = true
 	STGGlobal.end_sequence.emit()
 	STGGlobal.end_spell.emit()
+	STGGlobal.stop_spawner.emit()
 
 func _on_end_sequence():
-#	for i in _spawner_container.get_children():
-#		i.remove()
+	STGGlobal.stop_spawner.emit()
 	pass
 
 func _on_damage_taken(_life):
 	print(_life)
 	if _life <= hp_threshold:
 		STGGlobal.end_sequence.emit()
+		STGGlobal.stop_spawner.emit()
+
+func disconnect_stopper():
+	var arr = STGGlobal.stop_spawner.get_connections()
+	for dic in arr:
+		STGGlobal.stop_spawner.disconnect(dic.callable)

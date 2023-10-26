@@ -1,4 +1,3 @@
-@tool
 class_name STGBulletData extends Resource
 
 @export var texture:Texture2D

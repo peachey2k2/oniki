@@ -21,9 +21,9 @@ trigger_check = 0
 [sub_resource type="Resource" id="Resource_18el8"]
 script = ExtResource("4_t8pia")
 init_angle = 0.0
-amount = 20
+amount = 18
 repeat = 99999999
-tilt = 7.35
+tilt = 7.65
 distance = 0.0
 stretch = 1.0
 delay = 0.067

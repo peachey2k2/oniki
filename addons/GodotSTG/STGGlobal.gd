@@ -8,11 +8,12 @@ signal life_changed(values:Array[int], colors:Array[Color])
 signal end_sequence
 signal end_spell
 signal end_battle
+signal stop_spawner
+signal cleared
 
 signal bar_emptied
 signal damage_taken(new_amount:int)
 
-#@onready var bullet_template = preload("res://addons/GodotSTG/bullets/_template.tscn")
 @onready var zone_template = preload("res://addons/GodotSTG/resources/zone.tscn")
 @onready var area_template = preload("res://addons/GodotSTG/resources/shared_area.tscn")
 
@@ -54,9 +55,6 @@ var shared_area:Area2D:
 		shared_area = val
 		shared_area.collision_layer = COLLISION_LAYER
 var area_rid:RID
-#	set(val):
-#		area_rid = val
-#		PhysicsServer2D.area_set_collision_layer(area_rid, COLLISION_LAYER)
 var arena_rect:Rect2:
 	set(val):
 		arena_rect = val
@@ -88,7 +86,7 @@ func _ready():
 	for i in POOL_SIZE:
 		var shape_rid = PhysicsServer2D.circle_shape_create()
 		PhysicsServer2D.area_add_shape(area_rid, shape_rid)
-#		PhysicsServer2D.area_set_shape_disabled(area_rid, i, true)
+		PhysicsServer2D.area_set_shape_disabled(area_rid, i, true)
 		bpool.append(STGShape.new(shape_rid, i))
 	
 	# global clocks cuz yeah
@@ -112,6 +110,7 @@ func create_bullet(data:STGBulletData):
 	PhysicsServer2D.area_set_shape_disabled(area_rid, shape.idx, false)
 	b.append(data)
 
+# processing the bullets here.
 func _physics_process(delta):
 	bqueue.clear()
 	for i in b.size():
@@ -138,10 +137,11 @@ func create_texture(mod:STGBulletModifier):
 	textures.append(tex)
 
 func clear():
-	for i in b.size():
-		PhysicsServer2D.area_set_shape_disabled(area_rid, i, true)
-		bpool.append(b[i])
+	for blt in b:
+		PhysicsServer2D.area_set_shape_disabled(area_rid, blt.shape.idx, true)
+		bpool.append(blt.shape)
 	b.clear()
+	cleared.emit()
 
 func lerp4arena(weight:Vector2) -> Vector2:
 	return Vector2(

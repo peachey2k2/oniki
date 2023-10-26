@@ -1,4 +1,3 @@
-@tool
 class_name STGBulletModifier extends Resource
 
 enum TYPE{LOW, REGULAR, HIGH}

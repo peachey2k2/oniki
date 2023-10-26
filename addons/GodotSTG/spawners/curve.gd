@@ -1,4 +1,3 @@
-@tool
 class_name CurveSpawner extends STGSpawner
 
 @export_group("Pattern")

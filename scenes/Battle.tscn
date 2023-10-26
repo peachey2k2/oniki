@@ -56,7 +56,7 @@ transparent_bg = true
 handle_input_locally = false
 size = Vector2i(880, 880)
 render_target_clear_mode = 1
-render_target_update_mode = 1
+render_target_update_mode = 4
 
 [node name="Background" type="TextureRect" parent="SubViewportContainer/Arena"]
 modulate = Color(0, 0, 0, 1)
@@ -72,12 +72,6 @@ texture = SubResource("CanvasTexture_csmdb")
 [node name="Camera2D" type="Camera2D" parent="SubViewportContainer/Arena"]
 anchor_mode = 0
 editor_draw_screen = false
-
-[node name="Spawners" type="Node2D" parent="SubViewportContainer/Arena"]
-process_thread_group = 1
-process_thread_group_order = 0
-process_thread_messages = 0
-z_index = 1
 
 [node name="FrameCollision" type="Area2D" parent="SubViewportContainer/Arena"]
 z_index = 50

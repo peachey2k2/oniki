@@ -1,4 +1,3 @@
-@tool
 class_name STGSpawner extends Resource
 
 enum POS_TYPE{ABSOLUTE, RELATIVE}
@@ -19,20 +18,29 @@ enum TOWARDS{GENERIC, PLAYER}
 @export var offset:Vector2 = Vector2(0, 0)
 
 var real_pos:Vector2
+var stop_flag
+var is_running
 
 func spawn():
-	if Engine.is_editor_hint(): return
+	if is_running: return
+	is_running = true
+	stop_flag = false
 	bdata = STGGlobal.bdata[bullet.index]
 	tex = STGGlobal.textures[bullet.id]
 	if position_type:
 		real_pos = position + STGGlobal.controller.enemy.position
 	else:
 		real_pos = position
+	STGGlobal.stop_spawner.connect(Callable(self, "_stop_spawner"))
 	_spawn()
 
 func _spawn():
 	assert(false, "No \"_spawn()\" found.")
 	pass
+
+func _stop_spawner():
+	stop_flag = true
+	is_running = false
 
 var bdata:STGBulletData
 var tex:Texture2D

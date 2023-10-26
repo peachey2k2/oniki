@@ -4,12 +4,14 @@ This is a side project I've been working on for a while. The idea is that it'll 
 
 ## Progress
 Do these numbers even mean anything? Probably no, I just pull them out of my ass. This does look kinda cool tho so whatever.
-1. [GodotSTG](#godotstg) ![](https://geps.dev/progress/60)
-2. [Overworld](#overworld) ![](https://geps.dev/progress/3)
-3. [Pause Menu](#pause-menu) ![](https://geps.dev/progress/70)
-4. [Lore/Story](#lorestory) ![](https://geps.dev/progress/1)
+|  |  |
+| --- | --- |
+| [GodotSTG](#godotstg) | ![](https://geps.dev/progress/70) |
+| [Overworld](#overworld) | ![](https://geps.dev/progress/3) |
+| [Pause Menu](#pause-menu) | ![](https://geps.dev/progress/70) |
+| [Lore/Story](#lorestory) | ![](https://geps.dev/progress/1) |
 
-Overall: ![](https://geps.dev/progress/4)
+**Overall: ![](https://geps.dev/progress/4)**
 
 ## Checklist
 I first want to refine the system behind the danmaku battles. To summarize, the battles will play similarly to something like Touhou, so it'll have spellcards, extra-forgiving hitboxes and all that fun stuff.

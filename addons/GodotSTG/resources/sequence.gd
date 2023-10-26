@@ -1,4 +1,3 @@
-@tool
 class_name STGSequence extends Resource
 
 @export var wait_before:float = 1

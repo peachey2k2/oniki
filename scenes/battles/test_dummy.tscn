@@ -1,20 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://bl58xsn1r4b2l"]
+[gd_scene load_steps=3 format=3 uid="uid://bl58xsn1r4b2l"]
 
 [ext_resource type="Script" path="res://addons/GodotSTG/battle_controller.gd" id="1_d455w"]
-[ext_resource type="Script" path="res://addons/GodotSTG/resources/bar.gd" id="2_apiam"]
-[ext_resource type="PackedDataContainer" uid="uid://8w3edb6ef414" path="res://scenes/spells/test1.tres" id="3_cwelt"]
-[ext_resource type="PackedDataContainer" uid="uid://gvdy42sx458q" path="res://scenes/spells/test2.tres" id="4_ljdsm"]
-[ext_resource type="Script" path="res://addons/GodotSTG/battle_stats.gd" id="6_17363"]
-
-[sub_resource type="PackedDataContainer" id="PackedDataContainer_ufk1n"]
-script = ExtResource("2_apiam")
-spells = Array[Resource("res://addons/GodotSTG/resources/spell.gd")]([ExtResource("3_cwelt"), ExtResource("4_ljdsm")])
-
-[sub_resource type="PackedDataContainer" id="PackedDataContainer_ciymr"]
-script = ExtResource("6_17363")
-player_position = Vector2(0.5, 0.7)
-bars = Array[ExtResource("2_apiam")]([SubResource("PackedDataContainer_ufk1n")])
+[ext_resource type="PackedDataContainer" uid="uid://cj5pshlvdrp5" path="res://scenes/battles/test_dummy.tres" id="2_ecwyc"]
 
 [node name="test_dummy" type="Node2D"]
 script = ExtResource("1_d455w")
-stats = SubResource("PackedDataContainer_ciymr")
+stats = ExtResource("2_ecwyc")

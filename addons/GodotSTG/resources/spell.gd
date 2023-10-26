@@ -1,4 +1,3 @@
-@tool
 class_name STGSpell extends Resource
 
 enum SHIELD{NONE, RED}

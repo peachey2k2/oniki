@@ -1,4 +1,3 @@
-@tool
 class_name STGStats extends Resource
 
 func get_stats(id:String) -> Dictionary:

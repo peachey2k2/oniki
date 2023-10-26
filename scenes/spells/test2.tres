@@ -9,7 +9,7 @@ wait_before = 1.0
 end_at_hp = -1
 end_at_time = -1
 clear_after_done = true
-spawners = Array[Resource("res://addons/GodotSTG/resources/spawner.gd")]([])
+spawners = Array[Resource("res://addons/GodotSTG/resources/spawner.gd")]([null])
 
 [resource]
 script = ExtResource("1_pxt8l")
