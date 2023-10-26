@@ -259,22 +259,23 @@ func load_battle(id:String):
 
 func reload_battle():
 	game_state = NONE
-	Controller.stats = null
+#	Controller.stats = null
 	ArenaViewport.remove_child(Player)
 	ArenaViewport.add_child(Player)
+	ArenaViewport.move_child(Player, -2)
 	Player.resurrect()
 #	Ball.free()
 #	Ball = BallDefault.instantiate()
 #	ArenaViewport.add_child(Ball)
 	for i in Temporary.get_children():
 		i.queue_free()
-	Controller.kill()
+#	Controller.kill()
 	await get_tree().process_frame
-	Controller = load("res://scenes/battles/" + Enemy.id + ".tscn").instantiate()
-	Controller.player = Player
-	Controller.enemy = Enemy
-	Controller.arena_rect = BATTLE_RECT
-	ArenaViewport.add_child(Controller)
+#	Controller = load("res://scenes/battles/" + Enemy.id + ".tscn").instantiate()
+#	Controller.player = Player
+#	Controller.enemy = Enemy
+#	Controller.arena_rect = BATTLE_RECT
+#	ArenaViewport.add_child(Controller)
 	Controller.start()
 	game_state = BATTLE
 

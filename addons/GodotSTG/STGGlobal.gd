@@ -137,6 +137,7 @@ func create_texture(mod:STGBulletModifier):
 	textures.append(tex)
 
 func clear():
+	stop_spawner.emit()
 	for blt in b:
 		PhysicsServer2D.area_set_shape_disabled(area_rid, blt.shape.idx, true)
 		bpool.append(blt.shape)
