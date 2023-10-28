@@ -18,8 +18,8 @@ config/features=PackedStringArray("4.1", "C#")
 
 PauseHandler="*res://scenes/PauseHandler.tscn"
 GFS="*res://scripts/autoload/GlobalFunctionScript.gd"
-STGGlobal="*res://addons/GodotSTG/STGGlobal.gd"
 Panku="*res://addons/panku_console/console.tscn"
+STGGlobal="*res://addons/GodotSTG/STGGlobal.cs"
 
 [debug]
 
@@ -49,10 +49,6 @@ enabled=PackedStringArray("res://addons/GodotSTG/plugin.cfg", "res://addons/clyd
 [filesystem]
 
 import/blender/enabled=false
-
-[godotstg]
-
-bullet_directory="res://scenes/bullets"
 
 [input]
 
