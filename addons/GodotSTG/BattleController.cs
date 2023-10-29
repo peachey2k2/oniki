@@ -20,13 +20,15 @@ public partial class BattleController:Node2D{
     public int hp_threshold;
     public int time_threshold;
 
-    public Area2D player;
-    public Area2D enemy;
+    public CollisionObject2D player;
+    public CollisionObject2D enemy;
     Rect2 arena_rect;
 
     public override void _Ready(){
-        STGGlobal = (STGGlobal)Engine.GetSingleton("STGGlobal");
+        // STGGlobal = (STGGlobal)Engine.GetSingleton("STGGlobal");
+        STGGlobal = (STGGlobal)GetNode("/root/STGGlobal");
         tree = GetTree();
+        timer = new();
         timer.OneShot = true;
         STGGlobal.end_sequence += _on_end_sequence;
         timer.Timeout += _on_spell_timed_out;
@@ -36,9 +38,9 @@ public partial class BattleController:Node2D{
     }
 
     public async void start(){
-        Debug.Assert(player != null, "\"player\" has to be set in order for start() to work.");
-        Debug.Assert(enemy != null, "\"enemy\" has to be set in order for start() to work.");
-        // Debug.Assert(arena_rect != null, "\"arena_rect\" has to be set in order for start() to work.");
+        GodotSTG.Debug.Assert(player != null, "\"player\" has to be set in order for start() to work.");
+        GodotSTG.Debug.Assert(enemy != null, "\"enemy\" has to be set in order for start() to work.");
+        // GodotSTG.Debug.Assert(arena_rect != null, "\"arena_rect\" has to be set in order for start() to work.");
         STGGlobal.clear();
         disconnect_stopper();
         STGGlobal.shared_area.Reparent(this, false);
@@ -58,7 +60,7 @@ public partial class BattleController:Node2D{
                 timer.WaitTime = curr_spell.time;
                 timer.Start();
                 STGGlobal.EmitSignal("spell_name_changed");
-                enemy.Monitoring = true;
+                // enemy.Monitoring = true;
                 cache_spell_textures(curr_spell);
                 while (!is_spell_over){
                     foreach (STGSequence curr_sequence in curr_spell.sequences){
@@ -76,7 +78,7 @@ public partial class BattleController:Node2D{
                     }
                 }
                 await ToSignal(STGGlobal, "end_spell");
-                enemy.Monitoring = false;
+                // enemy.Monitoring = false;
             }
             bar_count -= 1;
             STGGlobal.EmitSignal("bar_changed", bar_count);

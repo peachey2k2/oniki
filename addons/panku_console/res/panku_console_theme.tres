@@ -1,7 +1,7 @@
 [gd_resource type="Theme" load_steps=25 format=3 uid="uid://bk18yfu0d77wk"]
 
-[ext_resource type="Texture2D" uid="uid://bua84a0uv8ntw" path="res://addons/panku_console/res/icons2/checkbox_checked.svg" id="1_pq2ss"]
-[ext_resource type="Texture2D" uid="uid://dkiyle8rjahmw" path="res://addons/panku_console/res/icons2/checkbox_unchecked.svg" id="2_svie5"]
+[ext_resource type="Texture2D" uid="uid://bua84a0uv8ntw" path="res://addons/panku_console/res/icons2/checkbox_checked.svg" id="1_1fdls"]
+[ext_resource type="Texture2D" uid="uid://dkiyle8rjahmw" path="res://addons/panku_console/res/icons2/checkbox_unchecked.svg" id="2_g2yup"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1q17k"]
 
@@ -110,8 +110,8 @@ Button/styles/focus = SubResource("StyleBoxEmpty_1q17k")
 Button/styles/hover = SubResource("StyleBoxFlat_j0iw5")
 Button/styles/normal = SubResource("StyleBoxFlat_2sv8t")
 Button/styles/pressed = SubResource("StyleBoxFlat_oko07")
-CheckBox/icons/checked = ExtResource("1_pq2ss")
-CheckBox/icons/unchecked = ExtResource("2_svie5")
+CheckBox/icons/checked = ExtResource("1_1fdls")
+CheckBox/icons/unchecked = ExtResource("2_g2yup")
 HScrollBar/styles/grabber = SubResource("StyleBoxFlat_66h6h")
 HScrollBar/styles/grabber_highlight = SubResource("StyleBoxFlat_io0fu")
 HScrollBar/styles/grabber_pressed = SubResource("StyleBoxFlat_5a1x3")

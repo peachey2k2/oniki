@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics;
 using Godot;
 using GodotSTG;
@@ -25,9 +26,9 @@ public partial class STGSpawner:Resource{
     [Export] public Shape2D shape {get; set;} = null;
     [Export] Vector2 offset {get; set;} = Vector2.Zero;
 
-    private Vector2 real_pos;
-    private bool stop_flag;
-    private bool is_running;
+    public Vector2 real_pos;
+    public bool stop_flag;
+    public bool is_running;
 
     public STGBulletData bdata;
     public Texture2D tex;
@@ -37,7 +38,7 @@ public partial class STGSpawner:Resource{
         if (is_running) return; 
         is_running = true;
         stop_flag = false;
-        bdata = STGGlobal.bdata[bullet.index];
+        bdata = STGGlobal.bltdata[bullet.index];
         tex = STGGlobal.textures[bullet.id];
         if (position_type == PosType.Relative){
             real_pos = position + STGGlobal.controller.enemy.Position;
@@ -48,7 +49,7 @@ public partial class STGSpawner:Resource{
         _spawn();
     }
 
-    public void _spawn(){
+    public virtual void _spawn(){
         Debug.Assert(false, "No \"_spawn()\" found.");
     }
 

@@ -1,8 +1,19 @@
-[gd_scene load_steps=3 format=3 uid="uid://bl58xsn1r4b2l"]
+[gd_scene load_steps=7 format=3 uid="uid://dykx1ccjpxfej"]
 
-[ext_resource type="Script" path="res://addons/GodotSTG/battle_controller.gd" id="1_d455w"]
-[ext_resource type="PackedDataContainer" uid="uid://cj5pshlvdrp5" path="res://scenes/battles/test_dummy.tres" id="2_ecwyc"]
+[ext_resource type="Script" path="res://addons/GodotSTG/BattleController.cs" id="1_d455w"]
+[ext_resource type="Script" path="res://addons/GodotSTG/resources/STGBar.cs" id="2_8uikf"]
+[ext_resource type="PackedDataContainer" uid="uid://8w3edb6ef414" path="res://scenes/spells/test1.tres" id="3_brjvu"]
+[ext_resource type="Script" path="res://addons/GodotSTG/resources/STGStats.cs" id="4_vky7a"]
+
+[sub_resource type="Resource" id="Resource_6bt2q"]
+script = ExtResource("2_8uikf")
+spells = [ExtResource("3_brjvu")]
+
+[sub_resource type="Resource" id="Resource_8lqq8"]
+script = ExtResource("4_vky7a")
+player_position = Vector2(0.5, 0.7)
+bars = [SubResource("Resource_6bt2q")]
 
 [node name="test_dummy" type="Node2D"]
 script = ExtResource("1_d455w")
-stats = ExtResource("2_ecwyc")
+stats = SubResource("Resource_8lqq8")

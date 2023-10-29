@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://bty05s2e3am5q"]
+[gd_scene load_steps=16 format=3 uid="uid://bty05s2e3am5q"]
 
 [ext_resource type="Texture2D" uid="uid://cdams53qwdqbu" path="res://assets/backgrounds/dot.png" id="2_fq3wh"]
 [ext_resource type="Script" path="res://scripts/FrameCollision.gd" id="3_547x7"]

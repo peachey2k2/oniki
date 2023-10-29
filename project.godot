@@ -26,10 +26,6 @@ STGGlobal="*res://addons/GodotSTG/STGGlobal.cs"
 file_logging/log_path="user://logs/latest.txt"
 file_logging/max_log_files=10
 
-[dialogue]
-
-source_folder="res://dialogues"
-
 [display]
 
 window/size/viewport_width=1920
@@ -44,11 +40,15 @@ project/assembly_name="oniki"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/GodotSTG/plugin.cfg", "res://addons/clyde/plugin.cfg", "res://addons/deranged_additions/plugin.cfg", "res://addons/panku_console/plugin.cfg")
+enabled=PackedStringArray("res://addons/GodotSTG/plugin.cfg", "res://addons/clyde/plugin.cfg", "res://addons/deranged_additions/plugin.cfg", "res://addons/editor_background/plugin.cfg", "res://addons/panku_console/plugin.cfg")
 
 [filesystem]
 
 import/blender/enabled=false
+
+[godotstg]
+
+bullet_directory="res://scenes/bullets/"
 
 [input]
 

@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://c3r0gmt4i14rg"]
+
+[node name="SharedArea" type="Area2D"]
+collision_layer = 0
+collision_mask = 0
+input_pickable = false
+monitoring = false

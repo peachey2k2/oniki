@@ -1,4 +1,3 @@
-@tool
 class_name Laser2D extends Line2D
 
 func _init():

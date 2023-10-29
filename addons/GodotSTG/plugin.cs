@@ -8,7 +8,7 @@ public partial class plugin:EditorPlugin{
 	Dictionary[] settings = {
 		new(){
 			{"name", "bullet_directory"},
-			{"default", "res://addons/GodotSTG/bullets/default/"},
+			{"default", "res://addons/GodotSTG/bullets/"},
 			{"type", (int)Variant.Type.String}, // int casting cuz appaerently 
 			{"hint", (int)PropertyHint.Dir},    // enums aren't real.
 			{"hint_string", ""}

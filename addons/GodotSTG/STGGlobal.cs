@@ -29,7 +29,7 @@ public partial class STGGlobal:Node{
     System.Collections.Generic.Dictionary<string, Variant>[] settings = {
         new() {
             {"name", "bullet_directory"},
-            {"default", "res://addons/GodotSTG/bullets/default/"},
+            {"default", "res://addons/GodotSTG/bullets/"},
         },
         new() {
             {"name", "collision_layer"},
@@ -52,24 +52,26 @@ public partial class STGGlobal:Node{
     public uint REMOVAL_MARGIN;
 
     // low level tomfuckery
-    public List<STGBulletData> b {get; set;}
-    public List<STGShape> bpool {get; set;}
-    public List<STGBulletData> bqueue {get; set;}
-    public List<STGBulletData> bdata {get; set;}
-    public List<Texture2D> textures {get; set;}
+    public List<STGBulletData> blts = new();
+    public List<STGShape> bpool = new();
+    public List<STGBulletData> bqueue = new();
+    public List<STGBulletData> bltdata = new(); // using new() here crashes the game with no debug message. why???
+    public List<Texture2D> textures = new();
+    private Area2D _shared_area;
     public Area2D shared_area {
-        get{ return shared_area; }
+        get{ return _shared_area; }
         set{
             area_rid = value.GetRid();
-            shared_area = value;
+            _shared_area = value;
             shared_area.CollisionLayer = COLLISION_LAYER;
         }
     }
     public Rid area_rid;
+    private Rect2 _arena_rect;
     public Rect2 arena_rect {
-        get{ return arena_rect; }
+        get{ return _arena_rect; }
         set{
-            arena_rect = value;
+            _arena_rect = value;
             arena_rect_margined = value.Grow(REMOVAL_MARGIN);
         }
     }
@@ -91,20 +93,21 @@ public partial class STGGlobal:Node{
         }
     }
 
-    public override void _Ready(){
+    public override async void _Ready(){
+
         // there is no @onready in c# :sadge: 
-        area_template = (PackedScene)ResourceLoader.Load("res://addons/GodotSTG/resources/zone.tscn");
-        zone_template = (PackedScene)ResourceLoader.Load("res://addons/GodotSTG/resources/shared_area.tscn");
+        area_template = (PackedScene)ResourceLoader.Load("res://addons/GodotSTG/resources/shared_area.tscn");
+        zone_template = (PackedScene)ResourceLoader.Load("res://addons/GodotSTG/resources/zone.tscn");
 
         foreach (string file in DirAccess.GetFilesAt(BULLET_DIRECTORY)){
-            bdata.Append(ResourceLoader.Load((BULLET_DIRECTORY + "/" + file).TrimSuffix(".remap"))); // builds use .remap extension so that is trimmed here
+            bltdata.Add((STGBulletData)ResourceLoader.Load((BULLET_DIRECTORY + "/" + file).TrimSuffix(".remap"))); // builds use .remap extension so that is trimmed here
             // you can look at this issue for more info: https://github.com/godotengine/godot/issues/66014
             // also this will probably change in a later release for the engine
-        }
 
         // pooling lol
-        shared_area = area_template.Instantiate() as Area2D;
+        shared_area = (Area2D)area_template.Instantiate(); // THIS MOTHERFUCKER...
         AddChild(shared_area);
+        await ToSignal(GetTree().CreateTimer(5), "timeout");
         for (int i = 0; i < POOL_SIZE; i++){
             Rid shape_rid = PhysicsServer2D.CircleShapeCreate();
             PhysicsServer2D.AreaAddShape(area_rid, shape_rid);
@@ -112,6 +115,8 @@ public partial class STGGlobal:Node{
             bpool.Append(new STGShape(shape_rid, i));
         }
 
+        await ToSignal(GetTree().CreateTimer(1), "timeout");
+        }
         // global clocks cuz yeah
         clock_timer      = GetTree().CreateTimer(TIMER_START, false);
         clock_real_timer = GetTree().CreateTimer(TIMER_START, true);
@@ -121,9 +126,9 @@ public partial class STGGlobal:Node{
     // also their game looks pretty cool too, so check it out if you have the time.
     // https://worldeater-dev.itch.io/bittersweet-birthday/devlog/210789/howto-drawing-a-metric-ton-of-bullets-in-godot
     public void create_bullet(STGBulletData data){
-        Debug.Assert(bpool.Count > 0, "Pool is out of bullets.");
+        GodotSTG.Debug.Assert(bpool.Count > 0, "Pool is out of bullets.");
         STGShape shape = bpool.Last();
-        Debug.Assert(shape.rid.IsValid, "Shape RID is invalid.");
+        GodotSTG.Debug.Assert(shape.rid.IsValid, "Shape RID is invalid.");
         bpool.RemoveAt(bpool.Count - 1);
         Transform2D t = new(0, data.position);
         t.Origin = data.position;
@@ -132,15 +137,15 @@ public partial class STGGlobal:Node{
         PhysicsServer2D.ShapeSetData(shape.rid, data.collision_radius);
         PhysicsServer2D.AreaSetShapeTransform(area_rid, shape.idx, t);
         PhysicsServer2D.AreaSetShapeDisabled(area_rid, shape.idx, false);
-        b.Append(data);
+        blts.Append(data);
     }
 
     // processing the bullets here.
     public override void _PhysicsProcess(double delta){
         float fdelta = (float)delta;
         bqueue.Clear();
-        for (int i = 0; i < b.Count; i++){
-            STGBulletData blt = b[i];
+        for (int i = 0; i < blts.Count; i++){
+            STGBulletData blt = blts[i];
             blt.velocity += blt.acceleration * fdelta / 2;
             blt.position += blt.velocity * fdelta;
             blt.velocity += blt.acceleration * fdelta / 2;
@@ -153,14 +158,15 @@ public partial class STGGlobal:Node{
     		PhysicsServer2D.AreaSetShapeTransform(area_rid, blt.shape.idx, t);
         }
         foreach (STGBulletData blt in bqueue){
-            b.Remove(blt);
+            blts.Remove(blt);
             bpool.Append(blt.shape);
         }
+        bullet_count = blts.Count();
     }
 
     public void create_texture(STGBulletModifier mod){
         if (mod.id != -1) return; // #todo: also check whether this exact texture is already saved (same index and colors)
-        Texture2D tex = (Texture2D)bdata[mod.index].texture.Duplicate(); // lol
+        Texture2D tex = (Texture2D)bltdata[mod.index].texture.Duplicate(); // lol
         if (tex is GradientTexture2D){
             GradientTexture2D gradientTex = tex as GradientTexture2D;
             gradientTex.Gradient = gradientTex.Gradient.Duplicate() as Gradient;
@@ -172,11 +178,11 @@ public partial class STGGlobal:Node{
 
     public void clear(){
         EmitSignal(SignalName.stop_spawner);
-        foreach (STGBulletData blt in b){
+        foreach (STGBulletData blt in blts){
             PhysicsServer2D.AreaSetShapeDisabled(area_rid, blt.shape.idx, true);
-            bpool.Append(blt.shape);
+            bpool.Add(blt.shape);
         }
-        b.Clear();
+        blts.Clear();
         EmitSignal(SignalName.cleared);
     }
 

@@ -1,38 +1,38 @@
 [gd_resource type="PackedDataContainer" script_class="STGSpell" load_steps=8 format=3 uid="uid://8w3edb6ef414"]
 
-[ext_resource type="Script" path="res://addons/GodotSTG/resources/spell.gd" id="1_51pkt"]
-[ext_resource type="Script" path="res://addons/GodotSTG/resources/sequence.gd" id="2_wj8xh"]
-[ext_resource type="Script" path="res://addons/GodotSTG/resources/bullet_modifier.gd" id="3_0n3mp"]
-[ext_resource type="Script" path="res://addons/GodotSTG/spawners/circular.gd" id="4_t8pia"]
+[ext_resource type="Script" path="res://addons/GodotSTG/resources/STGSpell.cs" id="1_51pkt"]
+[ext_resource type="Script" path="res://addons/GodotSTG/resources/STGSequence.cs" id="2_wj8xh"]
+[ext_resource type="Script" path="res://addons/GodotSTG/resources/STGBulletModifier.cs" id="3_1s66r"]
+[ext_resource type="Script" path="res://addons/GodotSTG/spawners/CircularSpawner.cs" id="4_3onb3"]
 
-[sub_resource type="Resource" id="Resource_5v088"]
-script = ExtResource("3_0n3mp")
+[sub_resource type="Resource" id="Resource_adm1b"]
+script = ExtResource("3_1s66r")
 index = 0
 outer_color = Color(1, 0, 0, 1)
 inner_color = Color(1, 1, 1, 1)
 type = 1
-speed = 100.0
+speed = 0.0
 acceleration = Vector2(0, 0)
 lifespan = -1.0
 sine_freq = 0.0
 sine_width = 0.0
 trigger_check = 0
 
-[sub_resource type="Resource" id="Resource_18el8"]
-script = ExtResource("4_t8pia")
+[sub_resource type="Resource" id="Resource_55q06"]
+script = ExtResource("4_3onb3")
 init_angle = 0.0
-amount = 18
-repeat = 99999999
-tilt = 7.65
+amount = 5
+repeat = 5
+tilt = 0.0
 distance = 0.0
 stretch = 1.0
-delay = 0.067
+delay = 0.1
 position = Vector2(0, 0)
-position_type = 1
+position_type = 0
 towards = 0
 rotation = 0.0
 rotation_speed = 0.0
-bullet = SubResource("Resource_5v088")
+bullet = SubResource("Resource_adm1b")
 offset = Vector2(0, 0)
 
 [sub_resource type="PackedDataContainer" id="PackedDataContainer_hud77"]
@@ -41,7 +41,7 @@ wait_before = 1.0
 end_at_hp = -1
 end_at_time = -1
 clear_after_done = true
-spawners = Array[Resource("res://addons/GodotSTG/resources/spawner.gd")]([SubResource("Resource_18el8")])
+spawners = [SubResource("Resource_55q06")]
 
 [resource]
 script = ExtResource("1_51pkt")
@@ -52,5 +52,5 @@ bar_color = Color(0.560784, 0.894118, 0.937255, 1)
 enemy_pos = Vector2(0.5, 0.5)
 enemy_movement = 0
 shield = 0
-randomize_sequences = false
-sequences = Array[ExtResource("2_wj8xh")]([SubResource("PackedDataContainer_hud77")])
+randomize_sequences = true
+sequences = [SubResource("PackedDataContainer_hud77")]

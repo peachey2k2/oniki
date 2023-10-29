@@ -2,7 +2,7 @@ using Godot;
 
 namespace GodotSTG;
 
-
+[GlobalClass]
 public partial class STGBulletModifier:Resource{
     public enum Type{Low, Regular, High}
     public enum TriggerCheck{Exited, Entered}
