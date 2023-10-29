@@ -34,7 +34,9 @@ public partial class STGSpawner:Resource{
     public Texture2D tex;
 
     public void spawn(){
-        STGGlobal = (STGGlobal)Engine.GetSingleton("STGGlobal");
+        // STGGlobal = (STGGlobal)Engine.GetSingleton("STGGlobal");
+        // STGGlobal = (STGGlobal)GetNode("/root/STGGlobal");
+        STGGlobal = STGGlobal.Instance;
         if (is_running) return; 
         is_running = true;
         stop_flag = false;

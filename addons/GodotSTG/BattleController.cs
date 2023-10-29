@@ -28,8 +28,7 @@ public partial class BattleController:Node2D{
         // STGGlobal = (STGGlobal)Engine.GetSingleton("STGGlobal");
         STGGlobal = (STGGlobal)GetNode("/root/STGGlobal");
         tree = GetTree();
-        timer = new();
-        timer.OneShot = true;
+        timer = new(){OneShot = true};
         STGGlobal.end_sequence += _on_end_sequence;
         timer.Timeout += _on_spell_timed_out;
         STGGlobal.bar_emptied += _on_bar_emptied;

@@ -85,7 +85,8 @@ public partial class STGGlobal:Node{
     public SceneTreeTimer clock_timer;
     public SceneTreeTimer clock_real_timer;
 
-    public bool exiting = false; 
+    public bool exiting = false;
+    public static STGGlobal Instance { get; private set; }
 
     public STGGlobal(){
         foreach (System.Collections.Generic.Dictionary<String, Variant> _setting in settings){
@@ -94,6 +95,7 @@ public partial class STGGlobal:Node{
     }
 
     public override async void _Ready(){
+        Instance = this; // epic self-reference to access the singleton from everywhere
 
         // there is no @onready in c# :sadge: 
         area_template = (PackedScene)ResourceLoader.Load("res://addons/GodotSTG/resources/shared_area.tscn");
@@ -130,8 +132,7 @@ public partial class STGGlobal:Node{
         STGShape shape = bpool.Last();
         GodotSTG.Debug.Assert(shape.rid.IsValid, "Shape RID is invalid.");
         bpool.RemoveAt(bpool.Count - 1);
-        Transform2D t = new(0, data.position);
-        t.Origin = data.position;
+        Transform2D t = new(0, data.position){Origin = data.position};
         data.shape = shape;
         PhysicsServer2D.AreaGetShape(area_rid, shape.idx);
         PhysicsServer2D.ShapeSetData(shape.rid, data.collision_radius);
@@ -149,8 +150,7 @@ public partial class STGGlobal:Node{
             blt.velocity += blt.acceleration * fdelta / 2;
             blt.position += blt.velocity * fdelta;
             blt.velocity += blt.acceleration * fdelta / 2;
-            Transform2D t = new(0, blt.position);
-            t.Origin = blt.position;
+            Transform2D t = new(0, blt.position){Origin = blt.position};
             if (!arena_rect_margined.HasPoint(blt.position)){
                 PhysicsServer2D.AreaSetShapeDisabled(area_rid, blt.shape.idx, true);
                 bqueue.Append(blt);
