@@ -137,6 +137,7 @@ public partial class STGGlobal:Node{
         PhysicsServer2D.ShapeSetData(shape.rid, data.collision_radius);
         PhysicsServer2D.AreaSetShapeTransform(area_rid, shape.idx, t);
         PhysicsServer2D.AreaSetShapeDisabled(area_rid, shape.idx, false);
+        if (data.lifespan <= 0) data.lifespan = 999999;
         blts.Add(data);
     }
 
@@ -146,17 +147,17 @@ public partial class STGGlobal:Node{
         bqueue.Clear();
         for (int i = 0; i < blts.Count; i++){
             STGBulletData blt = blts[i];
+            if (blt.lifespan >= 0) blt.lifespan -= delta;
+            else bqueue.Add(blt);
             blt.velocity += blt.acceleration * fdelta / 2;
             blt.position += blt.velocity * fdelta;
             blt.velocity += blt.acceleration * fdelta / 2;
             Transform2D t = new(0, blt.position){Origin = blt.position};
-            if (!arena_rect_margined.HasPoint(blt.position)){
-                PhysicsServer2D.AreaSetShapeDisabled(area_rid, blt.shape.idx, true);
-                bqueue.Add(blt);
-            }
+            if (!arena_rect_margined.HasPoint(blt.position)) bqueue.Add(blt);
     		PhysicsServer2D.AreaSetShapeTransform(area_rid, blt.shape.idx, t);
         }
         foreach (STGBulletData blt in bqueue){
+            PhysicsServer2D.AreaSetShapeDisabled(area_rid, blt.shape.idx, true);
             blts.Remove(blt);
             bpool.Add(blt.shape);
         }

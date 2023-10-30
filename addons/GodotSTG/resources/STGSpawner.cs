@@ -34,18 +34,17 @@ public partial class STGSpawner:Resource{
     public Texture2D tex;
 
     public void spawn(){
-        // STGGlobal = (STGGlobal)Engine.GetSingleton("STGGlobal");
-        // STGGlobal = (STGGlobal)GetNode("/root/STGGlobal");
         STGGlobal = STGGlobal.Instance;
+        
         if (is_running) return; 
         is_running = true;
         stop_flag = false;
         bdata = STGGlobal.bltdata[bullet.index];
         tex = STGGlobal.textures[bullet.id];
         if (position_type == PosType.Relative){
-            real_pos = position + STGGlobal.controller.enemy.Position;
+            real_pos = STGGlobal.lerp4arena(position) + STGGlobal.controller.enemy.Position;
         } else {
-            real_pos = position;
+            real_pos = STGGlobal.lerp4arena(position);
         }
         STGGlobal.stop_spawner += _stop_spawner;
         _spawn();
@@ -65,7 +64,7 @@ public partial class STGSpawner:Resource{
         _bdata.position = pos;
         _bdata.velocity = vel;
         _bdata.acceleration = acc;
-        _bdata.lifespan = -1;
+        _bdata.lifespan = bullet.lifespan;
         _bdata.texture = tex;
         STGGlobal.create_bullet(_bdata);
     }

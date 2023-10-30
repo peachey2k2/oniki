@@ -40,7 +40,7 @@ project/assembly_name="oniki"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/GodotSTG/plugin.cfg", "res://addons/clyde/plugin.cfg", "res://addons/deranged_additions/plugin.cfg", "res://addons/editor_background/plugin.cfg", "res://addons/panku_console/plugin.cfg")
+enabled=PackedStringArray("res://addons/GodotSTG/plugin.cfg", "res://addons/clyde/plugin.cfg", "res://addons/deranged_additions/plugin.cfg", "res://addons/panku_console/plugin.cfg")
 
 [filesystem]
 

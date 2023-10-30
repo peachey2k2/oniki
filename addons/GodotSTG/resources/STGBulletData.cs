@@ -1,7 +1,7 @@
 using Godot;
 using GodotSTG;
 
-[GlobalClass]
+[GlobalClass, Icon("res://addons/GodotSTG/icons/bulletdata.png")]
 public partial class STGBulletData:Resource{
 
     [Export] public Texture2D texture;
@@ -10,7 +10,7 @@ public partial class STGBulletData:Resource{
     public Vector2 position;
     public Vector2 velocity;
     public Vector2 acceleration;
-    public float lifespan;
+    public double lifespan;
 
     public STGShape shape;
 }

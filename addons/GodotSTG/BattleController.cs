@@ -1,10 +1,9 @@
 using Godot;
 using GodotSTG;
 using Godot.Collections;
-using System.Diagnostics;
 using System;
 
-[GlobalClass]
+[GlobalClass, Icon("res://addons/GodotSTG/icons/battlecontroller.png")]
 public partial class BattleController:Node2D{
     private static STGGlobal STGGlobal;
     [ExportCategory("BattleController")]
@@ -23,10 +22,13 @@ public partial class BattleController:Node2D{
     public CollisionObject2D player;
     public CollisionObject2D enemy;
     Rect2 arena_rect;
+    string signals_are_hard;
 
     public override void _Ready(){
-        // STGGlobal = (STGGlobal)Engine.GetSingleton("STGGlobal");
-        STGGlobal = (STGGlobal)GetNode("/root/STGGlobal");
+        STGGlobal = STGGlobal.Instance;
+
+        signals_are_hard = (string)STGGlobal.GetSignalConnectionList("stop_spawner")[0]["callable"];
+
         tree = GetTree();
         timer = new(){OneShot = true};
         STGGlobal.end_sequence += _on_end_sequence;
@@ -41,7 +43,7 @@ public partial class BattleController:Node2D{
         GodotSTG.Debug.Assert(enemy != null, "\"enemy\" has to be set in order for start() to work.");
         // GodotSTG.Debug.Assert(arena_rect != null, "\"arena_rect\" has to be set in order for start() to work.");
         STGGlobal.clear();
-        disconnect_stopper();
+        // disconnect_stopper(); //HOW DOES IT WORK WITHOUT THIS????
         STGGlobal.shared_area.Reparent(this, false);
         STGGlobal.controller = this;
         STGGlobal.EmitSignal("battle_start");
@@ -77,6 +79,7 @@ public partial class BattleController:Node2D{
                     }
                 }
                 await ToSignal(STGGlobal, "end_spell");
+                GC.Collect();
                 // enemy.Monitoring = false;
             }
             bar_count -= 1;
@@ -117,9 +120,6 @@ public partial class BattleController:Node2D{
             DrawTexture(blt.texture, blt.position - blt.texture.GetSize() * (float)0.5);
         }
     }
-    // func _draw():
-	// for blt in STGGlobal.b:
-	// 	draw_texture(blt.texture, blt.position - blt.texture.get_size() * 0.5)
 
     public void emit_life(STGBar _bar){
         Array<int> values = new();
@@ -164,12 +164,13 @@ public partial class BattleController:Node2D{
         STGGlobal.EmitSignal("stop_spawner");
     }
 
-    public void disconnect_stopper(){
-        Array<Dictionary> arr = STGGlobal.GetSignalConnectionList("stop_spawner");
-        foreach (Dictionary dic in arr){
-            STGGlobal.Disconnect("stop_spawner", dic["callable"].AsCallable());
-        }
-    }
+    // public void disconnect_stopper(){
+    //     Array<Dictionary> arr = STGGlobal.GetSignalConnectionList("stop_spawner");
+    //     foreach (Dictionary dic in arr){
+    //         if ((string)dic["signal"] == signals_are_hard)
+    //             STGGlobal.Disconnect("stop_spawner", dic["callable"].AsCallable());
+    //     }
+    // }
 
 
 }
