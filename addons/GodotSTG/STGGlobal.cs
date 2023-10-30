@@ -109,14 +109,13 @@ public partial class STGGlobal:Node{
         // pooling lol
         shared_area = (Area2D)area_template.Instantiate(); // THIS MOTHERFUCKER...
         AddChild(shared_area);
-        await ToSignal(GetTree().CreateTimer(5), "timeout");
+        // await ToSignal(GetTree().CreateTimer(5), "timeout");
         for (int i = 0; i < POOL_SIZE; i++){
             Rid shape_rid = PhysicsServer2D.CircleShapeCreate();
             PhysicsServer2D.AreaAddShape(area_rid, shape_rid);
 	    	PhysicsServer2D.AreaSetShapeDisabled(area_rid, i, true);
-            bpool.Append(new STGShape(shape_rid, i));
+            bpool.Add(new STGShape(shape_rid, i));
         }
-
         await ToSignal(GetTree().CreateTimer(1), "timeout");
         }
         // global clocks cuz yeah
@@ -138,7 +137,7 @@ public partial class STGGlobal:Node{
         PhysicsServer2D.ShapeSetData(shape.rid, data.collision_radius);
         PhysicsServer2D.AreaSetShapeTransform(area_rid, shape.idx, t);
         PhysicsServer2D.AreaSetShapeDisabled(area_rid, shape.idx, false);
-        blts.Append(data);
+        blts.Add(data);
     }
 
     // processing the bullets here.
@@ -153,15 +152,15 @@ public partial class STGGlobal:Node{
             Transform2D t = new(0, blt.position){Origin = blt.position};
             if (!arena_rect_margined.HasPoint(blt.position)){
                 PhysicsServer2D.AreaSetShapeDisabled(area_rid, blt.shape.idx, true);
-                bqueue.Append(blt);
+                bqueue.Add(blt);
             }
     		PhysicsServer2D.AreaSetShapeTransform(area_rid, blt.shape.idx, t);
         }
         foreach (STGBulletData blt in bqueue){
             blts.Remove(blt);
-            bpool.Append(blt.shape);
+            bpool.Add(blt.shape);
         }
-        bullet_count = blts.Count();
+        bullet_count = blts.Count;
     }
 
     public void create_texture(STGBulletModifier mod){

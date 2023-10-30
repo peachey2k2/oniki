@@ -112,6 +112,15 @@ public partial class BattleController:Node2D{
         QueueRedraw();
     }
 
+    public override void _Draw(){
+        foreach (STGBulletData blt in STGGlobal.blts){
+            DrawTexture(blt.texture, blt.position - blt.texture.GetSize() * (float)0.5);
+        }
+    }
+    // func _draw():
+	// for blt in STGGlobal.b:
+	// 	draw_texture(blt.texture, blt.position - blt.texture.get_size() * 0.5)
+
     public void emit_life(STGBar _bar){
         Array<int> values = new();
         Array<Color> colors = new();
