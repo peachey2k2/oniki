@@ -27,8 +27,6 @@ public partial class BattleController:Node2D{
     public override void _Ready(){
         STGGlobal = STGGlobal.Instance;
 
-        signals_are_hard = (string)STGGlobal.GetSignalConnectionList("stop_spawner")[0]["callable"];
-
         tree = GetTree();
         timer = new(){OneShot = true};
         STGGlobal.end_sequence += _on_end_sequence;
@@ -43,7 +41,6 @@ public partial class BattleController:Node2D{
         GodotSTG.Debug.Assert(enemy != null, "\"enemy\" has to be set in order for start() to work.");
         // GodotSTG.Debug.Assert(arena_rect != null, "\"arena_rect\" has to be set in order for start() to work.");
         STGGlobal.clear();
-        // disconnect_stopper(); //HOW DOES IT WORK WITHOUT THIS????
         STGGlobal.shared_area.Reparent(this, false);
         STGGlobal.controller = this;
         STGGlobal.EmitSignal("battle_start");
@@ -94,8 +91,8 @@ public partial class BattleController:Node2D{
                 STGBulletModifier blt = spw.bullet;
                 while (true){
                     STGGlobal.create_texture(blt);
-                    if (blt.zoned == null) return;
-                    blt = blt.zoned;
+                    if (blt.next == null) return;
+                    blt = blt.next;
                 }
             }
         }
@@ -163,14 +160,4 @@ public partial class BattleController:Node2D{
         STGGlobal.EmitSignal("end_sequence");
         STGGlobal.EmitSignal("stop_spawner");
     }
-
-    // public void disconnect_stopper(){
-    //     Array<Dictionary> arr = STGGlobal.GetSignalConnectionList("stop_spawner");
-    //     foreach (Dictionary dic in arr){
-    //         if ((string)dic["signal"] == signals_are_hard)
-    //             STGGlobal.Disconnect("stop_spawner", dic["callable"].AsCallable());
-    //     }
-    // }
-
-
 }

@@ -17,3 +17,4 @@ bars = [SubResource("Resource_6bt2q")]
 [node name="test_dummy" type="Node2D"]
 script = ExtResource("1_d455w")
 stats = SubResource("Resource_8lqq8")
+metadata/_edit_horizontal_guides_ = [130.0]

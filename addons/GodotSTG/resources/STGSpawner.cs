@@ -22,10 +22,6 @@ public partial class STGSpawner:Resource{
     [ExportGroup("Bullet")] 
     [Export] public STGBulletModifier bullet {get; set;}
 
-    [ExportGroup("Zone")]
-    [Export] public Shape2D shape {get; set;} = null;
-    [Export] Vector2 offset {get; set;} = Vector2.Zero;
-
     public Vector2 real_pos;
     public bool stop_flag;
     public bool is_running;
@@ -35,7 +31,7 @@ public partial class STGSpawner:Resource{
 
     public void spawn(){
         STGGlobal = STGGlobal.Instance;
-        
+
         if (is_running) return; 
         is_running = true;
         stop_flag = false;
@@ -66,6 +62,7 @@ public partial class STGSpawner:Resource{
         _bdata.acceleration = acc;
         _bdata.lifespan = bullet.lifespan;
         _bdata.texture = tex;
+        _bdata.next = bullet.next;
         STGGlobal.create_bullet(_bdata);
     }
 }

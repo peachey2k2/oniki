@@ -99,7 +99,6 @@ public partial class STGGlobal:Node{
 
         // there is no @onready in c# :sadge: 
         area_template = (PackedScene)ResourceLoader.Load("res://addons/GodotSTG/resources/shared_area.tscn");
-        zone_template = (PackedScene)ResourceLoader.Load("res://addons/GodotSTG/resources/zone.tscn");
 
         foreach (string file in DirAccess.GetFilesAt(BULLET_DIRECTORY)){
             bltdata.Add((STGBulletData)ResourceLoader.Load((BULLET_DIRECTORY + "/" + file).TrimSuffix(".remap"))); // builds use .remap extension so that is trimmed here
@@ -141,6 +140,16 @@ public partial class STGGlobal:Node{
         blts.Add(data);
     }
 
+    public STGBulletData configure_bullet(STGBulletData data){
+        STGBulletModifier mod = data.next;
+        data.velocity = data.velocity.Normalized() * mod.speed;
+        data.acceleration = data.acceleration.Normalized() * mod.acceleration;
+        data.lifespan = mod.lifespan > 0 ? mod.lifespan : 999999;
+        data.texture = textures[mod.id];
+        data.next = mod.next;
+        return data;
+    }
+
     // processing the bullets here.
     public override void _PhysicsProcess(double delta){
         float fdelta = (float)delta;
@@ -153,15 +162,13 @@ public partial class STGGlobal:Node{
             blt.position += blt.velocity * fdelta;
             blt.velocity += blt.acceleration * fdelta / 2;
             Transform2D t = new(0, blt.position){Origin = blt.position};
-            if (!arena_rect_margined.HasPoint(blt.position)) bqueue.Add(blt);
+            if (!arena_rect_margined.HasPoint(blt.position)){
+                bqueue.Add(blt);
+                blt.next = null;
+            }
     		PhysicsServer2D.AreaSetShapeTransform(area_rid, blt.shape.idx, t);
         }
-        foreach (STGBulletData blt in bqueue){
-            PhysicsServer2D.AreaSetShapeDisabled(area_rid, blt.shape.idx, true);
-            blts.Remove(blt);
-            bpool.Add(blt.shape);
-        }
-        bullet_count = blts.Count;
+        iterate_bullets();
     }
 
     public void create_texture(STGBulletModifier mod){
@@ -174,6 +181,21 @@ public partial class STGGlobal:Node{
         }
         mod.id = textures.Count;
         textures.Add(tex);
+    }
+
+    public void iterate_bullets(){
+        foreach (STGBulletData blt in bqueue){
+        // for (int i = 0; i < bqueue.Count; i++){
+        //     STGBulletData blt = bqueue[i];
+            if (blt.next == null){
+                PhysicsServer2D.AreaSetShapeDisabled(area_rid, blt.shape.idx, true);
+                blts.Remove(blt);
+                bpool.Add(blt.shape);
+            } else {
+               blts[blts.IndexOf(blt)] = configure_bullet(blt);
+            }
+        }
+        bullet_count = blts.Count;
     }
 
     public void clear(){

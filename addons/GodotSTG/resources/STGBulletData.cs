@@ -13,4 +13,5 @@ public partial class STGBulletData:Resource{
     public double lifespan;
 
     public STGShape shape;
+    public STGBulletModifier next;
 }
