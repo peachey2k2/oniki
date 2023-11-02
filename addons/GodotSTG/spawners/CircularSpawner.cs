@@ -33,10 +33,8 @@ public partial class CircularSpawner:STGSpawner{
 	public override async void _spawn(){
 		float gap = Mathf.Pi * 2 / amount;
         Vector2 velocity = bullet.speed * new Vector2((float)Mathf.Cos(init_angle_rad), (float)Mathf.Sin(init_angle_rad));
-        for (int i = 0; i < repeat; i++)
-        {
-            for (int j = 0; j < amount; j++)
-            {
+        for (int i = 0; i < repeat; i++){
+            for (int j = 0; j < amount; j++){
                 Vector2 velocity_normalized = velocity.Normalized();
                 if (stop_flag) return;
                 spawn_bullet(

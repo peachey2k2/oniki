@@ -199,7 +199,6 @@ func choice_box(_options:Array, is_for_dialogue:bool = true) -> MarginContainer:
 
 func _on_option_selected(index:int):
 	_dialogue.choose(index)
-	print(index)
 	proceed_dialogue.emit()
 
 func _on_dialogue_end():

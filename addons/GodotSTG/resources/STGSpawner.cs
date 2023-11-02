@@ -16,10 +16,9 @@ public partial class STGSpawner:Resource{
     [Export] public Vector2 position {get; set;}
     [Export] public PosType position_type {get; set;}
     [Export] public Towards towards {get; set;}
-    [Export] public float rotation {get; set;}
     [Export] public float rotation_speed {get; set;}
 
-    [ExportGroup("Bullet")] 
+    [ExportGroup("Bullet")]
     [Export] public STGBulletModifier bullet {get; set;}
 
     public Vector2 real_pos;
@@ -31,8 +30,8 @@ public partial class STGSpawner:Resource{
 
     public void spawn(){
         STGGlobal = STGGlobal.Instance;
-
-        if (is_running) return; 
+        
+        if (is_running) return;
         is_running = true;
         stop_flag = false;
         bdata = STGGlobal.bltdata[bullet.index];

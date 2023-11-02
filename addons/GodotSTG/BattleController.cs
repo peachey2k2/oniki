@@ -60,20 +60,26 @@ public partial class BattleController:Node2D{
                 STGGlobal.EmitSignal("spell_name_changed");
                 // enemy.Monitoring = true;
                 cache_spell_textures(curr_spell);
+                flag += 1; // timer await is encapsulated in flag increments and decrements
+                await ToSignal(GetTree().CreateTimer(curr_spell.wait_before, false), "timeout");
+                flag -= 1; // to prevent running multiple instances at the same time
+                if (flag > 0) return;
                 while (!is_spell_over){
                     foreach (STGSequence curr_sequence in curr_spell.sequences){
                         if (is_spell_over) break;
                         hp_threshold = curr_sequence.end_at_hp;
                         time_threshold = curr_sequence.end_at_time;
-                        flag += 1; // timer await is encapsulated in flag increments and decrements
-                        await ToSignal(GetTree().CreateTimer(curr_sequence.wait_before, false), "timeout");
-                        flag -= 1; // to prevent running multiple instances at the same time
-                        if (flag > 0) return;
                         foreach (STGSpawner curr_spawner in curr_sequence.spawners){
                             curr_spawner.spawn();
                         }
+                        flag += 1; // timer await is encapsulated in flag increments and decrements
+                        await ToSignal(GetTree().CreateTimer(curr_spell.wait_between, false), "timeout");
+                        flag -= 1; // to prevent running multiple instances at the same time
+                        if (flag > 0) return;
+                        GD.Print("pattern called");
                         await ToSignal(STGGlobal, "end_sequence");
                     }
+                    if ((curr_spell.sequence_flags&2) == 0) break;
                 }
                 await ToSignal(STGGlobal, "end_spell");
                 GC.Collect();
@@ -91,7 +97,7 @@ public partial class BattleController:Node2D{
                 STGBulletModifier blt = spw.bullet;
                 while (true){
                     STGGlobal.create_texture(blt);
-                    if (blt.next == null) return;
+                    if (blt.next == null) break;
                     blt = blt.next;
                 }
             }
