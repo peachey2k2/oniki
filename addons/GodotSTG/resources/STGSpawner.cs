@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using Godot;
 using GodotSTG;
 
@@ -28,7 +29,7 @@ public partial class STGSpawner:Resource{
     public STGBulletData bdata;
     public Texture2D tex;
 
-    public void spawn(){
+    public async void spawn(){
         STGGlobal = STGGlobal.Instance;
         
         if (is_running) return;
@@ -42,11 +43,13 @@ public partial class STGSpawner:Resource{
             real_pos = STGGlobal.lerp4arena(position);
         }
         STGGlobal.stop_spawner += _stop_spawner;
-        _spawn();
+        await _spawn();
+        STGGlobal.Instance.EmitSignal("spawner_done");
     }
 
-    public virtual void _spawn(){
+    public async virtual Task _spawn(){
         Debug.Assert(false, "No \"_spawn()\" found.");
+        return;
     }
 
     public void _stop_spawner(){

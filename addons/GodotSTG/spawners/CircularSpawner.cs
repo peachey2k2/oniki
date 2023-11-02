@@ -1,4 +1,4 @@
-using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using Godot;
 
 namespace GodotSTG;
@@ -30,7 +30,7 @@ public partial class CircularSpawner:STGSpawner{
 	[Export] public float stretch = 1;
 	[Export] public double delay = 0.1;
 
-	public override async void _spawn(){
+	public override async Task _spawn(){
 		float gap = Mathf.Pi * 2 / amount;
         Vector2 velocity = bullet.speed * new Vector2((float)Mathf.Cos(init_angle_rad), (float)Mathf.Sin(init_angle_rad));
         for (int i = 0; i < repeat; i++){

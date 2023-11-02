@@ -17,6 +17,7 @@ public partial class STGGlobal:Node{
     [Signal] public delegate void end_battleEventHandler();
     [Signal] public delegate void stop_spawnerEventHandler();
     [Signal] public delegate void clearedEventHandler();
+    [Signal] public delegate void spawner_doneEventHandler();
 
     [Signal] public delegate void bar_emptiedEventHandler();
     [Signal] public delegate void damage_takenEventHandler(int new_amount);

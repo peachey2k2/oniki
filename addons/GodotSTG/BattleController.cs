@@ -69,15 +69,12 @@ public partial class BattleController:Node2D{
                         if (is_spell_over) break;
                         hp_threshold = curr_sequence.end_at_hp;
                         time_threshold = curr_sequence.end_at_time;
-                        foreach (STGSpawner curr_spawner in curr_sequence.spawners){
-                            curr_spawner.spawn();
-                        }
+                        curr_sequence.spawn_sequence();
                         flag += 1; // timer await is encapsulated in flag increments and decrements
+                        await ToSignal(STGGlobal, "end_sequence"); //
                         await ToSignal(GetTree().CreateTimer(curr_spell.wait_between, false), "timeout");
                         flag -= 1; // to prevent running multiple instances at the same time
                         if (flag > 0) return;
-                        GD.Print("pattern called");
-                        await ToSignal(STGGlobal, "end_sequence");
                     }
                     if ((curr_spell.sequence_flags&2) == 0) break;
                 }
