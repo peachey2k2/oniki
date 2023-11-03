@@ -1,4 +1,4 @@
-[gd_resource type="PackedDataContainer" script_class="STGSpell" load_steps=9 format=3 uid="uid://8w3edb6ef414"]
+[gd_resource type="PackedDataContainer" script_class="STGSpell" load_steps=13 format=3 uid="uid://8w3edb6ef414"]
 
 [ext_resource type="Script" path="res://addons/GodotSTG/resources/STGSpell.cs" id="1_51pkt"]
 [ext_resource type="Script" path="res://addons/GodotSTG/resources/STGSequence.cs" id="2_wj8xh"]
@@ -49,6 +49,50 @@ end_at_hp = -1
 end_at_time = -1
 spawners = [SubResource("Resource_55q06")]
 
+[sub_resource type="Resource" id="Resource_76i0r"]
+script = ExtResource("3_1s66r")
+index = 0
+outer_color = Color(1, 0, 0, 1)
+inner_color = Color(1, 1, 1, 1)
+speed = -180.0
+acceleration = Vector2(0, 0)
+lifespan = 2.0
+sine_freq = 0.0
+sine_width = 0.0
+
+[sub_resource type="Resource" id="Resource_tsvhp"]
+script = ExtResource("3_1s66r")
+index = 0
+outer_color = Color(1, 0, 0, 1)
+inner_color = Color(1, 1, 1, 1)
+speed = 180.0
+acceleration = Vector2(0, 0)
+lifespan = 2.0
+sine_freq = 0.0
+sine_width = 0.0
+next = SubResource("Resource_76i0r")
+
+[sub_resource type="Resource" id="Resource_0gac6"]
+script = ExtResource("4_3onb3")
+init_angle = 18.0
+amount = 10
+repeat = 5
+tilt = 5.5
+distance = 0.0
+stretch = 1.0
+delay = 0.1
+position = Vector2(0, 0)
+position_type = 1
+towards = 0
+rotation_speed = 0.0
+bullet = SubResource("Resource_tsvhp")
+
+[sub_resource type="Resource" id="Resource_aaxg1"]
+script = ExtResource("2_wj8xh")
+end_at_hp = -1
+end_at_time = -1
+spawners = [SubResource("Resource_0gac6")]
+
 [resource]
 script = ExtResource("1_51pkt")
 name = "test"
@@ -59,6 +103,6 @@ enemy_pos = Vector2(0.5, 0.5)
 enemy_movement = 0
 shield = 0
 wait_before = 1.0
-wait_between = 0.3
-sequence_flags = 6
-sequences = [SubResource("PackedDataContainer_hud77")]
+wait_between = 0.2
+sequence_flags = 2
+sequences = [SubResource("PackedDataContainer_hud77"), SubResource("Resource_aaxg1")]

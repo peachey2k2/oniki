@@ -19,7 +19,10 @@ public partial class STGSpell:Resource{
     [Export] public Shield shield {get; set;}
     [Export] public float wait_before {get; set;}
     [Export] public float wait_between {get; set;}
-    [Export(PropertyHint.Flags, "Randomize sequences:1,Loop sequences:2,Stop after each:4,Clear after each:8")]
+    [Export(PropertyHint.Flags, 
+        "Randomize sequences:1,"+
+        "Loop sequences:2,"+
+        "Clear after each:4")]
     public int sequence_flags {get; set;}
     [Export] public Array<STGSequence> sequences {get; set;} = new();
 }

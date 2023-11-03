@@ -13,3 +13,9 @@ export_presets.cfg
 .mono/
 data_*/
 mono_crash.*.json
+
+# Push script
+.push
+
+# Editor plugins
+addons/editor_background
