@@ -188,7 +188,6 @@ position = Vector2(0, 18)
 shape = SubResource("CircleShape2D_5n1w8")
 
 [node name="ExtraColliders" type="Node2D" parent="."]
-modulate = Color(1, 1, 1, 0)
 
 [node name="Hitbox" type="Area2D" parent="ExtraColliders"]
 z_index = 5

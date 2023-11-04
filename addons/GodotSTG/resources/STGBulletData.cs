@@ -1,7 +1,7 @@
 using Godot;
 using GodotSTG;
 
-[GlobalClass, Icon("res://addons/GodotSTG/icons/bulletdata.png")]
+[GlobalClass, Icon("res://addons/GodotSTG/assets/bulletdata.png")]
 public partial class STGBulletData:Resource{
 
     [Export] public Texture2D texture;

@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://bty05s2e3am5q"]
+[gd_scene load_steps=17 format=3 uid="uid://bty05s2e3am5q"]
 
 [ext_resource type="Texture2D" uid="uid://cdams53qwdqbu" path="res://assets/backgrounds/dot.png" id="2_fq3wh"]
 [ext_resource type="Script" path="res://scripts/FrameCollision.gd" id="3_547x7"]
@@ -9,7 +9,6 @@
 [ext_resource type="Theme" uid="uid://banndw0q5ph2x" path="res://themes/theme.tres" id="6_8pmc4"]
 [ext_resource type="Script" path="res://scripts/GrazeCounter.gd" id="7_5eiw7"]
 [ext_resource type="Script" path="res://scripts/BarCount.gd" id="9_1jldx"]
-[ext_resource type="Script" path="res://scripts/BulletCounter.gd" id="11_7wnbf"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_csmdb"]
 
@@ -226,25 +225,6 @@ theme = ExtResource("6_8pmc4")
 text = "test"
 label_settings = ExtResource("4_8cyd8")
 horizontal_alignment = 1
-
-[node name="BulletCounter" type="Label" parent="BattleUI"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -211.5
-offset_top = 3.0
-offset_right = 211.5
-offset_bottom = 51.0
-grow_horizontal = 2
-grow_vertical = 0
-theme = ExtResource("6_8pmc4")
-text = "test"
-label_settings = ExtResource("4_8cyd8")
-horizontal_alignment = 1
-script = ExtResource("11_7wnbf")
 
 [node name="Graze" type="Label" parent="BattleUI"]
 layout_mode = 1

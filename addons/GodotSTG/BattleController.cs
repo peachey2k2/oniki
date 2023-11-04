@@ -3,7 +3,7 @@ using GodotSTG;
 using Godot.Collections;
 using System;
 
-[GlobalClass, Icon("res://addons/GodotSTG/icons/battlecontroller.png")]
+[GlobalClass, Icon("res://addons/GodotSTG/assets/battlecontroller.png")]
 public partial class BattleController:Node2D{
     private static STGGlobal STGGlobal;
     [ExportCategory("BattleController")]
@@ -43,10 +43,10 @@ public partial class BattleController:Node2D{
         STGGlobal.clear();
         STGGlobal.shared_area.Reparent(this, false);
         STGGlobal.controller = this;
-        STGGlobal.EmitSignal("battle_start");
+        STGGlobal.EmitSignal(STGGlobal.SignalName.battle_start);
         STGGlobal.arena_rect = arena_rect;
         int bar_count = stats.bars.Count;
-        STGGlobal.EmitSignal("bar_changed", bar_count);
+        STGGlobal.EmitSignal(STGGlobal.SignalName.bar_changed, bar_count);
         life = 0;
         player.Position = STGGlobal.lerp4arena(stats.player_position);
         foreach (STGBar curr_bar in stats.bars){
@@ -57,7 +57,7 @@ public partial class BattleController:Node2D{
                 change_shield(curr_spell.shield);
                 timer.WaitTime = curr_spell.time;
                 timer.Start();
-                STGGlobal.EmitSignal("spell_name_changed");
+                STGGlobal.EmitSignal(STGGlobal.SignalName.spell_name_changed);
                 // enemy.Monitoring = true;
                 cache_spell_textures(curr_spell);
                 flag += 1; // timer await is encapsulated in flag increments and decrements
@@ -71,21 +71,22 @@ public partial class BattleController:Node2D{
                         time_threshold = curr_sequence.end_at_time;
                         curr_sequence.spawn_sequence();
                         flag += 1; // timer await is encapsulated in flag increments and decrements
-                        await ToSignal(STGGlobal, "end_sequence"); //
+                        await ToSignal(STGGlobal, STGGlobal.SignalName.end_sequence); //
                         await ToSignal(GetTree().CreateTimer(curr_spell.wait_between, false), "timeout");
                         flag -= 1; // to prevent running multiple instances at the same time
                         if (flag > 0) return;
+                        if ((curr_spell.sequence_flags&4) == 4) STGGlobal.clear();
                     }
                     if ((curr_spell.sequence_flags&2) == 0) break;
                 }
-                await ToSignal(STGGlobal, "end_spell");
-                GC.Collect();
+                await ToSignal(STGGlobal, STGGlobal.SignalName.end_spell);
+                GC.Collect(); // force collect to prevent future lag spikes
                 // enemy.Monitoring = false;
             }
             bar_count -= 1;
-            STGGlobal.EmitSignal("bar_changed", bar_count);
+            STGGlobal.EmitSignal(STGGlobal.SignalName.bar_changed, bar_count);
         }
-        STGGlobal.EmitSignal("end_battle");
+        STGGlobal.EmitSignal(STGGlobal.SignalName.end_battle);
     }
 
     public void cache_spell_textures(STGSpell spell){
@@ -104,10 +105,10 @@ public partial class BattleController:Node2D{
     public async void kill(){
         ProcessMode = ProcessModeEnum.Disabled;
         STGGlobal.shared_area.Reparent(STGGlobal, false);
-        STGGlobal.EmitSignal("stop_spawner");
+        STGGlobal.EmitSignal(STGGlobal.SignalName.stop_spawner);
         STGGlobal.clear();
         QueueRedraw();
-        await ToSignal(STGGlobal, "cleared");
+        await ToSignal(STGGlobal, STGGlobal.SignalName.cleared);
         QueueFree();
     }
 
@@ -119,6 +120,9 @@ public partial class BattleController:Node2D{
         foreach (STGBulletData blt in STGGlobal.blts){
             DrawTexture(blt.texture, blt.position - blt.texture.GetSize() * (float)0.5);
         }
+        foreach (STGBulletData blt in STGGlobal.brem){
+            DrawTexture(blt.texture, blt.position - blt.texture.GetSize() * (float)0.5, new Color(1, 1, 1, (float)blt.lifespan * 2));
+        }
     }
 
     public void emit_life(STGBar _bar){
@@ -128,12 +132,12 @@ public partial class BattleController:Node2D{
             values.Add(i.health);
             colors.Add(i.bar_color);
         }
-        STGGlobal.EmitSignal("life_changed", values, colors);
+        STGGlobal.EmitSignal(STGGlobal.SignalName.life_changed, values, colors);
     }
 
     public void change_shield(STGSpell.Shield _shield){
         shield_state = _shield;
-        STGGlobal.EmitSignal("shield_changed", (int)_shield);
+        STGGlobal.EmitSignal(STGGlobal.SignalName.shield_changed, (int)_shield);
     }
 
     public void _on_timer_timeout(){
@@ -142,25 +146,25 @@ public partial class BattleController:Node2D{
 
     public void _on_bar_emptied(){
         is_spell_over = true;
-        STGGlobal.EmitSignal("end_sequence");
-        STGGlobal.EmitSignal("end_spell");
-        STGGlobal.EmitSignal("stop_spawner");
+        STGGlobal.EmitSignal(STGGlobal.SignalName.end_sequence);
+        STGGlobal.EmitSignal(STGGlobal.SignalName.end_spell);
+        STGGlobal.EmitSignal(STGGlobal.SignalName.stop_spawner);
     }
 
     public void _on_spell_timed_out(){
         is_spell_over = true;
-        STGGlobal.EmitSignal("end_sequence");
-        STGGlobal.EmitSignal("end_spell");
-        STGGlobal.EmitSignal("stop_spawner");
+        STGGlobal.EmitSignal(STGGlobal.SignalName.end_sequence);
+        STGGlobal.EmitSignal(STGGlobal.SignalName.end_spell);
+        STGGlobal.EmitSignal(STGGlobal.SignalName.stop_spawner);
     }
 
     public void _on_end_sequence(){
-        STGGlobal.EmitSignal("stop_spawner");
+        STGGlobal.EmitSignal(STGGlobal.SignalName.stop_spawner);
     }
 
     public void _on_damage_taken(int _life){
         if (life > hp_threshold) return;
-        STGGlobal.EmitSignal("end_sequence");
-        STGGlobal.EmitSignal("stop_spawner");
+        STGGlobal.EmitSignal(STGGlobal.SignalName.end_sequence);
+        STGGlobal.EmitSignal(STGGlobal.SignalName.stop_spawner);
     }
 }

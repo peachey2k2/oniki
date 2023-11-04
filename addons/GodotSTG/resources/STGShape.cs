@@ -3,7 +3,6 @@ using GodotSTG;
 
 namespace GodotSTG;
 
-[GlobalClass]
 public partial class STGShape:Resource{
     public Rid rid;
     public int idx;

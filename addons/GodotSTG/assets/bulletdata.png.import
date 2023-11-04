@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dckpdxvs4auns"
-path="res://.godot/imported/battlecontroller.png-5cd950dcd1a772a0890afc40c81fbcd8.ctex"
+uid="uid://b8lsgp0qtgmat"
+path="res://.godot/imported/bulletdata.png-9fb2c32f3c3c1416a1c1961c3cba3866.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/GodotSTG/icons/battlecontroller.png"
-dest_files=["res://.godot/imported/battlecontroller.png-5cd950dcd1a772a0890afc40c81fbcd8.ctex"]
+source_file="res://addons/GodotSTG/assets/bulletdata.png"
+dest_files=["res://.godot/imported/bulletdata.png-9fb2c32f3c3c1416a1c1961c3cba3866.ctex"]
 
 [params]
 

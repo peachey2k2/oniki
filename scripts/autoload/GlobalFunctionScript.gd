@@ -40,7 +40,6 @@ var CurrentArena:Node
 var ArenaViewport:Node
 var Controller:Node
 var PlayerCamera:Node
-var FpsCounter:Node
 var Ball:Node
 var SharedArea:Node
 var Temporary:Node
@@ -66,6 +65,8 @@ func _physics_process(_delta):
 		img.save_png("user://screenshots/" + str(Time.get_unix_time_from_system()) + ".png")
 
 func _ready():
+#	get_tree().get_root().set_disable_input(true)
+	
 	# self explanatory
 	load_settings()
 	
@@ -144,7 +145,7 @@ func play_dialogue(id:String):
 				in_dialogue = false
 				dialogue_end.emit()
 				return
-			print(next_content) #print the next line of dialogue
+#			print(next_content) #print the next line of dialogue
 			_print_dialogue(next_content)
 			if next_content.get("tags").has("NEXT"):
 				continue
@@ -210,13 +211,10 @@ func start():
 #	await STGGlobal.pool_all()
 	Overworld = load("res://scenes/overworld.tscn").instantiate()
 	Player = load("res://scenes/Player.tscn").instantiate()
-	FpsCounter = load("res://scenes/FpsCounter.tscn").instantiate()
 	PlayerCamera = Player.get_node("PlayerCamera")
 	root.add_child.call_deferred(Overworld)
 	Overworld.add_child.call_deferred(Player)
 	root.get_node("MenuRoot").queue_free()
-	PlayerCamera.add_child(FpsCounter)
-	FpsCounter.position = Vector2(-960, -540)
 	load_data()
 	game_state = WORLD
 
@@ -252,8 +250,6 @@ func load_battle(id:String):
 	Controller.enemy = Enemy
 	Controller.arena_rect = BATTLE_RECT
 	Controller.start()
-	FpsCounter.reparent(root)
-	FpsCounter.position = Vector2(0, 0)
 	game_state = BATTLE
 
 func reload_battle():
@@ -290,8 +286,6 @@ func unload_battle():
 	Player.position = player_pos
 #	CurrentArena.queue_free()
 	Controller.kill()
-	FpsCounter.reparent(PlayerCamera)
-	FpsCounter.position = Vector2(-960, -540)
 	game_state = WORLD
 
 func get_distance(node1:Node, node2:Node) -> float:

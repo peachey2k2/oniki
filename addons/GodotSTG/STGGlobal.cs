@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using Godot;
 using Godot.Collections;
 using GodotSTG;
@@ -22,10 +24,11 @@ public partial class STGGlobal:Node{
     [Signal] public delegate void bar_emptiedEventHandler();
     [Signal] public delegate void damage_takenEventHandler(int new_amount);
 
-    private PackedScene zone_template;
     private PackedScene area_template;
+    private Texture2D remove_template;
 
     public BattleController controller {get; set;}
+    public CanvasLayer panel;
 
     System.Collections.Generic.Dictionary<string, Variant>[] settings = {
         new() {
@@ -56,8 +59,10 @@ public partial class STGGlobal:Node{
     public List<STGBulletData> blts = new();
     public List<STGShape> bpool = new();
     public List<STGBulletData> bqueue = new();
-    public List<STGBulletData> bltdata = new(); // using new() here crashes the game with no debug message. why???
+    public List<STGBulletData> bltdata = new();
     public List<Texture2D> textures = new();
+    public List<STGBulletData> brem = new();
+
     private Area2D _shared_area;
     public Area2D shared_area {
         get{ return _shared_area; }
@@ -85,6 +90,10 @@ public partial class STGGlobal:Node{
     public float clock_real;
     public SceneTreeTimer clock_timer;
     public SceneTreeTimer clock_real_timer;
+    public ulong fps;
+    public ulong _fps = 1;
+    public ulong start = Time.GetTicksUsec();
+    public ulong end;
 
     public bool exiting = false;
     public static STGGlobal Instance { get; private set; }
@@ -100,11 +109,13 @@ public partial class STGGlobal:Node{
 
         // there is no @onready in c# :sadge: 
         area_template = (PackedScene)ResourceLoader.Load("res://addons/GodotSTG/resources/shared_area.tscn");
+        remove_template = (Texture2D)ResourceLoader.Load("res://addons/GodotSTG/assets/remove.png");
 
         foreach (string file in DirAccess.GetFilesAt(BULLET_DIRECTORY)){
             bltdata.Add((STGBulletData)ResourceLoader.Load((BULLET_DIRECTORY + "/" + file).TrimSuffix(".remap"))); // builds use .remap extension so that is trimmed here
             // you can look at this issue for more info: https://github.com/godotengine/godot/issues/66014
             // also this will probably change in a later release for the engine
+        }
 
         // pooling lol
         shared_area = (Area2D)area_template.Instantiate(); // THIS MOTHERFUCKER...
@@ -116,11 +127,43 @@ public partial class STGGlobal:Node{
 	    	PhysicsServer2D.AreaSetShapeDisabled(area_rid, i, true);
             bpool.Add(new STGShape(shape_rid, i));
         }
-        await ToSignal(GetTree().CreateTimer(1), "timeout");
-        }
+        // await ToSignal(GetTree().CreateTimer(1), "timeout");
+        
         // global clocks cuz yeah
         clock_timer      = GetTree().CreateTimer(TIMER_START, false);
         clock_real_timer = GetTree().CreateTimer(TIMER_START, true);
+
+        // panel
+        panel = (CanvasLayer)((PackedScene)ResourceLoader.Load("res://addons/GodotSTG/panel.tscn")).Instantiate();
+        AddChild(panel);
+        Label PoolSize = (Label)panel.GetNode("Panel/VBoxContainer/PoolSize/count");
+        Label Pooled   = (Label)panel.GetNode("Panel/VBoxContainer/Pooled/count");
+        Label Active   = (Label)panel.GetNode("Panel/VBoxContainer/Active/count");
+        Label Removing = (Label)panel.GetNode("Panel/VBoxContainer/Removing/count");
+        Label Textures = (Label)panel.GetNode("Panel/VBoxContainer/Textures/count");
+        Label FPS      = (Label)panel.GetNode("Panel/VBoxContainer/FPS/count");
+
+        PoolSize.Text = POOL_SIZE.ToString();
+        while (true){
+            await Task.Delay(200);
+            Pooled  .Text = bpool   .Count.ToString();
+            Active  .Text = blts    .Count.ToString();
+            Removing.Text = brem    .Count.ToString();
+            Textures.Text = textures.Count.ToString();
+            FPS     .Text = fps           .ToString();
+        }
+    }
+
+    // messy fps calculation
+    public override void _Process(double delta){
+        end = Time.GetTicksUsec();
+        if (end - start < 500000){
+            _fps += 1;
+        } else {
+            start = end;
+            fps = _fps * 2;
+            _fps = 1;
+        }
     }
 
     // i got the idea on how to optimize this from this nice devlog. it's pretty clean and detailed.
@@ -151,12 +194,15 @@ public partial class STGGlobal:Node{
         return data;
     }
 
+    public override void _UnhandledInput(InputEvent @event){
+        if (InputMap.HasAction("stg_info") && Input.IsActionJustPressed("stg_info")) panel.Visible = !panel.Visible;
+    }
+
     // processing the bullets here.
     public override void _PhysicsProcess(double delta){
         float fdelta = (float)delta;
         bqueue.Clear();
-        for (int i = 0; i < blts.Count; i++){
-            STGBulletData blt = blts[i];
+        foreach (STGBulletData blt in blts){
             if (blt.lifespan >= 0) blt.lifespan -= delta;
             else bqueue.Add(blt);
             blt.velocity += blt.acceleration * fdelta / 2;
@@ -169,7 +215,30 @@ public partial class STGGlobal:Node{
             }
     		PhysicsServer2D.AreaSetShapeTransform(area_rid, blt.shape.idx, t);
         }
-        iterate_bullets();
+        foreach (STGBulletData blt in bqueue){
+            if (blt.next == null){
+                PhysicsServer2D.AreaSetShapeDisabled(area_rid, blt.shape.idx, true);
+                blt.texture = remove_template;
+                blt.lifespan = 0.5;
+                blts.Remove(blt);
+                // bpool.Add(blt.shape);
+                brem.Add(blt);
+            } else {
+               blts[blts.IndexOf(blt)] = configure_bullet(blt);
+            }
+        }
+        bqueue.Clear();
+        foreach (STGBulletData blt in brem){
+            if (blt.lifespan >= 0) blt.lifespan -= delta;
+            else {
+                bqueue.Add(blt);
+            }
+        }
+        foreach (STGBulletData blt in bqueue){
+            brem.Remove(blt);
+            bpool.Add(blt.shape);
+        }
+        bullet_count = blts.Count;
     }
 
     public void create_texture(STGBulletModifier mod){
@@ -182,21 +251,6 @@ public partial class STGGlobal:Node{
         }
         mod.id = textures.Count;
         textures.Add(tex);
-    }
-
-    public void iterate_bullets(){
-        foreach (STGBulletData blt in bqueue){
-        // for (int i = 0; i < bqueue.Count; i++){
-        //     STGBulletData blt = bqueue[i];
-            if (blt.next == null){
-                PhysicsServer2D.AreaSetShapeDisabled(area_rid, blt.shape.idx, true);
-                blts.Remove(blt);
-                bpool.Add(blt.shape);
-            } else {
-               blts[blts.IndexOf(blt)] = configure_bullet(blt);
-            }
-        }
-        bullet_count = blts.Count;
     }
 
     public void clear(){

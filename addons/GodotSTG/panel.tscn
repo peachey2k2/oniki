@@ -1,0 +1,112 @@
+[gd_scene load_steps=2 format=3 uid="uid://8dr1xdr2wmoj"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_n2y2b"]
+line_spacing = 0.0
+font_size = 14
+
+[node name="panel" type="CanvasLayer"]
+layer = 5
+visible = false
+
+[node name="Panel" type="Panel" parent="."]
+offset_right = 140.0
+offset_bottom = 120.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="PoolSize" type="Label" parent="Panel/VBoxContainer"]
+layout_mode = 2
+text = "Pool size:"
+label_settings = SubResource("LabelSettings_n2y2b")
+
+[node name="count" type="Label" parent="Panel/VBoxContainer/PoolSize"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+label_settings = SubResource("LabelSettings_n2y2b")
+horizontal_alignment = 2
+
+[node name="Pooled" type="Label" parent="Panel/VBoxContainer"]
+layout_mode = 2
+text = "Pooled:"
+label_settings = SubResource("LabelSettings_n2y2b")
+
+[node name="count" type="Label" parent="Panel/VBoxContainer/Pooled"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+label_settings = SubResource("LabelSettings_n2y2b")
+horizontal_alignment = 2
+
+[node name="Active" type="Label" parent="Panel/VBoxContainer"]
+layout_mode = 2
+text = "Active:"
+label_settings = SubResource("LabelSettings_n2y2b")
+
+[node name="count" type="Label" parent="Panel/VBoxContainer/Active"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+label_settings = SubResource("LabelSettings_n2y2b")
+horizontal_alignment = 2
+
+[node name="Removing" type="Label" parent="Panel/VBoxContainer"]
+layout_mode = 2
+text = "Removing:"
+label_settings = SubResource("LabelSettings_n2y2b")
+
+[node name="count" type="Label" parent="Panel/VBoxContainer/Removing"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+label_settings = SubResource("LabelSettings_n2y2b")
+horizontal_alignment = 2
+
+[node name="Textures" type="Label" parent="Panel/VBoxContainer"]
+layout_mode = 2
+text = "Textures:"
+label_settings = SubResource("LabelSettings_n2y2b")
+
+[node name="count" type="Label" parent="Panel/VBoxContainer/Textures"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+label_settings = SubResource("LabelSettings_n2y2b")
+horizontal_alignment = 2
+
+[node name="FPS" type="Label" parent="Panel/VBoxContainer"]
+layout_mode = 2
+text = "FPS:"
+label_settings = SubResource("LabelSettings_n2y2b")
+
+[node name="count" type="Label" parent="Panel/VBoxContainer/FPS"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+label_settings = SubResource("LabelSettings_n2y2b")
+horizontal_alignment = 2

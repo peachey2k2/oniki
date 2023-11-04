@@ -1,20 +1,9 @@
-[gd_resource type="PackedDataContainer" script_class="STGSpell" load_steps=13 format=3 uid="uid://8w3edb6ef414"]
+[gd_resource type="PackedDataContainer" script_class="STGSpell" load_steps=11 format=3 uid="uid://8w3edb6ef414"]
 
 [ext_resource type="Script" path="res://addons/GodotSTG/resources/STGSpell.cs" id="1_51pkt"]
 [ext_resource type="Script" path="res://addons/GodotSTG/resources/STGSequence.cs" id="2_wj8xh"]
 [ext_resource type="Script" path="res://addons/GodotSTG/resources/STGBulletModifier.cs" id="3_1s66r"]
 [ext_resource type="Script" path="res://addons/GodotSTG/spawners/CircularSpawner.cs" id="4_3onb3"]
-
-[sub_resource type="Resource" id="Resource_nf73o"]
-script = ExtResource("3_1s66r")
-index = 0
-outer_color = Color(1, 0, 0, 1)
-inner_color = Color(1, 1, 1, 1)
-speed = -180.0
-acceleration = Vector2(0, 0)
-lifespan = 2.0
-sine_freq = 0.0
-sine_width = 0.0
 
 [sub_resource type="Resource" id="Resource_adm1b"]
 script = ExtResource("3_1s66r")
@@ -26,17 +15,16 @@ acceleration = Vector2(0, 0)
 lifespan = 2.0
 sine_freq = 0.0
 sine_width = 0.0
-next = SubResource("Resource_nf73o")
 
 [sub_resource type="Resource" id="Resource_55q06"]
 script = ExtResource("4_3onb3")
 init_angle = 0.0
 amount = 10
-repeat = 5
+repeat = 3
 tilt = 5.5
 distance = 0.0
 stretch = 1.0
-delay = 0.1
+delay = 0.01
 position = Vector2(0, 0)
 position_type = 1
 towards = 0
@@ -47,18 +35,8 @@ bullet = SubResource("Resource_adm1b")
 script = ExtResource("2_wj8xh")
 end_at_hp = -1
 end_at_time = -1
+persist = false
 spawners = [SubResource("Resource_55q06")]
-
-[sub_resource type="Resource" id="Resource_76i0r"]
-script = ExtResource("3_1s66r")
-index = 0
-outer_color = Color(1, 0, 0, 1)
-inner_color = Color(1, 1, 1, 1)
-speed = -180.0
-acceleration = Vector2(0, 0)
-lifespan = 2.0
-sine_freq = 0.0
-sine_width = 0.0
 
 [sub_resource type="Resource" id="Resource_tsvhp"]
 script = ExtResource("3_1s66r")
@@ -70,17 +48,16 @@ acceleration = Vector2(0, 0)
 lifespan = 2.0
 sine_freq = 0.0
 sine_width = 0.0
-next = SubResource("Resource_76i0r")
 
 [sub_resource type="Resource" id="Resource_0gac6"]
 script = ExtResource("4_3onb3")
-init_angle = 18.0
+init_angle = 10.0
 amount = 10
-repeat = 5
-tilt = 5.5
+repeat = 3
+tilt = -5.5
 distance = 0.0
 stretch = 1.0
-delay = 0.1
+delay = 0.01
 position = Vector2(0, 0)
 position_type = 1
 towards = 0
@@ -91,6 +68,7 @@ bullet = SubResource("Resource_tsvhp")
 script = ExtResource("2_wj8xh")
 end_at_hp = -1
 end_at_time = -1
+persist = false
 spawners = [SubResource("Resource_0gac6")]
 
 [resource]
@@ -101,8 +79,8 @@ time = 99999
 bar_color = Color(0.560784, 0.894118, 0.937255, 1)
 enemy_pos = Vector2(0.5, 0.5)
 enemy_movement = 0
-shield = 0
+shield = 1
 wait_before = 1.0
-wait_between = 0.2
+wait_between = 0.0
 sequence_flags = 2
 sequences = [SubResource("PackedDataContainer_hud77"), SubResource("Resource_aaxg1")]
