@@ -8,6 +8,9 @@ using Godot.Collections;
 using GodotSTG;
 
 public partial class STGGlobal:Node{
+
+    static StringName stg_info = new("stg_info");
+
     [Signal] public delegate void battle_startEventHandler();
     [Signal] public delegate void shield_changedEventHandler(int value);
     [Signal] public delegate void spell_name_changedEventHandler(string value);
@@ -194,7 +197,7 @@ public partial class STGGlobal:Node{
     }
 
     public override void _UnhandledInput(InputEvent @event){
-        if (InputMap.HasAction("stg_info") && Input.IsActionJustPressed("stg_info")) panel.Visible = !panel.Visible;
+        if (InputMap.HasAction(stg_info) && Input.IsActionJustPressed(stg_info)) panel.Visible = !panel.Visible;
     }
 
     // processing the bullets here.
@@ -205,7 +208,7 @@ public partial class STGGlobal:Node{
             else bqueue.Add(blt);
             foreach (STGTween tw in blt.tweens){
                 if (blt.current < tw.list.Count){
-                    blt.Set(tw.property.ToString(), tw.list[blt.current] + (float)(tw.mode == STGTween.TweenMode.Add ? blt.Get(tw.property.ToString()) : 0));
+                    blt.Set(tw.property_str, tw.list[blt.current] + (float)(tw.mode == STGTween.TweenMode.Add ? blt.Get(tw.property_str) : 0));
                     blt.current++;
                 }
             }

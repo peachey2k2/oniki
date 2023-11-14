@@ -10,14 +10,15 @@ namespace GodotSTG;
 public partial class STGTween:Resource{
     public enum TweenProperty {magnitude, direction}
     public enum TweenMode {Set, Add}
-    // private TweenProperty _property;
-    [Export] public TweenProperty property;
-    //     get{ return _property; }
-    //     set{
-    //         _property = value;
-    //         property_string = value.ToString()
-    //     }
-    // }
+    public StringName property_str;
+    private TweenProperty _property;
+    [Export] public TweenProperty property{
+        get{ return _property; }
+        set{
+            _property = value;
+            property_str = value.ToString();
+        }
+    }
     [Export] public TweenMode mode;
     [Export] public float length;
     public List<float> list = new();
