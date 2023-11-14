@@ -4,6 +4,19 @@
 [ext_resource type="Script" path="res://addons/GodotSTG/resources/STGSequence.cs" id="2_wj8xh"]
 [ext_resource type="Script" path="res://addons/GodotSTG/resources/STGBulletModifier.cs" id="3_1s66r"]
 [ext_resource type="Script" path="res://addons/GodotSTG/spawners/CircularSpawner.cs" id="4_3onb3"]
+[ext_resource type="Script" path="res://addons/GodotSTG/resources/STGTween.cs" id="4_76xdg"]
+
+[sub_resource type="Curve" id="Curve_su8gh"]
+max_value = 2.0
+_data = [Vector2(0.0340136, 0.0842104), 0.0, 17.7947, 0, 0, Vector2(0.210884, 0), 0.0, 0.0, 0, 0, Vector2(0.44898, 0.0631578), 0.0, 0.0, 0, 0, Vector2(0.537415, 0.821053), 0.0, 0.0, 0, 0, Vector2(0.62585, 0.105263), 0.0, 0.0, 0, 0, Vector2(0.816326, 0), 0.0, 0.0, 0, 0, Vector2(1, 0.610526), 0.0, 0.0, 0, 0]
+point_count = 7
+
+[sub_resource type="Resource" id="Resource_h1mx5"]
+script = ExtResource("4_76xdg")
+property = 1
+mode = 1
+length = 10.0
+curve = SubResource("Curve_su8gh")
 
 [sub_resource type="Resource" id="Resource_adm1b"]
 script = ExtResource("3_1s66r")
@@ -11,20 +24,16 @@ index = 0
 outer_color = Color(1, 0, 0, 1)
 inner_color = Color(1, 1, 1, 1)
 speed = 180.0
-acceleration = Vector2(0, 0)
-lifespan = 2.0
-sine_freq = 0.0
-sine_width = 0.0
+tweens = [SubResource("Resource_h1mx5")]
 
 [sub_resource type="Resource" id="Resource_55q06"]
 script = ExtResource("4_3onb3")
 init_angle = 0.0
 amount = 10
-repeat = 3
+repeat = 99999999
 tilt = 5.5
 distance = 0.0
-stretch = 1.0
-delay = 0.01
+delay = 0.1
 position = Vector2(0, 0)
 position_type = 1
 towards = 0
@@ -38,39 +47,6 @@ end_at_time = -1
 persist = false
 spawners = [SubResource("Resource_55q06")]
 
-[sub_resource type="Resource" id="Resource_tsvhp"]
-script = ExtResource("3_1s66r")
-index = 0
-outer_color = Color(1, 0, 0, 1)
-inner_color = Color(1, 1, 1, 1)
-speed = 180.0
-acceleration = Vector2(0, 0)
-lifespan = 2.0
-sine_freq = 0.0
-sine_width = 0.0
-
-[sub_resource type="Resource" id="Resource_0gac6"]
-script = ExtResource("4_3onb3")
-init_angle = 10.0
-amount = 10
-repeat = 3
-tilt = -5.5
-distance = 0.0
-stretch = 1.0
-delay = 0.01
-position = Vector2(0, 0)
-position_type = 1
-towards = 0
-rotation_speed = 0.0
-bullet = SubResource("Resource_tsvhp")
-
-[sub_resource type="Resource" id="Resource_aaxg1"]
-script = ExtResource("2_wj8xh")
-end_at_hp = -1
-end_at_time = -1
-persist = false
-spawners = [SubResource("Resource_0gac6")]
-
 [resource]
 script = ExtResource("1_51pkt")
 name = "test"
@@ -83,4 +59,4 @@ shield = 1
 wait_before = 1.0
 wait_between = 0.0
 sequence_flags = 2
-sequences = [SubResource("PackedDataContainer_hud77"), SubResource("Resource_aaxg1")]
+sequences = [SubResource("PackedDataContainer_hud77")]

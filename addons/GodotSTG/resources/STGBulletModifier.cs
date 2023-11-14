@@ -1,4 +1,5 @@
 using Godot;
+using Godot.Collections;
 
 namespace GodotSTG;
 
@@ -9,12 +10,10 @@ public partial class STGBulletModifier:Resource{
     [Export] public Color outer_color {get; set;} = Colors.Red;
     [Export] public Color inner_color {get; set;} = Colors.White;
     [Export] public float speed {get; set;}
-    [Export] public Vector2 acceleration {get; set;}
-    [Export] public double lifespan {get; set;} = -1;
-    [Export] public float sine_freq {get; set;}
-    [Export] public float sine_width {get; set;}
+    public double lifespan {get; set;} = -1;
+    [Export] public Array<STGTween> tweens = new();
     [Export] public STGBulletModifier next {get; set;}
 
-    // this is automatically set at runtime. dw about it.
+    // this are automatically set at runtime. dw about it.
     public int id = -1;
 }

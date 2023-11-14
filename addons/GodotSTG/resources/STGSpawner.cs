@@ -10,6 +10,7 @@ namespace GodotSTG;
 public partial class STGSpawner:Resource{
     
     public static STGGlobal STGGlobal;
+    public static SceneTree tree;
     public enum PosType{Absolute, Relative}
     public enum Towards{Generic, Player}
 
@@ -31,6 +32,7 @@ public partial class STGSpawner:Resource{
 
     public async void spawn(){
         STGGlobal = STGGlobal.Instance;
+        tree = STGGlobal.GetTree();
         
         if (is_running) return;
         is_running = true;
@@ -57,14 +59,22 @@ public partial class STGSpawner:Resource{
         is_running = false;
     }
 
-    public void spawn_bullet(Vector2 pos, Vector2 vel, Vector2 acc){
+    public void spawn_bullet(Vector2 pos, float dir, float mag){
         STGBulletData _bdata = (STGBulletData)bdata.Duplicate();
+        _bdata.current = 0;
         _bdata.position = pos;
-        _bdata.velocity = vel;
-        _bdata.acceleration = acc;
+        _bdata.direction = dir;
+        _bdata.magnitude = mag;
         _bdata.lifespan = bullet.lifespan;
         _bdata.texture = tex;
         _bdata.next = bullet.next;
+        _bdata.tweens = bullet.tweens;
+        // _bdata.tween = tree.CreateTween();
+        // foreach (BulletTween tw in bullet.tweens){
+        //     _bdata.tween.TweenProperty(_bdata, tw.Property, tw.FinalValue + (tw.Additive ? (float)_bdata.Get(tw.Property) : 0), tw.Duration).SetTrans(tw.Transition);
+        //     if (tw.Easing >= 0) _bdata.tween.SetEase((Tween.EaseType)tw.Easing);
+        //     if (tw.Parallelize) _bdata.tween.Parallel();
+        // }
         STGGlobal.create_bullet(_bdata);
     }
 }
