@@ -12,6 +12,7 @@ public partial class STGBulletData:Resource{
     public Vector2 position;
     public float direction;
     public float magnitude;
+    public float homing = 0;
     public double lifespan;
     public Array<STGTween> tweens;
     public int current = 0;

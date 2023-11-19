@@ -8,7 +8,7 @@ namespace GodotSTG;
 
 [GlobalClass]
 public partial class STGTween:Resource{
-    public enum TweenProperty {magnitude, direction}
+    public enum TweenProperty {magnitude, direction, homing}
     public enum TweenMode {Set, Add}
     public StringName property_str;
     private TweenProperty _property;

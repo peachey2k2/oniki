@@ -6,30 +6,30 @@
 [ext_resource type="Script" path="res://addons/GodotSTG/spawners/CircularSpawner.cs" id="4_3onb3"]
 [ext_resource type="Script" path="res://addons/GodotSTG/resources/STGTween.cs" id="4_76xdg"]
 
-[sub_resource type="Curve" id="Curve_su8gh"]
-max_value = 2.0
-_data = [Vector2(0.0340136, 0.0842104), 0.0, 17.7947, 0, 0, Vector2(0.210884, 0), 0.0, 0.0, 0, 0, Vector2(0.44898, 0.0631578), 0.0, 0.0, 0, 0, Vector2(0.537415, 0.821053), 0.0, 0.0, 0, 0, Vector2(0.62585, 0.105263), 0.0, 0.0, 0, 0, Vector2(0.816326, 0), 0.0, 0.0, 0, 0, Vector2(1, 0.610526), 0.0, 0.0, 0, 0]
-point_count = 7
+[sub_resource type="Curve" id="Curve_1v0wr"]
+max_value = 100.0
+_data = [Vector2(0.620722, 0), 0.0, 0.0, 0, 0, Vector2(0.620732, 100), 0.0, 0.0, 0, 0, Vector2(0.810836, 100), 0.0, 0.0, 0, 0, Vector2(0.810846, 0), 0.0, 0.0, 0, 0]
+point_count = 4
 
-[sub_resource type="Resource" id="Resource_h1mx5"]
+[sub_resource type="Resource" id="Resource_upcqv"]
 script = ExtResource("4_76xdg")
-property = 1
-mode = 1
-length = 10.0
-curve = SubResource("Curve_su8gh")
+property = 2
+mode = 0
+length = 0.8
+curve = SubResource("Curve_1v0wr")
 
 [sub_resource type="Resource" id="Resource_adm1b"]
 script = ExtResource("3_1s66r")
-index = 0
+index = 1
 outer_color = Color(1, 0, 0, 1)
 inner_color = Color(1, 1, 1, 1)
-speed = 180.0
-tweens = [SubResource("Resource_h1mx5")]
+speed = 300.0
+tweens = [SubResource("Resource_upcqv")]
 
 [sub_resource type="Resource" id="Resource_55q06"]
 script = ExtResource("4_3onb3")
 init_angle = 0.0
-amount = 10
+amount = 30
 repeat = 99999999
 tilt = 5.5
 distance = 0.0

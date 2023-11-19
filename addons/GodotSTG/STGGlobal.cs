@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Metadata;
 using System.Threading.Tasks;
 using Godot;
 using Godot.Collections;
@@ -123,15 +122,16 @@ public partial class STGGlobal:Node{
         // pooling lol
         shared_area = (Area2D)area_template.Instantiate(); // THIS MOTHERFUCKER...
         AddChild(shared_area);
-        // await ToSignal(GetTree().CreateTimer(5), "timeout");
         for (int i = 0; i < POOL_SIZE; i++){
             Rid shape_rid = PhysicsServer2D.CircleShapeCreate();
             PhysicsServer2D.AreaAddShape(area_rid, shape_rid);
 	    	PhysicsServer2D.AreaSetShapeDisabled(area_rid, i, true);
             bpool.Add(new STGShape(shape_rid, i));
         }
-        // await ToSignal(GetTree().CreateTimer(1), "timeout");
+
+        // initialize the threads
         
+
         // global clocks cuz yeah
         clock_timer      = GetTree().CreateTimer(TIMER_START, false);
         clock_real_timer = GetTree().CreateTimer(TIMER_START, true);
@@ -177,7 +177,7 @@ public partial class STGGlobal:Node{
         STGShape shape = bpool.Last();
         GodotSTG.Debug.Assert(shape.rid.IsValid, "Shape RID is invalid.");
         bpool.RemoveAt(bpool.Count - 1);
-        Transform2D t = new(0, data.position){Origin = data.position};
+        Transform2D t = new(0, data.position);
         data.shape = shape;
         PhysicsServer2D.AreaGetShape(area_rid, shape.idx);
         PhysicsServer2D.ShapeSetData(shape.rid, data.collision_radius);
@@ -189,7 +189,6 @@ public partial class STGGlobal:Node{
 
     public STGBulletData configure_bullet(STGBulletData data){
         STGBulletModifier mod = data.next;
-        // data.velocity = data.velocity.Normalized() * mod.speed;
         data.lifespan = mod.lifespan > 0 ? mod.lifespan : 999999;
         data.texture = textures[mod.id];
         data.next = mod.next;
@@ -202,8 +201,10 @@ public partial class STGGlobal:Node{
 
     // processing the bullets here.
     public override void _PhysicsProcess(double delta){
+        if (controller == null) return;
+        Vector2 player_pos = controller.player.Position;
         bqueue.Clear();
-        foreach (STGBulletData blt in blts){
+        Parallel.ForEach(blts, blt => {
             if (blt.lifespan >= 0) blt.lifespan -= fdelta;
             else bqueue.Add(blt);
             foreach (STGTween tw in blt.tweens){
@@ -212,38 +213,44 @@ public partial class STGGlobal:Node{
                     blt.current++;
                 }
             }
+            blt.direction = Clamp(blt.position.AngleToPoint(player_pos), blt.direction - blt.homing, blt.direction + blt.homing);
             blt.position += Vector2.Right.Rotated(blt.direction) * blt.magnitude * fdelta;
-            Transform2D t = new(0, blt.position){Origin = blt.position};
+            Transform2D t = new(0, blt.position);
             if (!arena_rect_margined.HasPoint(blt.position)){
                 bqueue.Add(blt);
                 blt.next = null;
             }
-    		PhysicsServer2D.AreaSetShapeTransform(area_rid, blt.shape.idx, t);
-        }
+            PhysicsServer2D.AreaSetShapeTransform(area_rid, blt.shape.idx, t);
+        });
         foreach (STGBulletData blt in bqueue){
             if (blt.next == null){
                 PhysicsServer2D.AreaSetShapeDisabled(area_rid, blt.shape.idx, true);
                 blt.texture = remove_template;
                 blt.lifespan = 0.5;
                 blts.Remove(blt);
-                // bpool.Add(blt.shape);
                 brem.Add(blt);
             } else {
                blts[blts.IndexOf(blt)] = configure_bullet(blt);
             }
         }
         bqueue.Clear();
-        foreach (STGBulletData blt in brem){
+        Parallel.ForEach(brem, blt => {
             if (blt.lifespan >= 0) blt.lifespan -= delta;
             else {
                 bqueue.Add(blt);
             }
-        }
+        });
         foreach (STGBulletData blt in bqueue){
             brem.Remove(blt);
             bpool.Add(blt.shape);
         }
         bullet_count = blts.Count;
+    }
+
+    private static float Clamp(float value, float min, float max){
+        if (value >= max) return max;
+        if (value <= min) return min;
+        return value;
     }
 
     public void create_texture(STGBulletModifier mod){

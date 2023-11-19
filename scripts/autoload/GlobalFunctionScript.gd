@@ -295,7 +295,7 @@ func get_distance(node1:Node, node2:Node) -> float:
 #func get_distance_as_vector(node1:Node, node2:Node) -> Vector2:
 #	return node2.global_transform.origin - node1.global_transform.origin
 
-func get_angle(node1:Node, node2:Node) -> float:
+func get_angle(node1:Node2D, node2:Node2D) -> float:
 	return node1.global_transform.origin.angle_to_point(node2.global_transform.origin)
 
 func get_angle_as_vector(node1:Node, node2:Node) -> Vector2:
