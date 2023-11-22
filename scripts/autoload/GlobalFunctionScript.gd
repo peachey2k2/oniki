@@ -241,7 +241,7 @@ func load_battle(id:String):
 	Player.reparent(ArenaViewport)
 	ArenaViewport.add_child(Enemy)
 	Player.connect("shoot", Callable(CurrentArena.get_node("BattleUI/LifeBarContainer"),"_on_player_shoot"))
-	Player.get_node("ExtraColliders/GrazeDetection").connect("area_entered", Callable(CurrentArena.get_node("BattleUI/Graze"),"_on_area_entered"))
+#	Player.get_node("ExtraColliders/GrazeDetection").connect("area_entered", Callable(CurrentArena.get_node("BattleUI/Graze"),"_on_area_entered"))
 	LastSprite = Sprite
 	ArenaViewport.add_child(Controller)
 #	ArenaViewport.add_child(Ball)

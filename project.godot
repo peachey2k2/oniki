@@ -49,6 +49,8 @@ import/blender/enabled=false
 [godotstg]
 
 bullet_directory="res://scenes/bullets/"
+graze_radius=60.0
+enable_panel_at_start=true
 
 [input]
 

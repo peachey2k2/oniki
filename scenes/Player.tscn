@@ -230,10 +230,6 @@ modulate = Color(1, 1, 1, 0.498039)
 scale = Vector2(1.05, 1.05)
 texture = ExtResource("6_a6fx5")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ExtraColliders/GrazeDetection"]
-shape = SubResource("CircleShape2D_7l3f5")
-debug_color = Color(0.980392, 0.254902, 0.431373, 0.105882)
-
 [node name="InteractDetection" type="Area2D" parent="ExtraColliders"]
 position = Vector2(0, 18)
 collision_layer = 0

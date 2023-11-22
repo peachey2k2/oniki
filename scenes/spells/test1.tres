@@ -8,11 +8,12 @@
 
 [sub_resource type="Curve" id="Curve_1v0wr"]
 max_value = 100.0
-_data = [Vector2(0.620722, 0), 0.0, 0.0, 0, 0, Vector2(0.620732, 100), 0.0, 0.0, 0, 0, Vector2(0.810836, 100), 0.0, 0.0, 0, 0, Vector2(0.810846, 0), 0.0, 0.0, 0, 0]
-point_count = 4
+_data = [Vector2(0.617251, 0), 0.0, 0.0, 0, 0, Vector2(0.620732, 100), 0.0, 0.0, 0, 0, Vector2(0.866577, 100), 0.0, 0.0, 0, 0]
+point_count = 3
 
 [sub_resource type="Resource" id="Resource_upcqv"]
 script = ExtResource("4_76xdg")
+test = false
 property = 2
 mode = 0
 length = 0.8
