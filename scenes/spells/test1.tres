@@ -1,31 +1,17 @@
-[gd_resource type="PackedDataContainer" script_class="STGSpell" load_steps=11 format=3 uid="uid://8w3edb6ef414"]
+[gd_resource type="PackedDataContainer" script_class="STGSpell" load_steps=8 format=3 uid="uid://8w3edb6ef414"]
 
 [ext_resource type="Script" path="res://addons/GodotSTG/resources/STGSpell.cs" id="1_51pkt"]
 [ext_resource type="Script" path="res://addons/GodotSTG/resources/STGSequence.cs" id="2_wj8xh"]
 [ext_resource type="Script" path="res://addons/GodotSTG/resources/STGBulletModifier.cs" id="3_1s66r"]
 [ext_resource type="Script" path="res://addons/GodotSTG/spawners/CircularSpawner.cs" id="4_3onb3"]
-[ext_resource type="Script" path="res://addons/GodotSTG/resources/STGTween.cs" id="4_76xdg"]
-
-[sub_resource type="Curve" id="Curve_1v0wr"]
-max_value = 100.0
-_data = [Vector2(0.617251, 0), 0.0, 0.0, 0, 0, Vector2(0.620732, 100), 0.0, 0.0, 0, 0, Vector2(0.866577, 100), 0.0, 0.0, 0, 0]
-point_count = 3
-
-[sub_resource type="Resource" id="Resource_upcqv"]
-script = ExtResource("4_76xdg")
-test = false
-property = 2
-mode = 0
-length = 0.8
-curve = SubResource("Curve_1v0wr")
 
 [sub_resource type="Resource" id="Resource_adm1b"]
 script = ExtResource("3_1s66r")
-index = 1
+index = 0
 outer_color = Color(1, 0, 0, 1)
 inner_color = Color(1, 1, 1, 1)
 speed = 300.0
-tweens = [SubResource("Resource_upcqv")]
+tweens = []
 
 [sub_resource type="Resource" id="Resource_55q06"]
 script = ExtResource("4_3onb3")
@@ -33,11 +19,11 @@ init_angle = 0.0
 amount = 30
 repeat = 99999999
 tilt = 5.5
+delta_tilt = 0.0
 distance = 0.0
 delay = 0.1
 position = Vector2(0, 0)
 position_type = 1
-towards = 0
 rotation_speed = 0.0
 bullet = SubResource("Resource_adm1b")
 

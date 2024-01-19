@@ -47,7 +47,7 @@ IDK how, but I already have mostly finished this one. It was somehow easier than
   - [X] Blur the screen when paused (gdshader was kinda difficult for me, so I asked my old friend ChatGippity for help. It came up with an 11x11 gaussian blur. It looks nice, but is pretty expensive on resources. What I do to get around that is flashing the blur on screen for a single frame, getting a screenshot and replacing the shader object with that. It isn't perfect but it's the best that I could come up with.)
   - [X] Save system (EZ!!! I even got to use serialization. Also added a quicksave button.)
   - [X] Options (A few features are missing, but that's something that future me has to deal with)
-  - [X] Option pickers (I'm constructing this using hardcoded arrays, and defining actions for buttons suing match statements. I implemented them in the way they are in case if I \[REDACTED\].)
+  - [X] Option pickers (I'm constructing this using hardcoded arrays, and defining actions for buttons using match statements. I implemented them in the way they are in case if I \[REDACTED\].)
   - [ ] Adding the \[REDACTED\]. IDK if I can, but if I manage to pull it off, it'll be so cool.
   - [ ] Dealing with mouse inputs (Mouse inputs work for the UI, but they create some nasty problems in the long run, because of my implementation of some menu features. There is a good chance I might block all mouse input inthe game, nothing other than menus use them anyway.)
 
