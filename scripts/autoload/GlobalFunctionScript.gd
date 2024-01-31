@@ -240,8 +240,9 @@ func load_battle(id:String):
 	Player.get_node("./ExtraColliders/Hitbox/CollisionShape2D").disabled = false
 	Player.reparent(ArenaViewport)
 	ArenaViewport.add_child(Enemy)
-	Player.connect("shoot", Callable(CurrentArena.get_node("BattleUI/LifeBarContainer"),"_on_player_shoot"))
-#	Player.get_node("ExtraColliders/GrazeDetection").connect("area_entered", Callable(CurrentArena.get_node("BattleUI/Graze"),"_on_area_entered"))
+	Player.shoot.connect(Callable(Enemy, "_on_player_shoot"))
+	STGGlobal.spell_changed.connect(Callable(Enemy, "_on_spell_changed"))
+	STGGlobal.end_spell.connect(Callable(Enemy, "_on_end_spell"))
 	LastSprite = Sprite
 	ArenaViewport.add_child(Controller)
 #	ArenaViewport.add_child(Ball)
@@ -249,6 +250,8 @@ func load_battle(id:String):
 	Controller.player = Player
 	Controller.enemy = Enemy
 	Controller.arena_rect = BATTLE_RECT
+	STGGlobal.arena_rect = BATTLE_RECT
+	Player.position = STGGlobal.lerp4arena(Vector2(0.5, 0.8))
 	Controller.start()
 	game_state = BATTLE
 
@@ -256,7 +259,7 @@ func reload_battle():
 	game_state = NONE
 #	Controller.stats = null
 	ArenaViewport.remove_child(Player)
-	ArenaViewport.add_child(Player)
+	ArenaViewport.add_child(Player) # yes trust me this is necessary
 	ArenaViewport.move_child(Player, -2)
 	Player.resurrect()
 #	Ball.free()
@@ -272,6 +275,7 @@ func reload_battle():
 #	Controller.arena_rect = BATTLE_RECT
 #	ArenaViewport.add_child(Controller)
 	Controller.start()
+#	Controller.enemy = Enemy
 	game_state = BATTLE
 
 func unload_battle():
@@ -284,7 +288,7 @@ func unload_battle():
 	Player.get_node("./ExtraColliders/Hitbox/CollisionShape2D").disabled = true
 	Player.reparent(Overworld)
 	Player.position = player_pos
-#	CurrentArena.queue_free()
+	CurrentArena.queue_free()
 	Controller.kill()
 	game_state = WORLD
 

@@ -1,10 +1,9 @@
-[gd_scene load_steps=17 format=3 uid="uid://bty05s2e3am5q"]
+[gd_scene load_steps=16 format=3 uid="uid://bty05s2e3am5q"]
 
 [ext_resource type="Texture2D" uid="uid://cdams53qwdqbu" path="res://assets/backgrounds/dot.png" id="2_fq3wh"]
 [ext_resource type="Script" path="res://scripts/FrameCollision.gd" id="3_547x7"]
 [ext_resource type="Script" path="res://addons/deranged_additions/nodes/parallax_but_good.gd" id="3_p315c"]
 [ext_resource type="LabelSettings" uid="uid://cxotwanmjjyix" path="res://label_settings/normal.tres" id="4_8cyd8"]
-[ext_resource type="Script" path="res://scripts/LifeBar.gd" id="5_taydl"]
 [ext_resource type="Script" path="res://scripts/TimeoutTimer.gd" id="6_7ngma"]
 [ext_resource type="Theme" uid="uid://banndw0q5ph2x" path="res://themes/theme.tres" id="6_8pmc4"]
 [ext_resource type="Script" path="res://scripts/GrazeCounter.gd" id="7_5eiw7"]
@@ -172,19 +171,6 @@ stretch_mode = 1
 script = ExtResource("3_p315c")
 scroll_speed = Vector2(40, 30)
 extra_copies = 0
-
-[node name="LifeBarContainer" type="HBoxContainer" parent="BattleUI"]
-z_index = 100
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_left = 15.0
-offset_top = 15.0
-offset_right = -15.0
-offset_bottom = 23.0
-grow_horizontal = 2
-script = ExtResource("5_taydl")
-metadata/_edit_use_anchors_ = true
 
 [node name="Time" type="Label" parent="BattleUI"]
 layout_mode = 1
