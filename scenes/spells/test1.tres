@@ -10,7 +10,7 @@
 script = ExtResource("1_chc0y")
 name = ""
 bar_color = Color(1, 1, 1, 1)
-shield = false
+shield_type = 0
 
 [sub_resource type="Resource" id="Resource_adm1b"]
 script = ExtResource("3_1s66r")

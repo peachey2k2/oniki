@@ -18,17 +18,10 @@ var max_health:
 		max_health = val
 		health = val
 		HealthBar.count = max_health
-		
 
 #func _ready():
 	#Shield = $Shield
 	#STGGlobal.shield_changed.connect(Callable(self, "_on_shield_changed"))
-
-func _on_shield_changed(shield:int):
-	#match shield:
-		#0: Shield.modulate = Color.TRANSPARENT
-		#1: Shield.modulate = Color.RED
-	return
 
 func _on_player_shoot():
 	if is_vulnerable && has_overlapping_areas():
