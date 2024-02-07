@@ -13,6 +13,8 @@ Do these numbers even mean anything? Probably no, I just pull them out of my ass
 
 **Overall: ![](https://geps.dev/progress/4)**
 
+If you're particularly curious, [here](https://trello.com/b/CePk8snF/oniki-development-stuff) is a link to my Trello page.
+
 ## Checklist
 I first want to refine the system behind the danmaku battles. To summarize, the battles will play similarly to something like Touhou, so it'll have spellcards, extra-forgiving hitboxes and all that fun stuff.
 
