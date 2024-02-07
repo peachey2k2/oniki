@@ -23,7 +23,7 @@ STGGlobal="*res://addons/GodotSTG/STGGlobal.cs"
 
 [debug]
 
-file_logging/log_path="user://logs/latest.txt"
+file_logging/enable_file_logging=true
 file_logging/max_log_files=10
 
 [display]

@@ -241,6 +241,7 @@ func load_battle(id:String):
 	Player.reparent(ArenaViewport)
 	ArenaViewport.add_child(Enemy)
 	Player.shoot.connect(Callable(Enemy, "_on_player_shoot"))
+	STGGlobal.battle_start.connect(Callable(Enemy, "_on_battle_start"))
 	STGGlobal.spell_changed.connect(Callable(Enemy, "_on_spell_changed"))
 	STGGlobal.end_spell.connect(Callable(Enemy, "_on_end_spell"))
 	LastSprite = Sprite

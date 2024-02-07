@@ -99,7 +99,7 @@ func slash_animation():
 	else:
 		Slash.rotation = facing
 	Slash.modulate = Color.WHITE
-	var tw = create_tween()
+	var tw := create_tween()
 	tw.tween_property(Slash, "modulate", Color.TRANSPARENT, 0.1)
 	Slash.flip_v = !Slash.flip_v
 
