@@ -9,7 +9,8 @@
 [sub_resource type="Resource" id="Resource_cmqnj"]
 script = ExtResource("1_chc0y")
 name = ""
-bar_color = Color(1, 1, 1, 1)
+health = 5
+bar_color = Color(1, 1, 0, 1)
 shield_type = 0
 
 [sub_resource type="Resource" id="Resource_adm1b"]
@@ -45,7 +46,6 @@ spawners = [SubResource("Resource_55q06")]
 [resource]
 script = ExtResource("1_51pkt")
 custom_data = SubResource("Resource_cmqnj")
-health = 5
 time = 99999
 enemy_pos = Vector2(0.5, 0.5)
 enemy_movement = 0

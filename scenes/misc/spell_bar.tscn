@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://bgsgi8tgwrhfw"]
+
+[ext_resource type="Texture2D" uid="uid://blly1dehisxw0" path="res://assets/HealthBar.png" id="1_nomrv"]
+[ext_resource type="Script" path="res://scripts/SpellBar.gd" id="2_ko5lx"]
+
+[node name="SpellBar" type="TextureProgressBar"]
+z_index = -1
+texture_filter = 2
+offset_left = -128.0
+offset_top = -128.0
+offset_right = 128.0
+offset_bottom = 128.0
+max_value = 1.0
+step = 0.0
+value = 1.0
+fill_mode = 5
+texture_progress = ExtResource("1_nomrv")
+radial_initial_angle = 360.0
+script = ExtResource("2_ko5lx")

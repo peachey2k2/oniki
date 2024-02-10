@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/autoload/PauseHandler.gd" id="1_bwbya"]
 [ext_resource type="Theme" uid="uid://banndw0q5ph2x" path="res://themes/theme.tres" id="2_k5rhx"]
-[ext_resource type="Shader" path="res://themes/blur.gdshader" id="2_p3pmp"]
+[ext_resource type="Shader" path="res://shaders/blur.gdshader" id="2_p3pmp"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_l4520"]
 shader = ExtResource("2_p3pmp")

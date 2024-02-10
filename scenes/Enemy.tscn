@@ -1,10 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://bidarnnls866x"]
+[gd_scene load_steps=7 format=3 uid="uid://bidarnnls866x"]
 
 [ext_resource type="Script" path="res://scripts/Enemy.gd" id="1_i3u5o"]
 [ext_resource type="Texture2D" uid="uid://cqidv1awi6e6i" path="res://assets/shield_outer.png" id="2_h1goy"]
 [ext_resource type="Texture2D" uid="uid://c4jnb2jd0gx1w" path="res://assets/shield_inner.png" id="3_jw6hw"]
 [ext_resource type="Texture2D" uid="uid://dywgg0ifp2usc" path="res://assets/HealthBarBG.png" id="4_6nkpb"]
-[ext_resource type="Texture2D" uid="uid://blly1dehisxw0" path="res://assets/HealthBar.png" id="4_7lop3"]
 [ext_resource type="Script" path="res://scripts/HealthBar.gd" id="6_gscd7"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_p2nc7"]
@@ -31,17 +30,6 @@ texture = ExtResource("2_h1goy")
 modulate = Color(0.890196, 1, 0.988235, 0.2)
 texture = ExtResource("3_jw6hw")
 
-[node name="Health" type="TextureProgressBar" parent="."]
-texture_filter = 2
-offset_left = -128.0
-offset_top = -128.0
-offset_right = 128.0
-offset_bottom = 128.0
-max_value = 1.0
-step = 0.0
-value = 1.0
-fill_mode = 5
-texture_under = ExtResource("4_6nkpb")
-texture_progress = ExtResource("4_7lop3")
+[node name="HealthBar" type="Sprite2D" parent="."]
+texture = ExtResource("4_6nkpb")
 script = ExtResource("6_gscd7")
-count = 50

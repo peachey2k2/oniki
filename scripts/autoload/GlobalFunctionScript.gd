@@ -28,17 +28,23 @@ signal option_selected(index:int, is_for_dialogue:bool)
 
 enum {NONE, MENU, WORLD, BATTLE}
 var game_state:int = 0
+var player_pos:Vector2
+#var bar_count:int:
+	#set(val):
+		#bar_count = val
+		#if val < 0: return
+		#for spell in Controller.stats.bars[Controller.stats.bars.size() - val - 1].spells:
+			#print(spell.custom_data)
 
 var game_settings:Dictionary
 
 var Player:Node
 var Enemy:Node
-var player_pos:Vector2
 var Overworld:Node
 var LastSprite:Node
 var CurrentArena:Node
 var ArenaViewport:Node
-var Controller:Node
+var Controller:BattleController
 var PlayerCamera:Node
 var Ball:Node
 var SharedArea:Node
@@ -241,9 +247,6 @@ func load_battle(id:String):
 	Player.reparent(ArenaViewport)
 	ArenaViewport.add_child(Enemy)
 	Player.shoot.connect(Callable(Enemy, "_on_player_shoot"))
-	STGGlobal.battle_start.connect(Callable(Enemy, "_on_battle_start"))
-	STGGlobal.spell_changed.connect(Callable(Enemy, "_on_spell_changed"))
-	STGGlobal.end_spell.connect(Callable(Enemy, "_on_end_spell"))
 	LastSprite = Sprite
 	ArenaViewport.add_child(Controller)
 #	ArenaViewport.add_child(Ball)
@@ -291,6 +294,7 @@ func unload_battle():
 	Player.position = player_pos
 	CurrentArena.queue_free()
 	Controller.kill()
+	#bar_count = 0
 	game_state = WORLD
 
 func get_distance(node1:Node, node2:Node) -> float:
