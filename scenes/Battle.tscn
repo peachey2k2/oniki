@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bty05s2e3am5q"]
+[gd_scene load_steps=17 format=3 uid="uid://bty05s2e3am5q"]
 
 [ext_resource type="Texture2D" uid="uid://cdams53qwdqbu" path="res://assets/backgrounds/dot.png" id="2_fq3wh"]
 [ext_resource type="Script" path="res://scripts/FrameCollision.gd" id="3_547x7"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://scripts/TimeoutTimer.gd" id="6_7ngma"]
 [ext_resource type="Theme" uid="uid://banndw0q5ph2x" path="res://themes/theme.tres" id="6_8pmc4"]
 [ext_resource type="Script" path="res://scripts/GrazeCounter.gd" id="7_5eiw7"]
+[ext_resource type="Script" path="res://scripts/SpellName.gd" id="8_67yvc"]
 [ext_resource type="Script" path="res://scripts/BarCount.gd" id="9_1jldx"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_csmdb"]
@@ -187,6 +188,8 @@ text = "test"
 label_settings = ExtResource("4_8cyd8")
 script = ExtResource("6_7ngma")
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="BattleUI/Time"]
+
 [node name="BarCount" type="Label" parent="BattleUI"]
 layout_mode = 0
 offset_left = -400.0
@@ -213,6 +216,7 @@ theme = ExtResource("6_8pmc4")
 text = "test"
 label_settings = ExtResource("4_8cyd8")
 horizontal_alignment = 1
+script = ExtResource("8_67yvc")
 
 [node name="Graze" type="Label" parent="BattleUI"]
 layout_mode = 1

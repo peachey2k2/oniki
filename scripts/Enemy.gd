@@ -12,6 +12,7 @@ const GHOST_MODULATE := Color(1, 1, 1, 0.6)
 var id:String
 var is_vulnerable:bool = false
 var spells:Array[STGCustomData]
+var degrees:Array[float]
 
 var health:float:
 	set(val):
@@ -21,7 +22,6 @@ var health:float:
 		tw.set_ease(Tween.EASE_OUT)
 		tw.tween_property(HealthBar.get_child(0), "value", val/max_health, 0.15)
 		if val == 0:
-			#await get_tree().process_frame
 			HealthBar.move_child(HealthBar.get_child(0), -1)
 
 var max_health:
@@ -44,6 +44,7 @@ func _on_bar_changed(value):
 	if value < 0: return
 	#for spell in GFS.Controller.stats.bars[GFS.Controller.stats.bars.size() - value - 1].spells:
 	spells = []
+	degrees = []
 	for i in HealthBar.get_children():
 		i.free()
 	var spellcard_count := 0
@@ -63,25 +64,25 @@ func _on_bar_changed(value):
 	if nonspell_count == 0 || spellcard_count == 0:
 		var next_angle := 360.0
 		var length := 360.0 / HealthBar.get_child_count()
-		var bruh = HealthBar.get_children()
-		bruh.reverse() # i wish reverse() would return the array. mutation sucks for this shit, come on godot.
-		for i:TextureProgressBar in bruh:
-			i.radial_initial_angle = next_angle
-			i.radial_fill_degrees = length
+		for i in range(HealthBar.get_child_count() - 1, -1, -1):
+			var bar = HealthBar.get_child(i)
+			bar.radial_initial_angle = next_angle
+			bar.radial_fill_degrees = length
+			degrees.push_front(length)
 			next_angle -= length
 	else:
 		var next_angle := 360.0
-		var s_length := (10.0 + 35.0 * spellcard_count) / spellcard_count
-		var n_length := (350.0 - 35.0 * spellcard_count) / nonspell_count
-		var bruh = HealthBar.get_children()
-		bruh.reverse() # i hate mutation i hate mutation
-		for i:TextureProgressBar in bruh:
-			i.radial_initial_angle = next_angle
-			if i.is_spellcard:
-				i.radial_fill_degrees = s_length
+		var s_length := (30.0 + 35.0 * spellcard_count) / spellcard_count
+		var n_length := (330.0 - 35.0 * spellcard_count) / nonspell_count
+		for i in range(HealthBar.get_child_count() - 1, -1, -1):
+			var bar = HealthBar.get_child(i)
+			bar.radial_initial_angle = next_angle
+			if bar.is_spellcard:
+				bar.radial_fill_degrees = s_length
 			else:
-				i.radial_fill_degrees = n_length
-			next_angle -= i.radial_fill_degrees
+				bar.radial_fill_degrees = n_length
+			degrees.push_front(bar.radial_fill_degrees)
+			next_angle -= bar.radial_fill_degrees
 
 func _on_player_shoot():
 	if is_vulnerable && has_overlapping_areas():

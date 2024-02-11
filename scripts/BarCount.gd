@@ -5,4 +5,3 @@ func _ready():
 
 func _on_bar_changed(val):
 	text = str(val)
-	#GFS.bar_count = val

@@ -1,8 +1,7 @@
-[gd_scene load_steps=19 format=3 uid="uid://dykx1ccjpxfej"]
+[gd_scene load_steps=23 format=3 uid="uid://dykx1ccjpxfej"]
 
 [ext_resource type="Script" path="res://addons/GodotSTG/BattleController.cs" id="1_d455w"]
 [ext_resource type="Script" path="res://addons/GodotSTG/resources/STGBar.cs" id="2_8uikf"]
-[ext_resource type="PackedDataContainer" uid="uid://8w3edb6ef414" path="res://scenes/spells/test1.tres" id="3_brjvu"]
 [ext_resource type="Script" path="res://addons/GodotSTG/resources/STGCustomData.cs" id="4_e1f15"]
 [ext_resource type="Script" path="res://addons/GodotSTG/resources/STGStats.cs" id="4_vky7a"]
 [ext_resource type="Script" path="res://addons/GodotSTG/resources/STGSpell.cs" id="5_pvnvs"]
@@ -10,11 +9,11 @@
 [ext_resource type="Script" path="res://addons/GodotSTG/resources/STGBulletModifier.cs" id="7_hc8jx"]
 [ext_resource type="Script" path="res://addons/GodotSTG/spawners/CircularSpawner.cs" id="8_e14t2"]
 
-[sub_resource type="Resource" id="Resource_5epl3"]
+[sub_resource type="Resource" id="Resource_6g88a"]
 script = ExtResource("4_e1f15")
-name = "test"
+name = ""
 health = 5
-bar_color = Color(1, 0.529412, 0, 1)
+bar_color = Color(1, 1, 0, 1)
 shield_type = 0
 
 [sub_resource type="Resource" id="Resource_adm1b"]
@@ -47,6 +46,54 @@ end_at_time = -1
 persist = false
 spawners = [SubResource("Resource_55q06")]
 
+[sub_resource type="PackedDataContainer" id="PackedDataContainer_02ubf"]
+script = ExtResource("5_pvnvs")
+custom_data = SubResource("Resource_6g88a")
+time = 99999
+enemy_pos = Vector2(0.5, 0.5)
+enemy_movement = 0
+wait_before = 1.0
+wait_between = 0.0
+sequence_flags = 2
+sequences = [SubResource("PackedDataContainer_hud77")]
+
+[sub_resource type="Resource" id="Resource_5epl3"]
+script = ExtResource("4_e1f15")
+name = "test"
+health = 5
+bar_color = Color(1, 0.529412, 0, 1)
+shield_type = 0
+
+[sub_resource type="Resource" id="Resource_kk5ny"]
+script = ExtResource("7_hc8jx")
+bullet_id = 0
+outer_color = Color(1, 0, 0, 1)
+inner_color = Color(1, 1, 1, 1)
+speed = 100.0
+lifespan = 0.0
+tweens = []
+
+[sub_resource type="Resource" id="Resource_p0gx4"]
+script = ExtResource("8_e14t2")
+init_angle = 0.0
+amount = 10
+repeat = 99999999
+tilt = 5.5
+delta_tilt = 0.0
+distance = 0.0
+delay = 0.5
+position = Vector2(0, 0)
+position_type = 1
+rotation_speed = 0.0
+bullet = SubResource("Resource_kk5ny")
+
+[sub_resource type="PackedDataContainer" id="PackedDataContainer_olxg3"]
+script = ExtResource("6_wo0mi")
+end_at_hp = -1
+end_at_time = -1
+persist = false
+spawners = [SubResource("Resource_p0gx4")]
+
 [sub_resource type="PackedDataContainer" id="PackedDataContainer_6wplk"]
 script = ExtResource("5_pvnvs")
 custom_data = SubResource("Resource_5epl3")
@@ -56,7 +103,7 @@ enemy_movement = 0
 wait_before = 1.0
 wait_between = 0.0
 sequence_flags = 2
-sequences = [SubResource("PackedDataContainer_hud77")]
+sequences = [SubResource("PackedDataContainer_olxg3")]
 
 [sub_resource type="Resource" id="Resource_c5jrx"]
 script = ExtResource("4_e1f15")
@@ -74,11 +121,11 @@ enemy_movement = 0
 wait_before = 1.0
 wait_between = 0.0
 sequence_flags = 2
-sequences = [SubResource("PackedDataContainer_hud77")]
+sequences = [SubResource("PackedDataContainer_olxg3")]
 
 [sub_resource type="Resource" id="Resource_6bt2q"]
 script = ExtResource("2_8uikf")
-spells = [ExtResource("3_brjvu"), SubResource("PackedDataContainer_6wplk"), SubResource("PackedDataContainer_x0vgi")]
+spells = [SubResource("PackedDataContainer_02ubf"), SubResource("PackedDataContainer_6wplk"), SubResource("PackedDataContainer_x0vgi")]
 
 [sub_resource type="Resource" id="Resource_8lqq8"]
 script = ExtResource("4_vky7a")
