@@ -20,6 +20,7 @@ PauseHandler="*res://scenes/PauseHandler.tscn"
 GFS="*res://scripts/autoload/GlobalFunctionScript.gd"
 Panku="*res://addons/panku_console/console.tscn"
 STGGlobal="*res://addons/GodotSTG/STGGlobal.cs"
+SFX="*res://scenes/SFX.tscn"
 
 [debug]
 

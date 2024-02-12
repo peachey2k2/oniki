@@ -17,3 +17,4 @@ func reset():
 
 func _on_graze(_bullet):
 	graze += 1
+	SFX.Graze.play()

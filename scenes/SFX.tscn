@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://bc5udh5vuaawx"]
+
+[ext_resource type="Script" path="res://scripts/autoload/SFX.gd" id="1_2qtnc"]
+[ext_resource type="AudioStream" uid="uid://qsssantat2wa" path="res://assets/sfx/graze.ogg" id="2_i8lgr"]
+
+[node name="SFX" type="Node"]
+script = ExtResource("1_2qtnc")
+
+[node name="Graze" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_i8lgr")
+volume_db = -20.0
+
+[node name="TimerBeep" type="AudioStreamPlayer" parent="."]
