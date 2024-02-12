@@ -4,9 +4,9 @@ This is a side project I've been working on for a while. The idea is that it'll 
 
 ## Progress
 Do these numbers even mean anything? Probably no, I just pull them out of my ass. This does look kinda cool tho so whatever.
-|  |  |
+| **Overall** | ![](https://geps.dev/progress/5) |
 | --- | --- |
-| [GodotSTG](#godotstg) | ![](https://geps.dev/progress/70) |
+| [GodotSTG](#godotstg) | ![](https://geps.dev/progress/80) |
 | [Overworld](#overworld) | ![](https://geps.dev/progress/3) |
 | [Pause Menu](#pause-menu) | ![](https://geps.dev/progress/70) |
 | [Lore/Story](#lorestory) | ![](https://geps.dev/progress/1) |
@@ -24,7 +24,7 @@ GodotSTG is the plugin I'm working on right now. The plan is to have a plugin th
   - [X] A simple interface to configure patterns
   - [X] A way to combine patterns into spellcards (so a spell can consist of multiple patterns running at the same time)
   - [X] Pattern sequencing (seperating patterns into sets that can run one after another, and these sequences can also be tied to health/time thresholds)
-  - [X] Zones (Areas where patterns entering/exiting is checked and this can be used to change the behaviour of bullets)
+  - [X] ~Zones (Areas where patterns entering/exiting is checked and this can be used to change the behaviour of bullets)~ (removed cuz it was basically a worse version of timed bullets)
   - [ ] Enemy movement (either within a `Path2D` or random slight movements)
   - [X] Optimisation via reducing the amount of nodes in every bullet (there are currently 2: one for the sprite and one for the collision. THere used to be 4, the other 2 were a `VisibleOnScreenNotifier2D`(switched to slightly off-screen colliders) and a second `Sprite2D`(2 sprites were there so I could change the outer and inner color seperately using `CanvasItem.modulate`, but there was a less expensive approach, which was to use a `GradientTexture2D` for bullet sprites.))
   - [X] ~Optimisation via the use of object pooling~ ~(further testing revealed that pooling (or at least for my implementations) is SLOWER. This is mainly because godot doesn't have a garbage collector, and it's pretty fast at instantiating nodes too.)~ (further FURTHER testing revealed that while the last statement is true, when you use too many RIDs, not having it causes some problems since Godot caches RIDs or something, I cba to fact-check)
