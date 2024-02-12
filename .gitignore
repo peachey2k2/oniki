@@ -19,3 +19,6 @@ mono_crash.*.json
 
 # Editor plugins
 addons/editor_background
+
+# temporary stuff created for testing
+temp/
