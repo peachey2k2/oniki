@@ -11,8 +11,6 @@ Do these numbers even mean anything? Probably no, I just pull them out of my ass
 | [Pause Menu](#pause-menu) | ![](https://geps.dev/progress/70) |
 | [Lore/Story](#lorestory) | ![](https://geps.dev/progress/1) |
 
-**Overall: ![](https://geps.dev/progress/4)**
-
 If you're particularly curious, [here](https://trello.com/b/CePk8snF/oniki-development-stuff) is a link to my Trello page.
 
 ## Checklist
