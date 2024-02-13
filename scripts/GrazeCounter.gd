@@ -15,6 +15,6 @@ func reset():
 	graze = 0
 	text = "0"
 
-func _on_graze(_bullet):
+func _on_graze(_bullet:STGBulletInstance):
 	graze += 1
 	SFX.Graze.play()

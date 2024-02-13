@@ -71,7 +71,7 @@ func _physics_process(_delta):
 		img.save_png("user://screenshots/" + str(Time.get_unix_time_from_system()) + ".png")
 
 func _ready():
-#	get_tree().get_root().set_disable_input(true)
+	#get_tree().get_root().set_disable_input(true)
 	
 	# self explanatory
 	load_settings()

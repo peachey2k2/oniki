@@ -18,9 +18,7 @@ var health:float:
 	set(val):
 		health = val
 		var tw := create_tween()
-		tw.set_trans(Tween.TRANS_QUAD) #quan
-		tw.set_ease(Tween.EASE_OUT)
-		tw.tween_property(HealthBar.get_child(0), "value", val/max_health, 0.15)
+		tw.tween_property(HealthBar.get_child(0), "value", val/max_health, 0.15).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD) #quan
 		if val == 0:
 			HealthBar.move_child(HealthBar.get_child(0), -1)
 

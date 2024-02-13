@@ -203,6 +203,7 @@ horizontal_alignment = 2
 script = ExtResource("9_1jldx")
 
 [node name="SpellName" type="Label" parent="BattleUI"]
+z_index = 200
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
