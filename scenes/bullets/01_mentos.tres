@@ -17,4 +17,9 @@ fill_to = Vector2(0, 0.5)
 [resource]
 script = ExtResource("1_c75lv")
 texture = SubResource("GradientTexture2D_h2182")
-collision_radius = 3.0
+collision_radius = 4.5
+colorable = true
+black = Color(0, 0, 0, 1)
+white = Color(1, 1, 1, 1)
+alpha = 1.0
+show_hitbox = true

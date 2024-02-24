@@ -31,5 +31,6 @@ modulate = Color(0.890196, 1, 0.988235, 0.2)
 texture = ExtResource("3_jw6hw")
 
 [node name="HealthBar" type="Sprite2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.75)
 texture = ExtResource("4_6nkpb")
 script = ExtResource("6_gscd7")

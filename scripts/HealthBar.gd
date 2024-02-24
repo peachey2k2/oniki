@@ -1,6 +1,6 @@
 extends Sprite2D
 
-const NOTCH_COLOR = Color.RED
+const NOTCH_COLOR = Color(Color.RED, 0.75)
 const NOTCH_WIDTH = 1.5
 
 @onready var Enemy = $".."

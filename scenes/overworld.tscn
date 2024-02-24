@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://d2h1uq85pptkn"]
+[gd_scene load_steps=6 format=3 uid="uid://d2h1uq85pptkn"]
 
 [ext_resource type="Texture2D" uid="uid://covxju5wbf4dp" path="res://assets/tilesets/placeholder_tiles.png" id="1_lxb3d"]
 [ext_resource type="PackedScene" uid="uid://b5hwpmbt8ap4l" path="res://scenes/npcs/test.tscn" id="3_aii2v"]
@@ -487,11 +487,6 @@ terrain_set_0/terrain_0/name = "Terrain 0"
 terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
 sources/0 = SubResource("TileSetAtlasSource_fskbc")
 
-[sub_resource type="QuadMesh" id="QuadMesh_iyegb"]
-
-[sub_resource type="MultiMesh" id="MultiMesh_k8ag0"]
-mesh = SubResource("QuadMesh_iyegb")
-
 [node name="Overworld" type="Node2D"]
 y_sort_enabled = true
 
@@ -509,6 +504,3 @@ metadata/dialogue_id = 1
 
 [node name="Sprite2D" parent="TestDummy" instance=ExtResource("4_3rgut")]
 use_parent_material = true
-
-[node name="MultiMeshInstance2D" type="MultiMeshInstance2D" parent="."]
-multimesh = SubResource("MultiMesh_k8ag0")
