@@ -38,17 +38,15 @@ func _on_battle_start():
 	is_vulnerable = false
 	ghost(true)
 
-func _on_bar_changed(value):
+func _on_bar_changed(value:int, datas:Array): # engine bug: you can't cast to typed array here
 	if value < 0: return
-	#for spell in GFS.Controller.stats.bars[GFS.Controller.stats.bars.size() - value - 1].spells:
 	spells = []
 	degrees = []
 	for i in HealthBar.get_children():
 		i.free()
 	var spellcard_count := 0
 	var nonspell_count := 0
-	for i in GFS.Controller.stats.bars[GFS.Controller.stats.bars.size() - value - 1].spells:
-		var data:STGCustomData = i.custom_data
+	for data in datas:
 		var ins = SPELL_BAR.instantiate()
 		spells.append(data)
 		HealthBar.add_child(ins)
