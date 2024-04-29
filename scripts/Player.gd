@@ -81,7 +81,7 @@ func hit():
 #	Hitbox.monitoring = false
 	hitOnCooldown = true
 	slash_animation()
-	emit_signal("shoot")
+	shoot.emit()
 	await get_tree().create_timer(HIT_COOLDOWN, false).timeout
 	hitOnCooldown = false
 

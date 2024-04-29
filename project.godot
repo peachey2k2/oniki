@@ -19,7 +19,7 @@ config/features=PackedStringArray("4.2", "C#")
 PauseHandler="*res://scenes/PauseHandler.tscn"
 GFS="*res://scripts/autoload/GlobalFunctionScript.gd"
 Panku="*res://addons/panku_console/console.tscn"
-STGGlobal="*res://addons/GodotSTG/STGGlobal.cs"
+STGGlobal="*res://addons/GodotSTG/nodes/STGGlobal.cs"
 SFX="*res://scenes/SFX.tscn"
 
 [debug]

@@ -1,21 +1,22 @@
-[gd_scene load_steps=14 format=3 uid="uid://dykx1ccjpxfej"]
+[gd_scene load_steps=15 format=3 uid="uid://dykx1ccjpxfej"]
 
-[ext_resource type="Script" path="res://addons/GodotSTG/BattleController.cs" id="1_d455w"]
-[ext_resource type="Script" path="res://addons/GodotSTG/resources/STGBar.cs" id="2_8uikf"]
-[ext_resource type="Script" path="res://addons/GodotSTG/resources/STGSpell.cs" id="5_pvnvs"]
+[ext_resource type="Script" path="res://addons/GodotSTG/nodes/BattleController.cs" id="1_d455w"]
+[ext_resource type="Script" path="res://addons/GodotSTG/nodes/STGBar.cs" id="2_8uikf"]
+[ext_resource type="Script" path="res://addons/GodotSTG/nodes/STGMovement.cs" id="5_oslgq"]
+[ext_resource type="Script" path="res://addons/GodotSTG/nodes/STGSpell.cs" id="5_pvnvs"]
 [ext_resource type="Script" path="res://addons/GodotSTG/resources/STGBulletModifier.cs" id="6_qq8u1"]
-[ext_resource type="Script" path="res://addons/GodotSTG/resources/STGSequence.cs" id="6_wo0mi"]
+[ext_resource type="Script" path="res://addons/GodotSTG/nodes/STGSequence.cs" id="6_wo0mi"]
 [ext_resource type="Script" path="res://addons/GodotSTG/resources/STGCustomData.cs" id="7_7gi4d"]
 [ext_resource type="Script" path="res://addons/GodotSTG/spawners/CircularSpawner.cs" id="8_e14t2"]
 
-[sub_resource type="Resource" id="Resource_xq0r7"]
+[sub_resource type="Resource" id="Resource_p0vh6"]
 script = ExtResource("7_7gi4d")
 name = ""
 health = 5
 bar_color = Color(1, 1, 1, 1)
 shield_type = 0
 
-[sub_resource type="Resource" id="Resource_ybu2v"]
+[sub_resource type="Resource" id="Resource_1d7s0"]
 script = ExtResource("6_qq8u1")
 bullet_id = 0
 outer_color = Color(1, 0, 0, 1)
@@ -25,9 +26,9 @@ speed = 200.0
 lifespan = 0.0
 tweens = []
 
-[sub_resource type="Resource" id="Resource_r1x2q"]
+[sub_resource type="Resource" id="Resource_o1i78"]
 script = ExtResource("7_7gi4d")
-name = "test"
+name = "fsfdsfsdg"
 health = 5
 bar_color = Color(0, 1, 1, 1)
 shield_type = 0
@@ -42,10 +43,10 @@ speed = 0.0
 lifespan = 0.0
 tweens = []
 
-[sub_resource type="Resource" id="Resource_3kbgj"]
+[sub_resource type="Resource" id="Resource_e058n"]
 script = ExtResource("7_7gi4d")
-name = "test22"
-health = 5
+name = "gdfgfd"
+health = 10
 bar_color = Color(1, 1, 0, 1)
 shield_type = 0
 
@@ -68,23 +69,25 @@ script = ExtResource("2_8uikf")
 
 [node name="STGSpell" type="Node" parent="STGBar"]
 script = ExtResource("5_pvnvs")
-custom_data = SubResource("Resource_xq0r7")
+custom_data = SubResource("Resource_p0vh6")
 time = 50
-enemy_pos = Vector2(0.5, 0.5)
 sequence_flags = 2
 
 [node name="STGSequence" type="Node" parent="STGBar/STGSpell"]
 script = ExtResource("6_wo0mi")
 
+[node name="STGMovement" type="Node" parent="STGBar/STGSpell/STGSequence"]
+script = ExtResource("5_oslgq")
+
 [node name="CircularSpawner" type="Node" parent="STGBar/STGSpell/STGSequence"]
 script = ExtResource("8_e14t2")
 tilt = 11.3
 position_type = 1
-bullet = SubResource("Resource_ybu2v")
+bullet = SubResource("Resource_1d7s0")
 
 [node name="STGSpell2" type="Node" parent="STGBar"]
 script = ExtResource("5_pvnvs")
-custom_data = SubResource("Resource_r1x2q")
+custom_data = SubResource("Resource_o1i78")
 
 [node name="STGSequence" type="Node" parent="STGBar/STGSpell2"]
 script = ExtResource("6_wo0mi")
@@ -96,7 +99,7 @@ bullet = SubResource("Resource_m20k6")
 
 [node name="STGSpell3" type="Node" parent="STGBar"]
 script = ExtResource("5_pvnvs")
-custom_data = SubResource("Resource_3kbgj")
+custom_data = SubResource("Resource_e058n")
 
 [node name="STGSequence" type="Node" parent="STGBar/STGSpell3"]
 script = ExtResource("6_wo0mi")
