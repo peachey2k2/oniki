@@ -22,3 +22,10 @@ temp/
 
 # gd-plug clone directory
 .plugged/
+
+# plugins (excluded since they're handled by gd-plug)
+addons/
+!addons/gd-plug/
+!addons/gd-plug/*
+!addons/deranged_additions/
+!addons/deranged_additions/*
