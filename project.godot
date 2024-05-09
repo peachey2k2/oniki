@@ -41,7 +41,7 @@ project/assembly_name="oniki"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/GodotSTG/plugin.cfg", "res://addons/clyde/plugin.cfg", "res://addons/deranged_additions/plugin.cfg", "res://addons/panku_console/plugin.cfg")
+enabled=PackedStringArray("res://addons/GodotSTG/plugin.cfg", "res://addons/cba/plugin.cfg", "res://addons/clyde/plugin.cfg", "res://addons/deranged_additions/plugin.cfg", "res://addons/dock_slot_expander/plugin.cfg", "res://addons/gd-plug-ui/plugin.cfg", "res://addons/panku_console/plugin.cfg", "res://addons/project_time_tracker/plugin.cfg")
 
 [filesystem]
 
