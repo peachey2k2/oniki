@@ -24,8 +24,7 @@ temp/
 .plugged/
 
 # plugins (excluded since they're handled by gd-plug)
-addons/
+addons/*
 !addons/gd-plug/
-!addons/gd-plug/*
 !addons/deranged_additions/
-!addons/deranged_additions/*
+!addons/cba/config.json
