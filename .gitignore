@@ -17,8 +17,8 @@ mono_crash.*.json
 # Push script
 .push
 
-# Editor plugins
-addons/editor_background
-
 # temporary stuff created for testing
 temp/
+
+# gd-plug clone directory
+.plugged/
