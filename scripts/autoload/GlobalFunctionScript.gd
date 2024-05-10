@@ -43,7 +43,7 @@ var Enemy:Node
 var Overworld:Node
 var LastSprite:Node
 var CurrentArena:Node
-var ArenaViewport:Node
+var ArenaPlane:Node
 var Controller:BattleController
 var PlayerCamera:Node
 var Ball:Node
@@ -234,7 +234,8 @@ func load_battle(id:String):
 	Enemy = load("res://scenes/Enemy.tscn").instantiate()
 	Enemy.id = id
 	CurrentArena = BattleArena.instantiate()
-	ArenaViewport = CurrentArena.get_node("./SubViewportContainer/Arena")
+	#ArenaViewport = CurrentArena.get_node("./SubViewportContainer/Arena")
+	ArenaPlane = CurrentArena.get_node("./Arena/Clipper")
 	Enemy.add_child(Sprite.duplicate())
 	Enemy.z_index = -1
 	root.remove_child(Overworld)
@@ -244,13 +245,17 @@ func load_battle(id:String):
 	# if this move_child() isn't called deferred.
 	root.move_child.call_deferred(PauseHandler, -1)
 	Player.get_node("./ExtraColliders/Hitbox/CollisionShape2D").disabled = false
-	Player.reparent(ArenaViewport)
-	ArenaViewport.add_child(Enemy)
+	#Player.reparent(ArenaViewport)
+	Player.reparent(ArenaPlane)
+	#ArenaViewport.add_child(Enemy)
+	ArenaPlane.add_child(Enemy)
 	Player.shoot.connect(Callable(Enemy, "_on_player_shoot"))
 	LastSprite = Sprite
-	ArenaViewport.add_child(Controller)
+	#ArenaViewport.add_child(Controller)
+	ArenaPlane.add_child(Controller)
 #	ArenaViewport.add_child(Ball)
-	Temporary = ArenaViewport.get_node("Temp")
+	#Temporary = ArenaViewport.get_node("Temp")
+	Temporary = ArenaPlane.get_node("Temp")
 	Controller.player = Player
 	Controller.enemy = Enemy
 	Controller.arena_rect = BATTLE_RECT
@@ -262,9 +267,12 @@ func load_battle(id:String):
 func reload_battle():
 	game_state = NONE
 #	Controller.stats = null
-	ArenaViewport.remove_child(Player)
-	ArenaViewport.add_child(Player) # yes trust me this is necessary
-	ArenaViewport.move_child(Player, -2)
+	#ArenaViewport.remove_child(Player)
+	#ArenaViewport.add_child(Player) # yes trust me this is necessary
+	#ArenaViewport.move_child(Player, -2)
+	ArenaPlane.remove_child(Player)
+	ArenaPlane.add_child(Player) # yes trust me this is necessary
+	ArenaPlane.move_child(Player, -2)
 	Player.resurrect()
 #	Ball.free()
 #	Ball = BallDefault.instantiate()
@@ -277,7 +285,8 @@ func reload_battle():
 	Controller.player = Player
 	Controller.enemy = Enemy
 	Controller.arena_rect = BATTLE_RECT
-	ArenaViewport.add_child(Controller)
+	#ArenaViewport.add_child(Controller)
+	ArenaPlane.add_child(Controller)
 	Controller.start()
 #	Controller.enemy = Enemy
 	game_state = BATTLE

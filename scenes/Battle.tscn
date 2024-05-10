@@ -1,14 +1,47 @@
-[gd_scene load_steps=17 format=3 uid="uid://bty05s2e3am5q"]
+[gd_scene load_steps=20 format=3 uid="uid://bty05s2e3am5q"]
 
 [ext_resource type="Texture2D" uid="uid://cdams53qwdqbu" path="res://assets/backgrounds/dot.png" id="2_fq3wh"]
 [ext_resource type="Script" path="res://scripts/FrameCollision.gd" id="3_547x7"]
-[ext_resource type="Script" path="res://addons/deranged_additions/nodes/parallax_but_good.gd" id="3_p315c"]
 [ext_resource type="LabelSettings" uid="uid://cxotwanmjjyix" path="res://label_settings/normal.tres" id="4_8cyd8"]
 [ext_resource type="Script" path="res://scripts/TimeoutTimer.gd" id="6_7ngma"]
 [ext_resource type="Theme" uid="uid://banndw0q5ph2x" path="res://themes/theme.tres" id="6_8pmc4"]
 [ext_resource type="Script" path="res://scripts/GrazeCounter.gd" id="7_5eiw7"]
 [ext_resource type="Script" path="res://scripts/SpellName.gd" id="8_67yvc"]
 [ext_resource type="Script" path="res://scripts/BarCount.gd" id="9_1jldx"]
+
+[sub_resource type="Gradient" id="Gradient_1fuem"]
+colors = PackedColorArray(0.188235, 0.184314, 0.156863, 1, 0.156863, 0.121569, 0.0901961, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ksak3"]
+gradient = SubResource("Gradient_1fuem")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xrbku"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+corner_detail = 5
+shadow_color = Color(0, 0, 0, 0.4)
+shadow_size = 1
+shadow_offset = Vector2(10, 10)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8b7g8"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="Gradient" id="Gradient_eatv4"]
+offsets = PackedFloat32Array(0, 0.646119, 0.812785, 0.999, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_2cx0k"]
+gradient = SubResource("Gradient_eatv4")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0, 0.5)
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_csmdb"]
 
@@ -24,12 +57,6 @@ distance = -440.0
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_tjc15"]
 distance = -440.0
 
-[sub_resource type="Gradient" id="Gradient_1fuem"]
-colors = PackedColorArray(0.188235, 0.184314, 0.156863, 1, 0.156863, 0.121569, 0.0901961, 1)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_ksak3"]
-gradient = SubResource("Gradient_1fuem")
-
 [node name="Battle" type="Control"]
 layout_mode = 3
 anchors_preset = 8
@@ -43,70 +70,7 @@ size_flags_vertical = 4
 mouse_filter = 2
 metadata/_edit_vertical_guides_ = [-181.0]
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
-z_index = 50
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -440.0
-offset_top = -440.0
-offset_right = 440.0
-offset_bottom = 440.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
-[node name="Arena" type="SubViewport" parent="SubViewportContainer"]
-transparent_bg = true
-handle_input_locally = false
-size = Vector2i(880, 880)
-render_target_clear_mode = 1
-render_target_update_mode = 4
-
-[node name="Background" type="TextureRect" parent="SubViewportContainer/Arena"]
-modulate = Color(0, 0, 0, 1)
-z_index = -100
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-texture = SubResource("CanvasTexture_csmdb")
-
-[node name="Camera2D" type="Camera2D" parent="SubViewportContainer/Arena"]
-anchor_mode = 0
-editor_draw_screen = false
-
-[node name="Temp" type="Node2D" parent="SubViewportContainer/Arena"]
-
-[node name="FrameCollision" type="Area2D" parent="SubViewportContainer/Arena"]
-z_index = 50
-position = Vector2(440, 440)
-collision_layer = 0
-collision_mask = 32
-script = ExtResource("3_547x7")
-
-[node name="Up" type="CollisionShape2D" parent="SubViewportContainer/Arena/FrameCollision"]
-rotation = 3.14159
-shape = SubResource("WorldBoundaryShape2D_43lrm")
-
-[node name="Left" type="CollisionShape2D" parent="SubViewportContainer/Arena/FrameCollision"]
-rotation = 1.5708
-shape = SubResource("WorldBoundaryShape2D_xgd6w")
-
-[node name="Down" type="CollisionShape2D" parent="SubViewportContainer/Arena/FrameCollision"]
-shape = SubResource("WorldBoundaryShape2D_xkh77")
-
-[node name="Right" type="CollisionShape2D" parent="SubViewportContainer/Arena/FrameCollision"]
-rotation = -1.5708
-shape = SubResource("WorldBoundaryShape2D_tjc15")
-
 [node name="BattleUI" type="Control" parent="."]
-z_index = 1
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -122,6 +86,7 @@ grow_vertical = 2
 pivot_offset = Vector2(290, 290)
 
 [node name="Shadow" type="ColorRect" parent="BattleUI"]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -137,22 +102,8 @@ grow_vertical = 2
 pivot_offset = Vector2(450, 450)
 color = Color(0, 0, 0, 0.431373)
 
-[node name="Frame" type="ColorRect" parent="BattleUI"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -441.0
-offset_top = -441.0
-offset_right = 441.0
-offset_bottom = 441.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(450, 450)
-
-[node name="Background" type="Node" parent="BattleUI"]
+[node name="Background" type="CanvasLayer" parent="BattleUI"]
+layer = -100
 
 [node name="Back" type="TextureRect" parent="BattleUI/Background"]
 anchors_preset = 15
@@ -169,9 +120,6 @@ offset_bottom = 1280.0
 texture = ExtResource("2_fq3wh")
 expand_mode = 1
 stretch_mode = 1
-script = ExtResource("3_p315c")
-scroll_speed = Vector2(40, 30)
-extra_copies = 0
 
 [node name="Time" type="Label" parent="BattleUI"]
 layout_mode = 1
@@ -201,7 +149,6 @@ horizontal_alignment = 2
 script = ExtResource("9_1jldx")
 
 [node name="SpellName" type="Label" parent="BattleUI"]
-z_index = 200
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -232,3 +179,75 @@ text = "test"
 label_settings = ExtResource("4_8cyd8")
 horizontal_alignment = 2
 script = ExtResource("7_5eiw7")
+
+[node name="Arena" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -440.0
+offset_top = -440.0
+offset_right = 440.0
+offset_bottom = 440.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_xrbku")
+
+[node name="Clipper" type="Panel" parent="Arena"]
+clip_children = 1
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = -1.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_8b7g8")
+
+[node name="TextureRect" type="Sprite2D" parent="Arena/Clipper"]
+position = Vector2(39, 30)
+texture = SubResource("GradientTexture2D_2cx0k")
+
+[node name="Background" type="TextureRect" parent="Arena/Clipper"]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = SubResource("CanvasTexture_csmdb")
+
+[node name="Camera2D" type="Camera2D" parent="Arena/Clipper"]
+anchor_mode = 0
+editor_draw_screen = false
+
+[node name="Temp" type="Node2D" parent="Arena/Clipper"]
+
+[node name="FrameCollision" type="Area2D" parent="Arena/Clipper"]
+z_index = 50
+position = Vector2(440, 440)
+collision_layer = 0
+collision_mask = 32
+script = ExtResource("3_547x7")
+
+[node name="Up" type="CollisionShape2D" parent="Arena/Clipper/FrameCollision"]
+rotation = 3.14159
+shape = SubResource("WorldBoundaryShape2D_43lrm")
+
+[node name="Left" type="CollisionShape2D" parent="Arena/Clipper/FrameCollision"]
+rotation = 1.5708
+shape = SubResource("WorldBoundaryShape2D_xgd6w")
+
+[node name="Down" type="CollisionShape2D" parent="Arena/Clipper/FrameCollision"]
+shape = SubResource("WorldBoundaryShape2D_xkh77")
+
+[node name="Right" type="CollisionShape2D" parent="Arena/Clipper/FrameCollision"]
+rotation = -1.5708
+shape = SubResource("WorldBoundaryShape2D_tjc15")
